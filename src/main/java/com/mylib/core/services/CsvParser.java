@@ -13,6 +13,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Component;
 import com.mylib.core.entities.Book;
 import com.mylib.core.entities.Author;
 import com.mylib.core.entities.Illustrator;
+import com.mylib.core.repositories.AuthorRepository;
 import com.mylib.core.entities.Editor;
 import com.mylib.core.entities.Collection;
 
@@ -27,6 +29,9 @@ import com.mylib.core.entities.Collection;
 public class CsvParser {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(CsvParser.class);
+	
+	@Autowired
+	AuthorRepository authorRepository;
 	
 	@Value("${csv.file.location}")
 	private File folder;
@@ -84,8 +89,10 @@ public class CsvParser {
             			} else {
             				Author author = new Author();
             				author.setFullName(authorFullName);
+            				authorRepository.createAuthor(author);
             				authors.put(authorFullName, author);
             				book.setAuthor(author);
+      
             				//persist author
             			}
             	} else {
