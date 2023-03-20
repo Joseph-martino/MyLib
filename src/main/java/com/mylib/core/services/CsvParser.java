@@ -22,6 +22,10 @@ import com.mylib.core.entities.Book;
 import com.mylib.core.entities.Author;
 import com.mylib.core.entities.Illustrator;
 import com.mylib.core.repositories.AuthorRepository;
+import com.mylib.core.repositories.BookRepository;
+import com.mylib.core.repositories.EditorRepository;
+import com.mylib.core.repositories.IllustratorRepository;
+import com.mylib.core.repositories.CollectionRepository;
 import com.mylib.core.entities.Editor;
 import com.mylib.core.entities.Collection;
 
@@ -32,6 +36,15 @@ public class CsvParser {
 	
 	@Autowired
 	AuthorRepository authorRepository;
+	@Autowired
+	IllustratorRepository illustratorRepository;
+	@Autowired
+	EditorRepository editorRepository;
+	@Autowired
+	CollectionRepository collectionRepository;
+	@Autowired
+	BookRepository bookRepository;
+	
 	
 	@Value("${csv.file.location}")
 	private File folder;
@@ -109,6 +122,7 @@ public class CsvParser {
             		} else {
             			Illustrator illustrator = new Illustrator();
             			illustrator.setFullName(illustratorName);
+            			illustratorRepository.createIllustrator(illustrator);
             			illustrators.put(illustratorName, illustrator);
             			book.setIllustrator(illustrator);
             		}
@@ -126,6 +140,7 @@ public class CsvParser {
         			} else {
         				Editor editor = new Editor();
         				editor.setName(editorName);
+        				editorRepository.createEditor(editor);
         				editors.put(editorName, editor);
         				book.setEditor(editor);
         			}
@@ -143,6 +158,7 @@ public class CsvParser {
         			} else {
         				Collection collection = new Collection();
         				collection.setName(collectionName);
+        				collectionRepository.createCollection(collection);
         				collections.put(collectionName, collection);
         				book.setCollection(collection);
         			}
@@ -153,10 +169,12 @@ public class CsvParser {
         		}	
         		
         		book.setTitle(title);
+        		bookRepository.createBook(book);
         		//book.persist
         		
         		File processedFolder = new File("C://Users/Joseph/Documents/tutos/processed/");
         		
+        		/*
         		// methode qui deplace le fichier ves le dossier processed
         		if(!processedFolder.exists()) {
         			processedFolder.mkdir();
@@ -174,6 +192,7 @@ public class CsvParser {
         			}
         			sourceFile.delete();
         		}
+        		*/
 	            books.add(book);
 	          
 	            LOGGER.info("Livre crée avec succès. Titre: {} auteur + : {}", book.getTitle(), book.getAuthor().getFullName());

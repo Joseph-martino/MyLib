@@ -11,13 +11,13 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="Illustrator")
+@Table(name="ILLUSTRATOR")
 public class Illustrator {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	@Column(name="fullName")
+	@Column(name="FULLNAME")
 	private String fullName;
 	@OneToMany
 	private List<Book> books; 

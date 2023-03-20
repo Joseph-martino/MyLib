@@ -11,13 +11,13 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="Collection")
+@Table(name="COLLECTION")
 public class Collection {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	@Column(name="name")
+	@Column(name="NAME")
 	private String name;
 	@OneToMany
 	private List<Book> books; 
