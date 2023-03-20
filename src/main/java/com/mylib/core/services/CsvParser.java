@@ -94,10 +94,12 @@ public class CsvParser {
             		
             	if(!bookInformationsRow[1].isEmpty() || !"".equals(bookInformationsRow[1])) {
             			String authorFullName = bookInformationsRow[1];
+            			//String authorNameFormDatabase = this.authorRepository.getAuthorByName(authorFullName).getFullName();
             			
-            			if(authors.containsKey(authorFullName)) {
+            			if(authorFullName == authorNameFormDatabase) {
             				//on appelera la base de donnée plutot que le containKey
-            				Author author = authors.get(authorFullName);
+            				Author author = this.authorRepository.getAuthorByName(authorFullName);
+            				//Author author = authors.get(authorFullName);
             				book.setAuthor(author);
             			} else {
             				Author author = new Author();
@@ -111,13 +113,15 @@ public class CsvParser {
             	} else {
             		Author author = new Author();
             		author.setFullName("Nom inconnu");
+            		authorRepository.createAuthor(author);
             		book.setAuthor(author);
             	}
             		
             	if(!bookInformationsRow[2].isEmpty() || !"".equals(bookInformationsRow[2])) {
             		String illustratorName = bookInformationsRow[2];
-            		if(illustrators.containsKey(illustratorName)) {
-            			Illustrator illustrator = illustrators.get(illustratorName);
+            		if(this.illustratorRepository.checkIfIllustratorNameExist(illustratorName)) {
+            			//Illustrator illustrator = illustrators.get(illustratorName);
+            			Illustrator illustrator = this.illustratorRepository.getIllustratorByName(illustratorName);
             			book.setIllustrator(illustrator);
             		} else {
             			Illustrator illustrator = new Illustrator();
@@ -129,13 +133,15 @@ public class CsvParser {
             	} else {
             		Illustrator illustrator = new Illustrator();
             		illustrator.setFullName("Nom inconnu");
+            		illustratorRepository.createIllustrator(illustrator);
             		book.setIllustrator(illustrator);
             	}
             		
         		if(!bookInformationsRow[3].isEmpty() || !"".equals(bookInformationsRow[3])) {
         			String editorName = bookInformationsRow[3];
-        			if(editors.containsKey(editorName)) {
-        				Editor editor = editors.get(editorName);
+        			if(this.editorRepository.checkIfEditorNameExist(editorName)) {
+        				Editor editor = this.editorRepository.getEditorByName(editorName);
+        				//Editor editor = editors.get(editorName);
         				book.setEditor(editor);
         			} else {
         				Editor editor = new Editor();
@@ -147,13 +153,15 @@ public class CsvParser {
         		} else {
         			Editor editor = new Editor();
         			editor.setName("Nom inconnu");
+        			editorRepository.createEditor(editor);
         			book.setEditor(editor);
         		}
         		
         		if(!bookInformationsRow[4].isEmpty() || !"".equals(bookInformationsRow[4])) {
         			String collectionName = bookInformationsRow[4];
-        			if(collections.containsKey(collectionName)) {
-        				Collection collection = collections.get(collectionName);
+        			if(this.collectionRepository.checkIfCollectionNameExist(collectionName)) {
+        				Collection collection = this.collectionRepository.getCollectionByName(collectionName);
+        				//Collection collection = collections.get(collectionName);
         				book.setCollection(collection);
         			} else {
         				Collection collection = new Collection();
@@ -165,6 +173,7 @@ public class CsvParser {
         		} else {
         			Collection collection = new Collection();
         			collection.setName("Nom inconnu");
+        			collectionRepository.createCollection(collection);
         			book.setCollection(collection);
         		}	
         		
@@ -174,7 +183,6 @@ public class CsvParser {
         		
         		File processedFolder = new File("C://Users/Joseph/Documents/tutos/processed/");
         		
-        		/*
         		// methode qui deplace le fichier ves le dossier processed
         		if(!processedFolder.exists()) {
         			processedFolder.mkdir();
@@ -192,7 +200,6 @@ public class CsvParser {
         			}
         			sourceFile.delete();
         		}
-        		*/
 	            books.add(book);
 	          
 	            LOGGER.info("Livre crée avec succès. Titre: {} auteur + : {}", book.getTitle(), book.getAuthor().getFullName());

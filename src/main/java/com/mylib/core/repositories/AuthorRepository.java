@@ -17,10 +17,25 @@ public class AuthorRepository {
 	public void createAuthor(Author author) {
 		this.entityManager.persist(author);
 		
-		System.out.println("L'auteur a été enregistré");
-		
-		
-		
+		System.out.println("L'auteur a été enregistré");	
 	}
+	
+	@Transactional
+	public Author getAuthorByName(String name) {
+		Author author = this.entityManager.find(Author.class, name);
+		return author;
+	}
+	
+	@Transactional
+	public boolean checkIfAuthorNameExist(String name) {
+		Author author = getAuthorByName(name);
+		if(name.equals(author.getFullName())) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	
 
 }
