@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,8 +64,6 @@ public class CsvParser {
 		return file;
 	}
 	
-	// methode qui retourne le fichier dans le dossier, verifier le nom du fichier
-	
 	@Scheduled(cron = "0 * * * * *")
 	public List<Book> getBooksList() {
 		
@@ -74,11 +73,6 @@ public class CsvParser {
 		 
 	    List<Book> books=new ArrayList<>();
         String title;
-        
-        Map<String, Author> authors = new HashMap<>();
-        Map<String, Illustrator> illustrators = new HashMap<>();
-        Map<String, Editor> editors = new HashMap<>();
-        Map<String, Collection> collections = new HashMap<>();
 	 
 	    try(BufferedReader br = new BufferedReader(new FileReader(sourceFile))) {
 	        for(String line; (line = br.readLine()) != null; ) {
@@ -94,96 +88,117 @@ public class CsvParser {
             		
             	if(!bookInformationsRow[1].isEmpty() || !"".equals(bookInformationsRow[1])) {
             			String authorFullName = bookInformationsRow[1];
-            			//String authorNameFormDatabase = this.authorRepository.getAuthorByName(authorFullName).getFullName();
-            			
-            			if(authorFullName == authorNameFormDatabase) {
-            				//on appelera la base de donnée plutot que le containKey
-            				Author author = this.authorRepository.getAuthorByName(authorFullName);
-            				//Author author = authors.get(authorFullName);
+        
+            			Author author = this.authorRepository.getByFullName(authorFullName);
+            			if(author != null) {
             				book.setAuthor(author);
+            				
             			} else {
-            				Author author = new Author();
+            				author = new Author();
             				author.setFullName(authorFullName);
-            				authorRepository.createAuthor(author);
-            				authors.put(authorFullName, author);
+            				authorRepository.save(author);
             				book.setAuthor(author);
-      
-            				//persist author
             			}
+            			
             	} else {
-            		Author author = new Author();
-            		author.setFullName("Nom inconnu");
-            		authorRepository.createAuthor(author);
-            		book.setAuthor(author);
+            		Author author = this.authorRepository.getByFullName("Nom inconnu");
+            		if(author != null) {
+            			author = new Author();
+            			author.setFullName(author.getFullName());
+            			authorRepository.save(author);
+            			book.setAuthor(author);
+            		} else {
+            			author = new Author();
+            			author.setFullName("Nom inconnu");
+            			authorRepository.save(author);
+            			book.setAuthor(author);
+            		}
             	}
             		
             	if(!bookInformationsRow[2].isEmpty() || !"".equals(bookInformationsRow[2])) {
             		String illustratorName = bookInformationsRow[2];
-            		if(this.illustratorRepository.checkIfIllustratorNameExist(illustratorName)) {
-            			//Illustrator illustrator = illustrators.get(illustratorName);
-            			Illustrator illustrator = this.illustratorRepository.getIllustratorByName(illustratorName);
+            		Illustrator illustrator = this.illustratorRepository.getByFullName(illustratorName);
+            		if(illustrator != null) {
             			book.setIllustrator(illustrator);
             		} else {
-            			Illustrator illustrator = new Illustrator();
+            			illustrator = new Illustrator();
             			illustrator.setFullName(illustratorName);
-            			illustratorRepository.createIllustrator(illustrator);
-            			illustrators.put(illustratorName, illustrator);
+            			illustratorRepository.save(illustrator);
             			book.setIllustrator(illustrator);
             		}
             	} else {
-            		Illustrator illustrator = new Illustrator();
-            		illustrator.setFullName("Nom inconnu");
-            		illustratorRepository.createIllustrator(illustrator);
-            		book.setIllustrator(illustrator);
+            		Illustrator illustrator = this.illustratorRepository.getByFullName("Nom inconnu");
+            		if(illustrator != null) {
+            			illustrator = new Illustrator();
+            			illustrator.setFullName(illustrator.getFullName());
+            			illustratorRepository.save(illustrator);
+            			book.setIllustrator(illustrator);
+            		} else {
+            			illustrator = new Illustrator();
+            			illustrator.setFullName("Nom inconnu");
+            			illustratorRepository.save(illustrator);
+            			book.setIllustrator(illustrator);
+            		}
             	}
             		
         		if(!bookInformationsRow[3].isEmpty() || !"".equals(bookInformationsRow[3])) {
         			String editorName = bookInformationsRow[3];
-        			if(this.editorRepository.checkIfEditorNameExist(editorName)) {
-        				Editor editor = this.editorRepository.getEditorByName(editorName);
-        				//Editor editor = editors.get(editorName);
+        			Editor editor = this.editorRepository.getByName(editorName);
+        			if(editor != null) {
         				book.setEditor(editor);
         			} else {
-        				Editor editor = new Editor();
+        				editor = new Editor();
         				editor.setName(editorName);
-        				editorRepository.createEditor(editor);
-        				editors.put(editorName, editor);
+        				editorRepository.save(editor);
         				book.setEditor(editor);
         			}
         		} else {
-        			Editor editor = new Editor();
-        			editor.setName("Nom inconnu");
-        			editorRepository.createEditor(editor);
-        			book.setEditor(editor);
+        			Editor editor = this.editorRepository.getByName("Nom inconnu");
+            		if(editor != null) {
+            			editor = new Editor();
+            			editor.setName(editor.getName());
+            			editorRepository.save(editor);
+            			book.setEditor(editor);
+            		} else {
+            			editor = new Editor();
+            			editor.setName("Nom inconnu");
+            			editorRepository.save(editor);
+            			book.setEditor(editor);
+            		}
         		}
         		
         		if(!bookInformationsRow[4].isEmpty() || !"".equals(bookInformationsRow[4])) {
         			String collectionName = bookInformationsRow[4];
-        			if(this.collectionRepository.checkIfCollectionNameExist(collectionName)) {
-        				Collection collection = this.collectionRepository.getCollectionByName(collectionName);
-        				//Collection collection = collections.get(collectionName);
+        			Collection collection = this.collectionRepository.getByName(collectionName);
+        			if(collection != null) {
         				book.setCollection(collection);
         			} else {
-        				Collection collection = new Collection();
+        				collection = new Collection();
         				collection.setName(collectionName);
-        				collectionRepository.createCollection(collection);
-        				collections.put(collectionName, collection);
+        				collectionRepository.save(collection);
         				book.setCollection(collection);
         			}
         		} else {
-        			Collection collection = new Collection();
-        			collection.setName("Nom inconnu");
-        			collectionRepository.createCollection(collection);
-        			book.setCollection(collection);
+        			Collection collection = this.collectionRepository.getByName("Nom inconnu");
+            		if(collection != null) {
+            			collection = new Collection();
+            			collection.setName(collection.getName());
+            			collectionRepository.save(collection);
+            			book.setCollection(collection);
+            		} else {
+            			collection = new Collection();
+            			collection.setName("Nom inconnu");
+            			collectionRepository.save(collection);
+            			book.setCollection(collection);
+            		}
         		}	
         		
         		book.setTitle(title);
         		bookRepository.createBook(book);
-        		//book.persist
         		
         		File processedFolder = new File("C://Users/Joseph/Documents/tutos/processed/");
         		
-        		// methode qui deplace le fichier ves le dossier processed
+        		// methode qui deplace le fichier vers le dossier processed
         		if(!processedFolder.exists()) {
         			processedFolder.mkdir();
         			try {

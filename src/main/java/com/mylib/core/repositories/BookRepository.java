@@ -23,20 +23,6 @@ public class BookRepository {
 		System.out.println("Le livre a été enregistré");
 	}
 	
-	@Transactional
-	public Book getBookByName(String name) {
-		Book book = this.entityManager.find(Book.class, name);
-		return book;
-	}
 	
-	@Transactional
-	public boolean checkIfBookNameExist(String name) {
-		Book book = this.entityManager.find(Book.class, name);
-		if(book.getTitle().equals(name)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
 
 }
