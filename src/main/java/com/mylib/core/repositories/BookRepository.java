@@ -14,7 +14,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 
 @Repository
-public class BookRepository {
+public class BookRepository implements IBookRepository{
 	
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -22,8 +22,6 @@ public class BookRepository {
 	@Transactional
 	public void createBook(Book book) {
 		this.entityManager.persist(book);
-		
-		System.out.println("Le livre a été enregistré");
 	}
 	
 	@Transactional
