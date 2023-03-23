@@ -19,7 +19,7 @@ public class Collection {
 	private long id;
 	@Column(name="NAME")
 	private String name;
-	@OneToMany
+	@OneToMany(mappedBy="collection")
 	private List<Book> books; 
 	
 	

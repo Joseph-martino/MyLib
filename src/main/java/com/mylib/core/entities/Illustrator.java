@@ -19,7 +19,7 @@ public class Illustrator {
 	private long id;
 	@Column(name="FULLNAME")
 	private String fullName;
-	@OneToMany
+	@OneToMany(mappedBy="illustrator")
 	private List<Book> books; 
 	
 	

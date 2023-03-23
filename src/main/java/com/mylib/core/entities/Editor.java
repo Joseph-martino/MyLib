@@ -19,7 +19,7 @@ public class Editor {
 	private long id;
 	@Column(name="NAME")
 	private String name;
-	@OneToMany
+	@OneToMany(mappedBy="editor")
 	private List<Book> books; 
 	
 	

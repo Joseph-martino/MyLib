@@ -42,8 +42,8 @@ public class BookRepository {
 	
 	@Transactional
 	public List<Book> getBooksList() {
-		String queryString = "SELECT * FROM Book b";
-		List<Book> books = this.entityManager.createQuery(queryString,Book.class).getResultList();
+		String queryString = "SELECT b FROM Book b";
+		List<Book> books = this.entityManager.createQuery(queryString,Book.class).setFirstResult(10).getResultList();
 		return books;
 		
 	}

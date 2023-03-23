@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mylib.core.dto.BookDto;
 import com.mylib.core.entities.Book;
 import com.mylib.core.services.BookService;
 
@@ -21,18 +22,18 @@ public class BookResource {
 	private BookService bookService;
 	
 	@GetMapping
-	public List<Book> getBooksList(){
+	public List<BookDto> getBooksList(){
 		return this.bookService.getBooksList();
 	}
 	
 	@GetMapping("/{id}")
-	public Book getById(@PathVariable("id") long id) {
+	public BookDto getById(@PathVariable("id") long id) {
 		return this.bookService.getById(id);
 	}
 	
 	@PostMapping("/create")
-	public Book createBook(@RequestBody Book book) {
-		return this.bookService.createBook(book);
+	public BookDto createBook(@RequestBody BookDto bookDto) {
+		return this.bookService.createBook(bookDto);
 		
 	}
 	
