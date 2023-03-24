@@ -8,26 +8,28 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name="BOOK")
 public class Book {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	@Column
+	@Column(name="TITLE")
 	private String title;
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name= "author_id")
+	@JoinColumn(name= "AUTHOR_ID")
 	private Author author;
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name= "illustrator_id")
+	@JoinColumn(name= "ILLUSTRATOR_ID")
 	private Illustrator illustrator;
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name= "editor_id")
+	@JoinColumn(name= "EDITOR_ID")
 	private Editor editor;
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name= "collection_id")
+	@JoinColumn(name= "COLLECTION_ID")
 	private Collection collection;
 	
 	

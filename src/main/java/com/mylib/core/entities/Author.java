@@ -11,15 +11,15 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="Author")
+@Table(name="AUTHOR")
 public class Author {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	@Column(name="name")
+	@Column(name="FULLNAME")
 	private String fullName;
-	@OneToMany
+	@OneToMany(mappedBy="author")
 	private List<Book> books; 
 	
 

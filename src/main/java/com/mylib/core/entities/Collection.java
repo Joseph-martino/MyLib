@@ -8,16 +8,18 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name="COLLECTION")
 public class Collection {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	@Column(name="name")
+	@Column(name="NAME")
 	private String name;
-	@OneToMany
+	@OneToMany(mappedBy="collection")
 	private List<Book> books; 
 	
 	

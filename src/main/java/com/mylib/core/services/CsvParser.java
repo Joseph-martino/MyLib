@@ -4,13 +4,14 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,11 @@ import org.springframework.stereotype.Component;
 import com.mylib.core.entities.Book;
 import com.mylib.core.entities.Author;
 import com.mylib.core.entities.Illustrator;
+import com.mylib.core.repositories.AuthorRepository;
+import com.mylib.core.repositories.EditorRepository;
+import com.mylib.core.repositories.IBookRepository;
+import com.mylib.core.repositories.IllustratorRepository;
+import com.mylib.core.repositories.CollectionRepository;
 import com.mylib.core.entities.Editor;
 import com.mylib.core.entities.Collection;
 
@@ -26,116 +32,140 @@ public class CsvParser {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(CsvParser.class);
 	
+	@Autowired
+	private AuthorRepository authorRepository;
+	@Autowired
+	private IllustratorRepository illustratorRepository;
+	@Autowired
+	private EditorRepository editorRepository;
+	@Autowired
+	private CollectionRepository collectionRepository;
+	@Autowired
+	private IBookRepository bookRepository;
+	
+	
 	@Value("${csv.file.location}")
-	private File file;
+	private File folder;
+
+	
+	public File getFileFromFolder(File folder) {
+		File file = null;
+		if(folder.exists()) {
+			File[] listOfFiles = folder.listFiles();
+			for(File fileInFolder: listOfFiles) {
+				if("bibliotheque.csv".equals(fileInFolder.getName())) {
+					file = fileInFolder;
+					break;
+				} else {
+					LOGGER.info("Le fichier bibliotheque.csv n'existe pas ou n'a pas le nom approprié");
+				}
+			}
+			return file;	
+		} 
+		LOGGER.info("Le fichier n'existe pas");	
+		return null;
+	}
 	
 	@Scheduled(cron = "0 * * * * *")
-	public List<Book> getBooksList() {
-		 
+	public void getBooksList() {
+		
+		File sourceFile = getFileFromFolder(folder);
 	    List<Book> books=new ArrayList<>();
         String title;
         
-        Map<String, Author> authors = new HashMap<>();
-        Map<String, Illustrator> illustrators = new HashMap<>();
-        Map<String, Editor> editors = new HashMap<>();
-        Map<String, Collection> collections = new HashMap<>();
+        if(sourceFile == null ) {
+        	LOGGER.info("Echec de la lecture du fichier");
+        } else {
 	 
-	    try(BufferedReader br = new BufferedReader(new FileReader(file))) {
-	        for(String line; (line = br.readLine()) != null; ) {
+		    try(BufferedReader br = new BufferedReader(new FileReader(sourceFile))) {
+		        for(String line; (line = br.readLine()) != null; ) {
+		            
+		        	Book book = new Book();
+		            final String[] bookInformationsRow = line.split(";", -1);
+		            
+		            if(!"".equals(bookInformationsRow[0])) {
+	            		book.setTitle(bookInformationsRow[0]);
+	            	} else {
+	            		book.setTitle("Nom inconnu");
+	            	}
+	            		
+	            	
+	            	String authorFullName = !"".equals(bookInformationsRow[1]) ? bookInformationsRow[1] : "Nom inconnu";
+	        
+        			Author author = this.authorRepository.getByFullName(authorFullName);
+        			 if(author == null) {
+        				author = new Author();
+        				author.setFullName(authorFullName);
+        				this.authorRepository.save(author);
+        			}
+        			book.setAuthor(author);	 
+	            		
 	            
-	        	Book book = new Book();
-	            final String[] bookInformationsRow = line.split(";", -1);
-	            
-	            if(!bookInformationsRow[0].isEmpty() || !"".equals(bookInformationsRow[0])) {
-            		title = bookInformationsRow[0];
-            	} else {
-            		title = "titre inconnu";
-            	}
+            		String illustratorName = !"".equals(bookInformationsRow[2]) ? bookInformationsRow[2] : "Nom inconnu";
+            		Illustrator illustrator = this.illustratorRepository.getByFullName(illustratorName);
             		
-            	if(!bookInformationsRow[1].isEmpty() || !"".equals(bookInformationsRow[1])) {
-            			String authorFullName = bookInformationsRow[1];
-            			
-            			if(authors.containsKey(authorFullName)) {
-            				//on appelera la base de donnée plutot que le containKey
-            				Author author = authors.get(authorFullName);
-            				book.setAuthor(author);
-            			} else {
-            				Author author = new Author();
-            				author.setFullName(authorFullName);
-            				authors.put(authorFullName, author);
-            				book.setAuthor(author);
-            				//persist author
-            			}
-            	} else {
-            		Author author = new Author();
-            		author.setFullName("Nom inconnu");
-            		book.setAuthor(author);
-            	}
-            		
-            	if(!bookInformationsRow[2].isEmpty() || !"".equals(bookInformationsRow[2])) {
-            		String illustratorName = bookInformationsRow[2];
-            		if(illustrators.containsKey(illustratorName)) {
-            			Illustrator illustrator = illustrators.get(illustratorName);
-            			book.setIllustrator(illustrator);
-            		} else {
-            			Illustrator illustrator = new Illustrator();
+            		if(illustrator == null) {
+            			illustrator = new Illustrator();
             			illustrator.setFullName(illustratorName);
-            			illustrators.put(illustratorName, illustrator);
-            			book.setIllustrator(illustrator);
-            		}
-            	} else {
-            		Illustrator illustrator = new Illustrator();
-            		illustrator.setFullName("Nom inconnu");
-            		book.setIllustrator(illustrator);
-            	}
+            			this.illustratorRepository.save(illustrator);
+            		} 
+            		book.setIllustrator(illustrator);	
             		
-        		if(!bookInformationsRow[3].isEmpty() || !"".equals(bookInformationsRow[3])) {
-        			String editorName = bookInformationsRow[3];
-        			if(editors.containsKey(editorName)) {
-        				Editor editor = editors.get(editorName);
-        				book.setEditor(editor);
-        			} else {
-        				Editor editor = new Editor();
+        			String editorName = !"".equals(bookInformationsRow[3]) ? bookInformationsRow[3] : "Nom inconnu";
+        			Editor editor = this.editorRepository.getByName(editorName);
+        			if(editor == null) {
+        				editor = new Editor();
         				editor.setName(editorName);
-        				editors.put(editorName, editor);
-        				book.setEditor(editor);
-        			}
-        		} else {
-        			Editor editor = new Editor();
-        			editor.setName("Nom inconnu");
-        			book.setEditor(editor);;
-        		}
+        				this.editorRepository.save(editor);
+        			} 
+        			book.setEditor(editor);
         		
-        		if(!bookInformationsRow[4].isEmpty() || !"".equals(bookInformationsRow[4])) {
-        			String collectionName = bookInformationsRow[4];
-        			if(collections.containsKey(collectionName)) {
-        				Collection collection = collections.get(collectionName);
-        				book.setCollection(collection);
-        			} else {
-        				Collection collection = new Collection();
+        			String collectionName = !"".equals(bookInformationsRow[4]) ? bookInformationsRow[4] : "Nom inconnu";
+        			Collection collection = this.collectionRepository.getByName(collectionName);
+        			if(collection == null) {
+        				collection = new Collection();
         				collection.setName(collectionName);
-        				collections.put(collectionName, collection);
-        				book.setCollection(collection);
-        			}
-        		} else {
-        			Collection collection = new Collection();
-        			collection.setName("Nom inconnu");
-        			book.setCollection(collection);
-        		}	
-        		
-        		book.setTitle(title);
-        		//book.persist
-        		
-	            books.add(book);
-	          
-	            LOGGER.info("Livre crée avec succès. Titre: {} auteur + : {}", book.getTitle(), book.getAuthor().getFullName());
-	            LOGGER.info("Illustrator: {} , Editeur: {}", book.getIllustrator().getFullName(), book.getEditor().getName());
-	            LOGGER.info("Collection: {}", book.getCollection().getName());
-	        }
-	    } catch (IOException e) {
-	    	LOGGER.error("Echec de la création du livre", e);
-	    }
-	    return books;
+        				this.collectionRepository.save(collection);
+        			} 
+        			book.setCollection(collection);	
+	        		
+	        		this.bookRepository.createBook(book);
+	        		
+		            books.add(book);
+		          
+		            LOGGER.info("Livre crée avec succès. Titre: {} auteur: {}", book.getTitle(), book.getAuthor().getFullName());
+		            LOGGER.info("Illustrator: {} , Editeur: {}", book.getIllustrator().getFullName(), book.getEditor().getName());
+		            LOGGER.info("Collection: {}", book.getCollection().getName());
+		        }
+		        File processedFolder = new File(folder, "processed");
+		        File destinationFile = new File(processedFolder.getPath() +"/" + sourceFile.getName());
+		        moveFileToFolder(processedFolder, sourceFile, destinationFile);
+		    } catch (IOException e) {
+		    	LOGGER.error("Echec de la création du livre", e);
+		    	File failedFolder = new File(folder, "failed");
+		    	File destinationFile = new File(failedFolder.getPath() + "/" + sourceFile.getName());
+		    	
+		    	moveFileToFolder(failedFolder, sourceFile, destinationFile);
+		    }
+        }
 	}
-
+	
+	public void moveFileToFolder(File folder, File sourceFile, File destinationFile) {
+		
+		if(!folder.exists()) {
+			folder.mkdir();
+		} 
+		copyFile(sourceFile, destinationFile);
+		sourceFile.delete();
+		
+	}
+	
+	public void copyFile(File sourceFile, File destinationFile) {
+		try {
+			Files.copy(sourceFile.toPath(), destinationFile.toPath(),StandardCopyOption.REPLACE_EXISTING);
+		} catch(IOException e) {
+			e.printStackTrace();
+			LOGGER.info("Fichier " + sourceFile.getName() + "déplacé dans le dossier " + destinationFile.getName());
+		}
+	}
 }

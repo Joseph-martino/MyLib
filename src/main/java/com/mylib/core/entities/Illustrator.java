@@ -8,16 +8,18 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name="ILLUSTRATOR")
 public class Illustrator {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	@Column(name="fullName")
+	@Column(name="FULLNAME")
 	private String fullName;
-	@OneToMany
+	@OneToMany(mappedBy="illustrator")
 	private List<Book> books; 
 	
 	

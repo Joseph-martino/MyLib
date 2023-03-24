@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+    <changeSet id="1" author="Joseph">
+    <createTable tableName="AUTHOR">
+           <column name="id" type="bigint" autoIncrement="true">
+                 <constraints primaryKey="true"/>
+           </column>
+           <column name="FULLNAME" type="varchar(255)"/>
+    </createTable>
+    </changeSet>
+    
+    <changeSet id="2" author="Joseph">
+    <createTable tableName="ILLUSTRATOR">
+           <column name="id" type="bigint" autoIncrement="true">
+                 <constraints primaryKey="true"/>
+           </column>
+           <column name="FULLNAME" type="varchar(255)"/>
+    </createTable>
+    </changeSet>
+    
+    <changeSet id="3" author="Joseph">
+    <createTable tableName="EDITOR">
+           <column name="id" type="bigint" autoIncrement="true">
+                 <constraints primaryKey="true"/>
+           </column>
+           <column name="NAME" type="varchar(255)"/>
+    </createTable>
+    </changeSet>
+    
+    <changeSet id="4" author="Joseph">
+    <createTable tableName="COLLECTION">
+           <column name="id" type="bigint" autoIncrement="true">
+                 <constraints primaryKey="true"/>
+           </column>
+           <column name="NAME" type="varchar(255)"/>
+    </createTable>
+    </changeSet>
+    
+    <changeSet id="5" author="Joseph">
+    <createTable tableName="BOOK">
+           <column name="id" type="bigint" autoIncrement="true">
+                 <constraints primaryKey="true"/>
+           </column>
+           <column name="TITLE" type="varchar(255)"/>
+           <column name="AUTHOR_ID" type="bigint"></column>
+           <column name="ILLUSTRATOR_ID" type="bigint"></column>
+           <column name="EDITOR_ID" type="bigint"></column>
+           <column name="COLLECTION_ID" type="bigint"></column>
+    </createTable>
+    </changeSet>
+</databaseChangeLog>
