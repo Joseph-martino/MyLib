@@ -73,14 +73,11 @@ public class CsvParser {
 	@Scheduled(cron = "0 * * * * *")
 	public List<Book> getBooksList() {
 		
-		
 		File sourceFile = getFileFromFolder(folder);
-		//gérer le fait que sourceFile puisse être null
-		
-		 
 	    List<Book> books=new ArrayList<>();
         String title;
         
+        //gérer le fait que sourceFile puisse être null
         if(sourceFile == null ) {
         	LOGGER.info("Echec de la lecture du fichier");
         	return null;
@@ -179,32 +176,12 @@ public class CsvParser {
 	        		}	
 	        		
 	        		book.setTitle(title);
-	        		bookRepository.createBook(book);
+	        		this.bookRepository.createBook(book);
 	        		
 	        		File processedFolder = new File(folder, "processed");
-	        		File destinationFile = new File(/*"C://Users/Joseph/Documents/tutos/processed/"*/processedFolder.getPath() + sourceFile.getName());
+	        		File destinationFile = new File(processedFolder.getPath() +"//" + sourceFile.getName());
 	        		
 	        		moveFileToFolder(processedFolder, sourceFile, destinationFile);
-	        		
-	        		/*
-	        		if(!processedFolder.exists()) {
-	        			processedFolder.mkdir();
-	        			try {
-	        				Files.copy(sourceFile.toPath(), destinationFile.toPath(),StandardCopyOption.REPLACE_EXISTING);
-	        			} catch(IOException e) {
-	        				e.printStackTrace();
-	        			}
-	        			sourceFile.delete();
-	        		} else {
-	        			try {
-	        				Files.copy(sourceFile.toPath(), destinationFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-	        			} catch(IOException e) {
-	        				e.printStackTrace();
-	        			}
-	        			sourceFile.delete();
-	        			
-	        		}
-	        		*/
 		            books.add(book);
 		          
 		            LOGGER.info("Livre crée avec succès. Titre: {} auteur + : {}", book.getTitle(), book.getAuthor().getFullName());
@@ -212,30 +189,11 @@ public class CsvParser {
 		            LOGGER.info("Collection: {}", book.getCollection().getName());
 		        }
 		    } catch (IOException e) {
-		    	// si ca marche pas fichier fails et envoyer fichier dedans
 		    	LOGGER.error("Echec de la création du livre", e);
 		    	File failedFolder = new File(folder, "failed");
-		    	File destinationFile = new File(failedFolder.getPath() + sourceFile.getName());
+		    	File destinationFile = new File(failedFolder.getPath() + "//" + sourceFile.getName());
 		    	
 		    	moveFileToFolder(failedFolder, sourceFile, destinationFile);
-		    	/*
-	    		if(!failedFolder.exists()) {
-	    			failedFolder.mkdir();
-	    			try {
-	    				Files.copy(sourceFile.toPath(), destinationFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-	    			} catch(IOException ex) {
-	    				ex.printStackTrace();
-	    			}
-	    			sourceFile.delete();
-	    		} else {
-	    			try {
-	    				Files.copy(sourceFile.toPath(), destinationFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-	    			} catch(IOException ex) {
-	    				ex.printStackTrace();
-	    			}
-	    			sourceFile.delete();
-	    		}
-	    		*/
 		    }
         }
         return books;

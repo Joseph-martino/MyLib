@@ -43,8 +43,9 @@ public class BookRepository implements IBookRepository{
 		String queryString = "SELECT b FROM Book b";
 		List<Book> books = this.entityManager.createQuery(queryString,Book.class).setFirstResult(10).getResultList();
 		return books;
-		
 	}
+	
+	//methode qui retourne une liste de livres par autheur, editeur, collection
 	
 	
 	
