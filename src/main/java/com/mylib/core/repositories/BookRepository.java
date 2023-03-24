@@ -5,13 +5,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.mylib.core.entities.Author;
 import com.mylib.core.entities.Book;
-
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 
 @Repository
 public class BookRepository implements IBookRepository{
@@ -26,10 +23,9 @@ public class BookRepository implements IBookRepository{
 	
 	@Transactional
 	public Book getFindByTitle(String title) {
-		 Query query = this.entityManager.createQuery("SELECT * FROM Book b WHERE title=?:title")
-		.setParameter("title", title);
-		
-		return (Book) query.getSingleResult();
+		TypedQuery<Book> typedQuery = this.entityManager.createQuery("FROM Book b WHERE b.title=:title", Book.class);
+		typedQuery.setParameter("title", title);
+		return typedQuery.getSingleResult();
 	}
 	
 	@Transactional
@@ -40,7 +36,7 @@ public class BookRepository implements IBookRepository{
 	
 	@Transactional
 	public List<Book> getBooksList() {
-		String queryString = "SELECT b FROM Book b";
+		String queryString = "FROM Book b";
 		List<Book> books = this.entityManager.createQuery(queryString,Book.class).setFirstResult(10).getResultList();
 		return books;
 	}
