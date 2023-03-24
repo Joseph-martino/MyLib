@@ -7,10 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +20,6 @@ import com.mylib.core.entities.Book;
 import com.mylib.core.entities.Author;
 import com.mylib.core.entities.Illustrator;
 import com.mylib.core.repositories.AuthorRepository;
-import com.mylib.core.repositories.BookRepository;
 import com.mylib.core.repositories.EditorRepository;
 import com.mylib.core.repositories.IBookRepository;
 import com.mylib.core.repositories.IllustratorRepository;

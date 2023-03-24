@@ -22,7 +22,7 @@ public class BookRepository implements IBookRepository{
 	}
 	
 	@Transactional
-	public Book getFindByTitle(String title) {
+	public Book getByTitle(String title) {
 		TypedQuery<Book> typedQuery = this.entityManager.createQuery("FROM Book b WHERE b.title=:title", Book.class);
 		typedQuery.setParameter("title", title);
 		return typedQuery.getSingleResult();
