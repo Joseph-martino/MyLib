@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -16,18 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.mylib.core.entities.Book;
-import com.mylib.core.entities.Author;
-import com.mylib.core.entities.Illustrator;
-import com.mylib.core.repositories.AuthorRepository;
-import com.mylib.core.repositories.EditorRepository;
-import com.mylib.core.repositories.IBookRepository;
-import com.mylib.core.repositories.IllustratorRepository;
-import com.mylib.core.repositories.CollectionRepository;
-import com.mylib.core.entities.Editor;
-import com.mylib.core.entities.Collection;
 
 @Component
 public class CsvParser {
