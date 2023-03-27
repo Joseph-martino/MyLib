@@ -12,7 +12,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
 
-public interface EditorRepository extends CrudRepository<Editor, Long>{	
+public interface EditorRepository extends CrudRepository<Editor, Long>, CustomizedEditorRepository{	
 	
 	Editor getByName(String name);
 }

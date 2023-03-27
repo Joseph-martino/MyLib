@@ -1,11 +1,14 @@
 package com.mylib.core.repositories;
 
 
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import com.mylib.core.entities.Book;
+import com.mylib.core.enums.Status;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
@@ -43,6 +46,42 @@ public class BookRepository implements IBookRepository{
 	}
 	
 	@Transactional
+	public List<Book> getBooksListFromView(String authorName, String illustratorName, String editorName, String collectionName) {
+		String queryString = "FROM Book b WHERE 1=1";
+		Map<String, String> queryKeysValues = new HashMap<>();
+		if(authorName != null) {
+			queryString = queryString + " AND b.author.fullName = :authorName";
+			queryKeysValues.put("authorName", authorName);
+		}
+		
+		if(illustratorName != null) {
+			queryString = queryString + " AND b.illustrator.fullName = :illustratorName";
+			queryKeysValues.put("illustratorName", illustratorName);
+		}
+		
+		if(editorName != null) {
+			queryString = queryString + " AND b.editor.name = :editorName";
+			queryKeysValues.put("editorName", editorName);
+		}
+		
+		if(collectionName != null) {
+			queryString = queryString + " AND b.collection.name = :collectionName";	
+			queryKeysValues.put("collectionName", collectionName);
+		}
+		
+		TypedQuery<Book> typedQuery = this.entityManager.createQuery(queryString,Book.class);
+		for(Map.Entry<String, String> setKeyValue: queryKeysValues.entrySet()) {
+			typedQuery.setParameter(setKeyValue.getKey(), setKeyValue.getValue());
+		}
+//		typedQuery.setParameter("authorName", authorName);
+//		typedQuery.setParameter("illustratorName", illustratorName);
+//		typedQuery.setParameter("editorName", editorName);
+//		typedQuery.setParameter("collectionName", collectionName);
+		List<Book> books = typedQuery.getResultList();
+		return books;
+	}
+	
+	@Transactional
 	public List<Book> getBooksByAuthor(String authorName){
 		String queryString = """
 				SELECT b FROM Book b 
@@ -71,6 +110,69 @@ public class BookRepository implements IBookRepository{
 		this.entityManager.merge(book);
 	}
 	
+	/**
+	 * Met à jour le status IN_PROGRESS en OK
+	 */
+	@Transactional
+	public void changeBookStatusToOk() {
+		Query query = this.entityManager.createQuery("UPDATE Book b SET status = :status WHERE status=:inProgress");
+		query.setParameter("status", Status.OK.toString());
+		query.setParameter("inProgress", Status.IN_PROGRESS.toString());
+		query.executeUpdate();	
+	}
+	
+	/**
+	 * Met à jour le status TO_DELETE en OK
+	 */
+	@Transactional
+	public void changeBookWithStatusToDeleteToOk() {
+		Query query = this.entityManager.createQuery("UPDATE Book b SET status = :status WHERE status=:toDelete");
+		query.setParameter("status", Status.OK.toString());
+		query.setParameter("toDelete", Status.TO_DELETE.toString());
+		query.executeUpdate();	
+	}
+	
+	/**
+	 * Met à jour le status OK en TO_DELETE
+	 */
+	@Transactional
+	public void changeBookStatusToToDelete() {
+		Query query = this.entityManager.createQuery("UPDATE Book b SET status = :status WHERE status =:ok");
+		query.setParameter("status", Status.TO_DELETE.toString());
+		query.setParameter("ok", Status.OK.toString());
+		query.executeUpdate();	
+	}
+	
+	/**
+	 * Supprime les données avec le status TO_DELETE
+	 */
+	@Transactional
+	public void deleteBookWithStatusToDelete() {
+		Query query = this.entityManager.createQuery("DELETE FROM Book b WHERE status =:status");
+		query.setParameter("status", Status.TO_DELETE.toString());
+		query.executeUpdate();	
+	}
+	
+	/**
+	 * Supprime les données avec le status IN PROGRESS
+	 */
+	@Transactional
+	public void deleteBookWithStatusInProgress() {
+		Query query = this.entityManager.createQuery("DELETE FROM Book b WHERE status =:status");
+		query.setParameter("status", Status.IN_PROGRESS.toString());
+		query.executeUpdate();	
+	}
+	
+	/**
+	 * Supprime les données avec le status OK
+	 */
+	@Transactional
+	public void deleteBookWithStatusOk() {
+		Query query = this.entityManager.createQuery("DELETE FROM Book b WHERE status =:status");
+		query.setParameter("status", Status.OK.toString());
+		query.executeUpdate();	
+	}
+	
 	@Transactional
 	public void deleteBook(long id) {
 		Book book = getById(id);
@@ -79,7 +181,6 @@ public class BookRepository implements IBookRepository{
 	
 	@Transactional
 	public void deleteAllFromDatabase() {
-		System.out.println("La méthode deleteAllFromDatabase a été appelée");
 		String queryStringBook = "DELETE FROM Book b";
 		String queryStringAuthor = "DELETE FROM Author a";
 		String queryStringIllustrator = "DELETE FROM Illustrator i";
@@ -96,11 +197,4 @@ public class BookRepository implements IBookRepository{
 		Query queryCollection  = this.entityManager.createQuery(queryStringCollection);
 		queryCollection.executeUpdate();
 	}
-	
-	//methode qui retourne une liste de livres par autheur, editeur, collection
-	
-	
-	
-	
-
 }

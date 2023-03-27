@@ -2,9 +2,6 @@ package com.mylib.core.entities;
 
 import java.util.List;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,6 +21,8 @@ public class Editor {
 	private String name;
 	@OneToMany(mappedBy="editor")
 	private List<Book> books; 
+	@Column(name="STATUS")
+	private String status;
 	
 	
 	public List<Book> getBooks() {
@@ -32,8 +31,6 @@ public class Editor {
 	public void setBooks(List<Book> books) {
 		this.books = books;
 	}
-	
-	
 	public long getId() {
 		return id;
 	}
@@ -46,7 +43,10 @@ public class Editor {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
-
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 }

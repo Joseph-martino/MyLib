@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,18 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.mylib.core.entities.Book;
-import com.mylib.core.entities.Author;
-import com.mylib.core.entities.Illustrator;
-import com.mylib.core.repositories.AuthorRepository;
-import com.mylib.core.repositories.EditorRepository;
-import com.mylib.core.repositories.IBookRepository;
-import com.mylib.core.repositories.IllustratorRepository;
-import com.mylib.core.repositories.CollectionRepository;
-import com.mylib.core.entities.Editor;
-import com.mylib.core.entities.Collection;
 
 @Component
 public class CsvParser {
@@ -39,7 +25,14 @@ public class CsvParser {
 	
 	@Autowired
 	BookService bookService;
-
+	@Autowired
+	AuthorService authorService;
+	@Autowired
+	IllustratorService illustratorService;
+	@Autowired
+	EditorService editorService;
+	@Autowired
+	CollectionService collectionService;
 	
 	public File getFileFromFolder(File folder) {
 		File file = null;
@@ -67,16 +60,16 @@ public class CsvParser {
         if(sourceFile == null ) {
         	LOGGER.info("Echec de la lecture du fichier");
         } else {
-        	//récupérer tout ce qu'il y a dans la base de données
-        	List<Book> books = this.bookService.getAll();
-        	
-        	// supprimer tout ce qu'il y a dans la base de données
-        	this.bookService.deleteAllFromDatabase();
+
+        	changeDataStatusToToDelete();
 	 
 		    try(BufferedReader br = new BufferedReader(new FileReader(sourceFile))) {
 		        for(String line; (line = br.readLine()) != null; ) {
 		        	this.bookService.lineParser(line);      
 		        }
+
+		        changeDataStatusToOk();
+		        deleteDataWithStatusToDelete();
 		        
 		        File processedFolder = new File(folder, "processed");
 		        String fileNameWithoutExtension = getFileNameWithoutExtension(sourceFile.getName());
@@ -84,16 +77,15 @@ public class CsvParser {
 		        moveFileToFolder(processedFolder, sourceFile, destinationFile);
 		    } catch (IOException e) {
 		    	LOGGER.error("Echec de la création du livre", e);
+		    	
+		    	deleteDataWithStatusInProgress();
+		    	deleteDataWithStatusOk();
+		    	changeDataStatusFromToDeleteToOk();
+		    	
 		    	File failedFolder = new File(folder, "failed");
 		    	String fileNameWithoutExtension = getFileNameWithoutExtension(sourceFile.getName());
 		    	File destinationFile = new File(failedFolder.getPath() + "/" + fileNameWithoutExtension + LocalDate.now() + ".csv");
 		    	moveFileToFolder(failedFolder, sourceFile, destinationFile);
-	        	// supprimer tout ce qu'il y a dans la base de données
-	        	this.bookService.deleteAllFromDatabase();
-        		//ajouter anciennes données de la liste books
-        		for(Book book : books) {
-        			this.bookService.createBook(book);
-        		}	
 		    }
         }
 	}
@@ -121,5 +113,53 @@ public class CsvParser {
 		int position = fileName.lastIndexOf('.');
 		String fileNameWithoutExtension = (position == -1) ? fileName : fileName.substring(0, position);
 		return fileNameWithoutExtension;
+	}
+	
+	public void changeDataStatusToToDelete() {
+		this.authorService.changeAuthorStatusToToDelete();
+    	this.illustratorService.changeIllustratorStatusToToDelete();
+    	this.editorService.changeEditorStatusToToDelete();
+    	this.collectionService.changeCollectionStatusToToDelete();
+    	this.bookService.changeBookStatusToToDelete();
+	}
+	
+	public void changeDataStatusToOk() {
+		this.bookService.changeBookStatutToOk();
+        this.authorService.changeAuthorStatutToOk();
+        this.illustratorService.changeIllustratorStatutToOk();
+        this.editorService.changeEditorStatutToOk();
+        this.collectionService.changeCollectionStatutToOk();
+	}
+	
+	public void deleteDataWithStatusToDelete() {
+		this.bookService.deleteBookWithStatusToDelete();
+        this.authorService.deleteAuthorWithStatusToDelete();
+        this.illustratorService.deleteIllustratorWithStatusToDelete();
+        this.editorService.deleteEditorWithStatusToDelete();
+        this.collectionService.deleteCollectionWithStatusToDelete();
+	}
+	
+	public void deleteDataWithStatusInProgress() {
+		this.bookService.deleteBookWithStatusInProgress();
+    	this.authorService.deleteAuthorWithStatusInProgress();
+    	this.illustratorService.deleteIllustratorWithStatusInProgress();
+    	this.editorService.deleteEditorWithStatusInProgress();
+    	this.collectionService.deleteCollectionWithStatusInProgress();
+	}
+	
+	public void deleteDataWithStatusOk() {
+		this.bookService.deleteBookWithStatusOk();
+    	this.authorService.deleteAuthorWithStatusOk();
+    	this.illustratorService.deleteIllustratorWithStatusOk();
+    	this.editorService.deleteEditorWithStatusOk();
+    	this.collectionService.deleteCollectionWithStatusOk();
+	}
+	
+	public void changeDataStatusFromToDeleteToOk() {
+		this.bookService.changeBookWithStatusToDeleteToOk();
+    	this.authorService.changeAuthorWithStatusToDeleteToOk();
+    	this.illustratorService.changeIllustratorWithStatusToDeleteToOk();
+    	this.editorService.changeEditorWithStatusToDeleteToOk();
+    	this.collectionService.changeCollectionWithStatusToDeleteToOk();
 	}
 }

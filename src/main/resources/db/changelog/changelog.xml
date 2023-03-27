@@ -74,6 +74,24 @@
     </createTable>
     </changeSet>
     
+    <changeSet id="add-status-column-to-book-table" author="Joseph"> 
+		<addColumn tableName="BOOK" >
+			<column name="status"  type="varchar(255)"/>  
+		</addColumn>  
+		<addColumn tableName="AUTHOR" >
+			<column name="status"  type="varchar(255)"/>  
+		</addColumn> 
+		<addColumn tableName="ILLUSTRATOR" >
+			<column name="status"  type="varchar(255)"/>  
+		</addColumn> 
+		<addColumn tableName="EDITOR" >
+			<column name="status"  type="varchar(255)"/>  
+		</addColumn> 
+		<addColumn tableName="COLLECTION" >
+			<column name="status"  type="varchar(255)"/>  
+		</addColumn> 
+	</changeSet>
+    
     <!--changeSet id="add-foreign-keys-of-author-illustrator-editor-collection-tables" author="Joseph">
     	<addForeignKeyConstraint baseTableName="book" baseColumnNames="author_id" constraintName="fk_book_author" referencedTableName="AUTHOR" referencedColumnNames="id" />
     	<addForeignKeyConstraint baseTableName="book" baseColumnNames="illustrator_id" constraintName="fk_book_illustraror" referencedTableName="ILLUSTRATOR" referencedColumnNames="id" />
