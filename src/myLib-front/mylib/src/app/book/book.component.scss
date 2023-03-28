@@ -4,7 +4,7 @@ h3 {
 
 .card {
     box-sizing: border-box;
-    width: 25%;
+    width: 100%;
     padding: 20px 30px;
     box-shadow: lightgray 4px 4px 20px;
     display: flex;
@@ -26,4 +26,7 @@ h3 {
 .more-info-button {
     background-color: #F97068;
     padding: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    color: white;
 }

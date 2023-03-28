@@ -32,6 +32,7 @@
                  <constraints primaryKey="true"/>
            </column>
            <column name="NAME" type="varchar(255)"/>
+           
     </createTable>
     </changeSet>
     
@@ -50,10 +51,33 @@
                  <constraints primaryKey="true"/>
            </column>
            <column name="TITLE" type="varchar(255)"/>
-           <column name="AUTHOR_ID" type="bigint"></column>
-           <column name="ILLUSTRATOR_ID" type="bigint"></column>
-           <column name="EDITOR_ID" type="bigint"></column>
-           <column name="COLLECTION_ID" type="bigint"></column>
+           <column name="AUTHOR_ID" type="bigint">
+           		<constraints nullable="true" 
+                foreignKeyName="fk_author_book" 
+                references="AUTHOR(id)"/>
+           </column>
+           <column name="ILLUSTRATOR_ID" type="bigint">
+           		<constraints nullable="true" 
+                foreignKeyName="fk_illustrator_book" 
+                references="ILLUSTRATOR(id)"/>
+           </column>
+           <column name="EDITOR_ID" type="bigint">
+           	<constraints nullable="true" 
+                foreignKeyName="fk_editor_book" 
+                references="EDITOR(id)"/>
+           </column>
+           <column name="COLLECTION_ID" type="bigint">
+           	<constraints nullable="true" 
+                foreignKeyName="fk_collection_book" 
+                references="COLLECTION(id)"/>
+           </column>
     </createTable>
     </changeSet>
+    
+    <!--changeSet id="add-foreign-keys-of-author-illustrator-editor-collection-tables" author="Joseph">
+    	<addForeignKeyConstraint baseTableName="book" baseColumnNames="author_id" constraintName="fk_book_author" referencedTableName="AUTHOR" referencedColumnNames="id" />
+    	<addForeignKeyConstraint baseTableName="book" baseColumnNames="illustrator_id" constraintName="fk_book_illustraror" referencedTableName="ILLUSTRATOR" referencedColumnNames="id" />
+    	<addForeignKeyConstraint baseTableName="book" baseColumnNames="editor_id" constraintName="fk_book_editor" referencedTableName="EDITOR" referencedColumnNames="id" />
+    	<addForeignKeyConstraint baseTableName="book" baseColumnNames="collection_id" constraintName="fk_book_collection" referencedTableName="COLLECTION" referencedColumnNames="id" />
+    </changeSet-->
 </databaseChangeLog>

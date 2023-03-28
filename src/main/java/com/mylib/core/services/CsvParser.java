@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mylib.core.entities.Book;
 import com.mylib.core.entities.Author;
@@ -31,21 +33,12 @@ import com.mylib.core.entities.Collection;
 public class CsvParser {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(CsvParser.class);
-	
-	@Autowired
-	private AuthorRepository authorRepository;
-	@Autowired
-	private IllustratorRepository illustratorRepository;
-	@Autowired
-	private EditorRepository editorRepository;
-	@Autowired
-	private CollectionRepository collectionRepository;
-	@Autowired
-	private IBookRepository bookRepository;
-	
-	
+		
 	@Value("${csv.file.location}")
 	private File folder;
+	
+	@Autowired
+	BookService bookService;
 
 	
 	public File getFileFromFolder(File folder) {
@@ -70,82 +63,37 @@ public class CsvParser {
 	public void getBooksList() {
 		
 		File sourceFile = getFileFromFolder(folder);
-	    List<Book> books=new ArrayList<>();
-        String title;
         
         if(sourceFile == null ) {
         	LOGGER.info("Echec de la lecture du fichier");
         } else {
+        	//récupérer tout ce qu'il y a dans la base de données
+        	List<Book> books = this.bookService.getAll();
+        	
+        	// supprimer tout ce qu'il y a dans la base de données
+        	this.bookService.deleteAllFromDatabase();
 	 
 		    try(BufferedReader br = new BufferedReader(new FileReader(sourceFile))) {
 		        for(String line; (line = br.readLine()) != null; ) {
-		            
-		        	Book book = new Book();
-		            final String[] bookInformationsRow = line.split(";", -1);
-		            
-		            if(!"".equals(bookInformationsRow[0])) {
-	            		book.setTitle(bookInformationsRow[0]);
-	            	} else {
-	            		book.setTitle("Nom inconnu");
-	            	}
-	            		
-	            	
-	            	String authorFullName = !"".equals(bookInformationsRow[1]) ? bookInformationsRow[1] : "Nom inconnu";
-	        
-        			Author author = this.authorRepository.getByFullName(authorFullName);
-        			 if(author == null) {
-        				author = new Author();
-        				author.setFullName(authorFullName);
-        				this.authorRepository.save(author);
-        			}
-        			book.setAuthor(author);	 
-	            		
-	            
-            		String illustratorName = !"".equals(bookInformationsRow[2]) ? bookInformationsRow[2] : "Nom inconnu";
-            		Illustrator illustrator = this.illustratorRepository.getByFullName(illustratorName);
-            		
-            		if(illustrator == null) {
-            			illustrator = new Illustrator();
-            			illustrator.setFullName(illustratorName);
-            			this.illustratorRepository.save(illustrator);
-            		} 
-            		book.setIllustrator(illustrator);	
-            		
-        			String editorName = !"".equals(bookInformationsRow[3]) ? bookInformationsRow[3] : "Nom inconnu";
-        			Editor editor = this.editorRepository.getByName(editorName);
-        			if(editor == null) {
-        				editor = new Editor();
-        				editor.setName(editorName);
-        				this.editorRepository.save(editor);
-        			} 
-        			book.setEditor(editor);
-        		
-        			String collectionName = !"".equals(bookInformationsRow[4]) ? bookInformationsRow[4] : "Nom inconnu";
-        			Collection collection = this.collectionRepository.getByName(collectionName);
-        			if(collection == null) {
-        				collection = new Collection();
-        				collection.setName(collectionName);
-        				this.collectionRepository.save(collection);
-        			} 
-        			book.setCollection(collection);	
-	        		
-	        		this.bookRepository.createBook(book);
-	        		
-		            books.add(book);
-		          
-		            LOGGER.info("Livre crée avec succès. Titre: {} auteur: {}", book.getTitle(), book.getAuthor().getFullName());
-		            LOGGER.info("Illustrator: {} , Editeur: {}", book.getIllustrator().getFullName(), book.getEditor().getName());
-		            LOGGER.info("Collection: {}", book.getCollection().getName());
+		        	this.bookService.lineParser(line);      
 		        }
+		        
 		        File processedFolder = new File(folder, "processed");
-		        File destinationFile = new File(processedFolder.getPath() +"/" + sourceFile.getName());
+		        String fileNameWithoutExtension = getFileNameWithoutExtension(sourceFile.getName());
+		        File destinationFile = new File(processedFolder.getPath() +"/" + fileNameWithoutExtension+ LocalDate.now() + ".csv");
 		        moveFileToFolder(processedFolder, sourceFile, destinationFile);
 		    } catch (IOException e) {
 		    	LOGGER.error("Echec de la création du livre", e);
 		    	File failedFolder = new File(folder, "failed");
-		    	File destinationFile = new File(failedFolder.getPath() + "/" + sourceFile.getName());
-		    	
+		    	String fileNameWithoutExtension = getFileNameWithoutExtension(sourceFile.getName());
+		    	File destinationFile = new File(failedFolder.getPath() + "/" + fileNameWithoutExtension + LocalDate.now() + ".csv");
 		    	moveFileToFolder(failedFolder, sourceFile, destinationFile);
+	        	// supprimer tout ce qu'il y a dans la base de données
+	        	this.bookService.deleteAllFromDatabase();
+        		//ajouter anciennes données de la liste books
+        		for(Book book : books) {
+        			this.bookService.createBook(book);
+        		}	
 		    }
         }
 	}
@@ -167,5 +115,11 @@ public class CsvParser {
 			e.printStackTrace();
 			LOGGER.info("Fichier " + sourceFile.getName() + "déplacé dans le dossier " + destinationFile.getName());
 		}
+	}
+	
+	public String getFileNameWithoutExtension(String fileName) {
+		int position = fileName.lastIndexOf('.');
+		String fileNameWithoutExtension = (position == -1) ? fileName : fileName.substring(0, position);
+		return fileNameWithoutExtension;
 	}
 }

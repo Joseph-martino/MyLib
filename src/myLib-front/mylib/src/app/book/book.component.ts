@@ -15,8 +15,6 @@ export class BookComponent {
   }
 
   onViewBook(){
-
-    this.router.navigateByUrl(`${this.book.id}`)
-
+    this.router.navigateByUrl(`books/${this.book.id}`);
   }
 }

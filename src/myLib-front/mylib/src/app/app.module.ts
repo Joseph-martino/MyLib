@@ -7,18 +7,37 @@ import { BookListComponent } from './book-list/book-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BookComponent } from './book/book.component';
 import { SingleBookComponent } from './single-book/single-book.component';
+import { HeaderComponent } from './header/header.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NewBookComponent } from './new-book/new-book.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SearchBarsComponent } from './search-bars/search-bars.component';
+import { SingleSearchBarComponent } from './single-search-bar/single-search-bar.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     BookListComponent,
     BookComponent,
-    SingleBookComponent
+    SingleBookComponent,
+    HeaderComponent,
+    LandingPageComponent,
+    NewBookComponent,
+    SearchBarsComponent,
+    SingleSearchBarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatProgressSpinnerModule,
+  ],
+  exports: [
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
