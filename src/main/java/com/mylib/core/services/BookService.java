@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.mylib.core.dto.AuthorDto;
 import com.mylib.core.dto.BookDto;
 import com.mylib.core.dto.CollectionDto;
@@ -44,8 +43,34 @@ public class BookService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(BookService.class);
 	
 	public BookDto getById(long id) {
+		BookDto bookDto = new BookDto();
+		AuthorDto authorDto = new AuthorDto();
+		IllustratorDto illustratorDto = new IllustratorDto();
+		EditorDto editorDto = new EditorDto();
+		CollectionDto collectionDto = new CollectionDto();
+		
+		
 		Book book = this.bookRepository.getById(id);
-		BookDto bookDto = createBookDto(book);
+		
+		authorDto.setId(book.getAuthor().getId());
+		authorDto.setFullName(book.getAuthor().getFullName());
+		
+		illustratorDto.setId(book.getIllustrator().getId());
+		illustratorDto.setFullName(book.getIllustrator().getFullName());
+		
+		editorDto.setId(book.getEditor().getId());
+		editorDto.setName(book.getEditor().getName());
+		
+		collectionDto.setId(book.getCollection().getId());
+		collectionDto.setName(book.getCollection().getName());
+		
+		bookDto.setId(book.getId());
+		bookDto.setTitle(book.getTitle());
+		bookDto.setAuthor(authorDto);
+		bookDto.setIllustrator(illustratorDto);
+		bookDto.setEditor(editorDto);
+		bookDto.setCollection(collectionDto);
+		
 		return bookDto;
 	}
 	
@@ -58,7 +83,6 @@ public class BookService {
 		}
 		return booksDto;
 	}
-	
 	
 	public List<Book> getAll(){
 		List<Book> books = this.bookRepository.getAll();
@@ -132,36 +156,6 @@ public class BookService {
 		this.bookRepository.deleteAllFromDatabase();
 	}
 	
-	public BookDto createBookDto(Book book) {
-		
-		
-		AuthorDto authorDto = new AuthorDto();
-		authorDto.setId(book.getAuthor().getId());
-		authorDto.setFullName(book.getAuthor().getFullName());
-		
-		IllustratorDto illustratorDto = new IllustratorDto();
-		illustratorDto.setId(book.getIllustrator().getId());
-		illustratorDto.setFullName(book.getIllustrator().getFullName());
-		
-		EditorDto editorDto = new EditorDto();
-		editorDto.setId(book.getEditor().getId());
-		editorDto.setName(book.getEditor().getName());
-		
-		CollectionDto collectionDto = new CollectionDto();
-		collectionDto.setId(book.getCollection().getId());
-		collectionDto.setName(book.getCollection().getName());
-		
-		BookDto bookDto = new BookDto();
-		bookDto.setId(book.getId());
-		bookDto.setTitle(book.getTitle());
-		bookDto.setAuthor(authorDto);
-		bookDto.setIllustrator(illustratorDto);
-		bookDto.setEditor(editorDto);
-		bookDto.setCollection(collectionDto);
-		
-		return bookDto;
-	}
-	
 	@Transactional
 	public void lineParser(String line) {
 		Book book = new Book();
@@ -218,6 +212,9 @@ public class BookService {
 		LOGGER.info("Livre crée avec succès. Titre: {} auteur: {}", book.getTitle(), book.getAuthor().getFullName());
         LOGGER.info("Illustrator: {} , Editeur: {}", book.getIllustrator().getFullName(), book.getEditor().getName());
         LOGGER.info("Collection: {}", book.getCollection().getName());
+		
+		this.bookRepository.createBook(book);
+		return bookDto;
 	}
 	
 	
