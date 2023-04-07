@@ -1,0 +1,40 @@
+<ng-container *ngIf="isModified == false">
+    <div class="book-card" *ngIf="book$ | async as book">
+        <h2>{{ book.title | uppercase}}</h2>
+        <h3>{{ book.author.fullName }}</h3>
+        <h3>{{ book.illustrator.fullName }}</h3>
+        <h3>{{ book.editor.name }}</h3>
+        <h3>{{ book.collection.name }}</h3>
+        <button (click)="onUpdateBook()">Modifier</button>
+        <button (click)="onDeleteBook()">Supprimer</button>
+    </div>
+</ng-container>
+
+<div class="update-book-form" *ngIf="isModified">
+    <form [formGroup]="updateForm" (ngSubmit)="onSubmitForm()">
+        <div class="form-group">
+            <label for="title">Titre</label>
+            <input id="title" type="text" formControlName="title"/>
+        </div>
+        <div class="form-group">
+            <label for="author-name">Autheur</label>
+            <input id="author-name" type="text" formControlName="authorName"/>
+        </div>
+        <div class="form-group">
+            <label for="illustrator-name">Illustrateur</label>
+            <input id="illustrator-name" type="text" formControlName="illustratorName"/>
+        </div>
+        <div class="form-group">
+            <label for="editor-name">Editeur</label>
+            <input id="editor-name" type="text" formControlName="editorName"/>
+        </div>
+
+        <div class="form-group">
+            <label for="collection-name">Collection</label>
+            <input id="collection-name" type="text" formControlName="collectionName"/>
+        </div>
+        <div class="action-buttons">
+            <button type="submit">Valider</button>
+        </div>
+    </form>
+</div>

@@ -1,5 +1,6 @@
 package com.mylib.core.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -19,16 +20,16 @@ public class Book {
 	private long id;
 	@Column(name="TITLE")
 	private String title;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@JoinColumn(name= "AUTHOR_ID")
 	private Author author;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@JoinColumn(name= "ILLUSTRATOR_ID")
 	private Illustrator illustrator;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@JoinColumn(name= "EDITOR_ID")
 	private Editor editor;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@JoinColumn(name= "COLLECTION_ID")
 	private Collection collection;
 	

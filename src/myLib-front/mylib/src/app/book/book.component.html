@@ -1,0 +1,8 @@
+<div class="card">
+    <h2 class="book-title">{{ book.title | uppercase }}</h2>
+    <h3>{{ book.author.fullName }}</h3>
+    <h3>{{ book.illustrator.fullName }}</h3>
+    <h3>{{ book.editor.name }}</h3>
+    <h3>{{ book.collection.name }}</h3>
+    <button class="more-info-button" (click)="onViewBook()">En savoir plus</button>
+</div>

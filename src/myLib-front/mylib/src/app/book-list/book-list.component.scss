@@ -1,0 +1,16 @@
+.search-bars-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    grid-auto-rows: minmax(100px, auto);
+}
+
+.loader-container {
+    display: flex;
+    justify-content: center;
+}

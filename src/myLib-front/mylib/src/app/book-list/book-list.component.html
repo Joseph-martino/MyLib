@@ -1,0 +1,16 @@
+<div class="search-bars-container">
+    <app-single-search-bar (authorSearched)="getBooksByAuthorName($event)"></app-single-search-bar>
+    <app-single-search-bar (authorSearched)="getBooksByAuthorName($event)"></app-single-search-bar>
+    <app-single-search-bar (authorSearched)="getBooksByAuthorName($event)"></app-single-search-bar>
+    <app-single-search-bar (authorSearched)="getBooksByAuthorName($event)"></app-single-search-bar>
+</div>
+
+<div class="grid">
+    <app-book *ngFor="let bookElement of books$ | async"
+    [book]="bookElement"></app-book>
+</div>
+
+<div class="loader-container">
+    <mat-spinner></mat-spinner>
+</div>
+
