@@ -110,7 +110,7 @@ public class CsvParser {
 	
 	public void copyFile(File sourceFile, File destinationFile) {
 		try {
-			Files.copy(sourceFile.toPath(), destinationFile.toPath(),StandardCopyOption.REPLACE_EXISTING);
+			Files.move(sourceFile.toPath(), destinationFile.toPath(),StandardCopyOption.REPLACE_EXISTING);
 		} catch(IOException e) {
 			e.printStackTrace();
 			LOGGER.info("Fichier " + sourceFile.getName() + "déplacé dans le dossier " + destinationFile.getName());
