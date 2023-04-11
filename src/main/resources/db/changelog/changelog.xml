@@ -74,6 +74,21 @@
     </createTable>
     </changeSet>
     
+    <changeSet id="6" author="Joseph">
+    <createTable tableName="BOOKWITHALLINFORMATIONS">
+    	<column name="book_id" type="bigint"/>
+        <column name="title" type="varchar(255)"/>
+        <column name="AUTHOR_ID" type="bigint"/>
+        <column name="ILLUSTRATOR_ID" type="bigint"/>
+        <column name="EDITOR_ID" type="bigint"/>
+        <column name="COLLECTION_ID" type="bigint"/>
+        <column name="authorfullname" type="varchar(255)"/>
+        <column name="illustratorfullname" type="varchar(255)"/>
+        <column name="editorfullname" type="varchar(255)"/>
+        <column name="collectionfullname" type="varchar(255)"/>   
+    </createTable>
+    </changeSet>
+    
     <!--changeSet id="add-foreign-keys-of-author-illustrator-editor-collection-tables" author="Joseph">
     	<addForeignKeyConstraint baseTableName="book" baseColumnNames="author_id" constraintName="fk_book_author" referencedTableName="AUTHOR" referencedColumnNames="id" />
     	<addForeignKeyConstraint baseTableName="book" baseColumnNames="illustrator_id" constraintName="fk_book_illustraror" referencedTableName="ILLUSTRATOR" referencedColumnNames="id" />

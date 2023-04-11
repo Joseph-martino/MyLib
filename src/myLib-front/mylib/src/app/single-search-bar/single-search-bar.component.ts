@@ -6,9 +6,9 @@ import { Component, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./single-search-bar.component.scss']
 })
 export class SingleSearchBarComponent{
-  @Output() authorSearched = new EventEmitter<string>();
+  @Output() infoSearched = new EventEmitter<string>();
 
   onEnter(value: string) { 
-    this.authorSearched.emit(value);
+    this.infoSearched.emit(value);
   }
 }

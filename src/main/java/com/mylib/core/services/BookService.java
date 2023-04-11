@@ -2,7 +2,6 @@ package com.mylib.core.services;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +23,6 @@ import com.mylib.core.repositories.EditorRepository;
 import com.mylib.core.repositories.IBookRepository;
 import com.mylib.core.repositories.IllustratorRepository;
 
-
-
 @Service
 public class BookService {
 	
@@ -43,39 +40,23 @@ public class BookService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(BookService.class);
 	
 	public BookDto getById(long id) {
-		BookDto bookDto = new BookDto();
-		AuthorDto authorDto = new AuthorDto();
-		IllustratorDto illustratorDto = new IllustratorDto();
-		EditorDto editorDto = new EditorDto();
-		CollectionDto collectionDto = new CollectionDto();
-		
-		
 		Book book = this.bookRepository.getById(id);
-		
-		authorDto.setId(book.getAuthor().getId());
-		authorDto.setFullName(book.getAuthor().getFullName());
-		
-		illustratorDto.setId(book.getIllustrator().getId());
-		illustratorDto.setFullName(book.getIllustrator().getFullName());
-		
-		editorDto.setId(book.getEditor().getId());
-		editorDto.setName(book.getEditor().getName());
-		
-		collectionDto.setId(book.getCollection().getId());
-		collectionDto.setName(book.getCollection().getName());
-		
-		bookDto.setId(book.getId());
-		bookDto.setTitle(book.getTitle());
-		bookDto.setAuthor(authorDto);
-		bookDto.setIllustrator(illustratorDto);
-		bookDto.setEditor(editorDto);
-		bookDto.setCollection(collectionDto);
-		
+		BookDto bookDto = createBookDto(book);
 		return bookDto;
 	}
 	
 	public List<BookDto> getBooksList(){
 		List<Book> books = this.bookRepository.getBooksList();
+		List<BookDto> booksDto = new ArrayList<>();
+		for(Book book: books) {
+			BookDto bookDto = createBookDto(book);
+			booksDto.add(bookDto);
+		}
+		return booksDto;
+	}
+	
+	public List<BookDto> getBooksListTest(String authorName, String illustratorName, String editorName, String collectionName){
+		List<Book> books = this.bookRepository.getBooksListFromView(authorName, illustratorName, editorName, collectionName);
 		List<BookDto> booksDto = new ArrayList<>();
 		for(Book book: books) {
 			BookDto bookDto = createBookDto(book);
@@ -155,6 +136,36 @@ public class BookService {
 	public void deleteAllFromDatabase() {
 		this.bookRepository.deleteAllFromDatabase();
 	}
+
+	public BookDto createBookDto(Book book) {
+		
+		
+		AuthorDto authorDto = new AuthorDto();
+		authorDto.setId(book.getAuthor().getId());
+		authorDto.setFullName(book.getAuthor().getFullName());
+		
+		IllustratorDto illustratorDto = new IllustratorDto();
+		illustratorDto.setId(book.getIllustrator().getId());
+		illustratorDto.setFullName(book.getIllustrator().getFullName());
+		
+		EditorDto editorDto = new EditorDto();
+		editorDto.setId(book.getEditor().getId());
+		editorDto.setName(book.getEditor().getName());
+		
+		CollectionDto collectionDto = new CollectionDto();
+		collectionDto.setId(book.getCollection().getId());
+		collectionDto.setName(book.getCollection().getName());
+		
+		BookDto bookDto = new BookDto();
+		bookDto.setId(book.getId());
+		bookDto.setTitle(book.getTitle());
+		bookDto.setAuthor(authorDto);
+		bookDto.setIllustrator(illustratorDto);
+		bookDto.setEditor(editorDto);
+		bookDto.setCollection(collectionDto);
+		
+		return bookDto;
+	}
 	
 	@Transactional
 	public void lineParser(String line) {
@@ -212,11 +223,5 @@ public class BookService {
 		LOGGER.info("Livre crée avec succès. Titre: {} auteur: {}", book.getTitle(), book.getAuthor().getFullName());
         LOGGER.info("Illustrator: {} , Editeur: {}", book.getIllustrator().getFullName(), book.getEditor().getName());
         LOGGER.info("Collection: {}", book.getCollection().getName());
-		
-		this.bookRepository.createBook(book);
-		return bookDto;
 	}
-	
-	
-
 }
