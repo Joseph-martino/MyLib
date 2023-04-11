@@ -1,8 +1,31 @@
 <div class="search-bars-container">
-    <app-single-search-bar (authorSearched)="getBooksByAuthorName($event)"></app-single-search-bar>
-    <app-single-search-bar (authorSearched)="getBooksByAuthorName($event)"></app-single-search-bar>
-    <app-single-search-bar (authorSearched)="getBooksByAuthorName($event)"></app-single-search-bar>
-    <app-single-search-bar (authorSearched)="getBooksByAuthorName($event)"></app-single-search-bar>
+    <div class="input-container">
+        <app-single-search-bar (infoSearched)="getAuthorName($event)"></app-single-search-bar>
+        <label class="label" for="fname" id="label-fname">
+            <div class="text">Auteur</div>
+        </label>
+    </div>
+
+    <div class="input-container">
+        <app-single-search-bar (infoSearched)="getIllustratorName($event)"></app-single-search-bar>
+        <label class="label" for="fname" id="label-fname">
+            <div class="text">Illustrateur</div>
+        </label>
+    </div>
+
+    <div class="input-container">
+        <app-single-search-bar (infoSearched)="getEditorName($event)"></app-single-search-bar>
+        <label class="label" for="fname" id="label-fname">
+            <div class="text">Editeur</div>
+        </label>
+    </div>
+
+    <div class="input-container">
+        <app-single-search-bar (infoSearched)="getCollectionName($event)"></app-single-search-bar>
+        <label class="label" for="fname" id="label-fname">
+            <div class="text">Collection</div>
+        </label>
+    </div>
 </div>
 
 <div class="grid">

@@ -1,5 +1,6 @@
 package com.mylib.core.entities;
 
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,6 +33,8 @@ public class Book {
 	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@JoinColumn(name= "COLLECTION_ID")
 	private Collection collection;
+	@Column(name="STATUS")
+	private String status;
 	
 	
 	public long getId() {
@@ -70,8 +73,10 @@ public class Book {
 	public void setCollection(Collection collection) {
 		this.collection = collection;
 	}
-	
-	
-	
-
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 }

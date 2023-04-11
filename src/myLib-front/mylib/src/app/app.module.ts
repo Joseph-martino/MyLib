@@ -13,7 +13,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NewBookComponent } from './new-book/new-book.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { SearchBarsComponent } from './search-bars/search-bars.component';
 import { SingleSearchBarComponent } from './single-search-bar/single-search-bar.component'
 
 @NgModule({
@@ -25,7 +24,6 @@ import { SingleSearchBarComponent } from './single-search-bar/single-search-bar.
     HeaderComponent,
     LandingPageComponent,
     NewBookComponent,
-    SearchBarsComponent,
     SingleSearchBarComponent
   ],
   imports: [

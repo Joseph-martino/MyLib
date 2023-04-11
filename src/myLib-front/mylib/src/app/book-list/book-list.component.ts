@@ -14,18 +14,38 @@ export class BookListComponent implements OnInit {
 
   books$!: Observable<Book[]>;
   authorName!: string;
+  illustratorName!: string;
+  editorName!: string;
+  collectionName!: string;
+  
   constructor(private bookService: BookService){
-
+  
   }
 
   ngOnInit(): void {
     //boolean =true et afficher le gif (on peut utiliser Angular material ???)
-    this.books$ = this.bookService.getAllBooks();
+    //this.books$ = this.bookService.getAllBooks();
+    this.books$ = this.bookService.getBooksList(this.authorName, this.illustratorName, this.editorName, this.collectionName);
     // dans une promise then=> boolean a false et on n'affiche plus le gif de chargement, avec les observables utiliser un pipe ????
   }
 
-  getBooksByAuthorName(authorName: string){
-    this.books$ = this.bookService.getBookByAuthorName(authorName);
+  getAuthorName(authorName: string){
+    this.authorName = authorName;
+    this.books$ = this.bookService.getBooksList(this.authorName, this.illustratorName, this.editorName, this.collectionName);
   }
 
+  getIllustratorName(illustratorName: string){
+    this.illustratorName = illustratorName;
+    this.books$ = this.bookService.getBooksList(this.authorName, this.illustratorName, this.editorName, this.collectionName);
+  }
+
+  getEditorName(editorName: string){
+    this.editorName = editorName;
+    this.books$ = this.bookService.getBooksList(this.authorName, this.illustratorName, this.editorName, this.collectionName);
+  }
+
+  getCollectionName(collectionName: string){
+    this.collectionName = collectionName;
+    this.books$ = this.bookService.getBooksList(this.authorName, this.illustratorName, this.editorName, this.collectionName);
+  }
 }
