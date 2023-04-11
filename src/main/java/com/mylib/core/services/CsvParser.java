@@ -71,10 +71,6 @@ public class CsvParser {
 		        changeDataStatusToOk();
 		        deleteDataWithStatusToDelete();
 		        
-		        File processedFolder = new File(folder, "processed");
-		        String fileNameWithoutExtension = getFileNameWithoutExtension(sourceFile.getName());
-		        File destinationFile = new File(processedFolder.getPath() +"/" + fileNameWithoutExtension+ LocalDate.now() + ".csv");
-		        moveFileToFolder(processedFolder, sourceFile, destinationFile);
 		    } catch (IOException e) {
 		    	LOGGER.error("Echec de la création du livre", e);
 		    	
@@ -86,6 +82,12 @@ public class CsvParser {
 		    	String fileNameWithoutExtension = getFileNameWithoutExtension(sourceFile.getName());
 		    	File destinationFile = new File(failedFolder.getPath() + "/" + fileNameWithoutExtension + LocalDate.now() + ".csv");
 		    	moveFileToFolder(failedFolder, sourceFile, destinationFile);
+		    } finally {
+		    	File processedFolder = new File(folder, "processed");
+		        String fileNameWithoutExtension = getFileNameWithoutExtension(sourceFile.getName());
+		        File destinationFile = new File(processedFolder.getPath() +"/" + fileNameWithoutExtension+ LocalDate.now() + ".csv");
+		    	moveFileToFolder(processedFolder, sourceFile, destinationFile);
+		    	
 		    }
         }
 	}
@@ -102,7 +104,7 @@ public class CsvParser {
 	
 	public void copyFile(File sourceFile, File destinationFile) {
 		try {
-			Files.copy(sourceFile.toPath(), destinationFile.toPath(),StandardCopyOption.REPLACE_EXISTING);
+			Files.move(sourceFile.toPath(), destinationFile.toPath(),StandardCopyOption.REPLACE_EXISTING);
 		} catch(IOException e) {
 			e.printStackTrace();
 			LOGGER.info("Fichier " + sourceFile.getName() + "déplacé dans le dossier " + destinationFile.getName());
