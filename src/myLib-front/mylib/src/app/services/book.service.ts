@@ -57,6 +57,10 @@ export class BookService {
     return this.http.get<Book[]>(`${this.url}/mylib/books/authorBookList`, { params: params });
     }
 
+    getCountData(): Observable<number> {
+        return this.http.get<number>(`${this.url}/mylib/books/total`);
+    }
+
     getAllBooks(): Observable<Book[]>{
         return this.http.get<Book[]>(`${this.url}/mylib/books`);
     }

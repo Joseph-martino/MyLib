@@ -73,9 +73,13 @@ public class BookService {
 		return books;	
 	}
 	
-	public List<Book> getBooksByAuthorName(String authorName){
-		return this.bookRepository.getBooksByAuthor(authorName);
+	public long getCountData() {
+		return this.bookRepository.getCountData();
 	}
+	
+//	public List<Book> getBooksByAuthorName(String authorName){
+//		return this.bookRepository.getBooksByAuthor(authorName);
+//	}
 	
 	public BookDto createBook(BookDto bookDto) {
 		//Vérifier si l'auteur, l'illustrateur.... existent et si oui récupère l'id

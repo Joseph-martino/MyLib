@@ -46,8 +46,12 @@
     ></pagination-controls>
 </div> -->
 
-<div>
-    <button (click)="onPrevious()">Précédent</button>
-    <button (click)="onNext()">Suivant</button>
+<div class="button-wrapper">
+    <div class="button-container">
+        <button (click)="onPrevious()">Précédent</button>
+        <p>{{totalNumberOfData | async }}</p>
+        <p>{{totalPage | async | number: '1.0-0' }}</p>
+        <button (click)="onNext()">Suivant</button>
+    </div>
 </div>
 

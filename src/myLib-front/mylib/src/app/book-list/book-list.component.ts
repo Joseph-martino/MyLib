@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { BookService } from '../services/book.service';
 import { OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 import { Book } from '../models/book.model';
 
 
@@ -19,16 +19,28 @@ export class BookListComponent implements OnInit {
   collectionName!: string;
   pageNumber: number = 1;
   pageSize: number = 9;
+  totalNumberOfData!: Observable<number>;
+  totalPage!: Observable<number>;
 
   constructor(private bookService: BookService){
   
   }
 
   ngOnInit(): void {
+    this.totalNumberOfData = this.bookService.getCountData();
+    
+    this.totalPage = this.totalNumberOfData.pipe(
+      tap(value => console.log(value)),
+      map(numberOfPage => numberOfPage /this.pageSize),
+      tap(myNumber => console.log(myNumber))
+    );
     //boolean =true et afficher le gif (on peut utiliser Angular material ???)
     this.books$ = this.bookService.getBooksList(this.authorName, this.illustratorName, this.editorName, this.collectionName, this.pageNumber, this.pageSize);
     // dans une promise then=> boolean a false et on n'affiche plus le gif de chargement, avec les observables utiliser un pipe ????
   }
+
+  //pagination bar angular
+//https://javascript.plainenglish.io/create-a-simple-pagination-component-in-angular-17b909ea03e1
 
   onPrevious(): void {
     this.pageNumber = this.pageNumber - 1;

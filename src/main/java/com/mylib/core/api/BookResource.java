@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.mylib.core.dto.BookDto;
 import com.mylib.core.services.BookService;
 
@@ -28,16 +27,6 @@ public class BookResource {
 	@GetMapping
 	public List<BookDto> getBooksList(){
 		return this.bookService.getBooksList();
-	}
-	
-	@GetMapping("/test")
-	public ResponseEntity<List<BookDto>> getAllBooks(
-			@RequestParam(defaultValue = "0") Integer pageNumber,
-			@RequestParam(defaultValue = "9") Integer pageSize,
-			@RequestParam(defaultValue = "id") String sortBy){
-		List<BookDto> booksDto = this.bookService.getBooksList();
-		return ResponseEntity.status(HttpStatus.OK).body(booksDto);
-		
 	}
 	
 	@GetMapping("/{id}")
@@ -55,6 +44,11 @@ public class BookResource {
 										@RequestParam( name="pageSize") int pageSize
 										){
 		return this.bookService.getBooksListTest(authorName, illustratorName, editorName, collectionName, pageNumber, pageSize);
+	}
+	
+	@GetMapping("/total")
+	public long getCountData() {
+		return this.bookService.getCountData();
 	}
 	
 	@PostMapping("/create")

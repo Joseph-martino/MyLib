@@ -70,6 +70,8 @@ public class BookRepository implements IBookRepository{
 			queryKeysValues.put("collectionName", collectionName);
 		}
 		
+		queryString = queryString + "ORDER BY b.id ASC";
+		
 		TypedQuery<Book> typedQuery = this.entityManager.createQuery(queryString,Book.class);
 		for(Map.Entry<String, String> setKeyValue: queryKeysValues.entrySet()) {
 			typedQuery.setParameter(setKeyValue.getKey(), setKeyValue.getValue());
@@ -89,16 +91,24 @@ public class BookRepository implements IBookRepository{
 	}
 	
 	@Transactional
-	public List<Book> getBooksByAuthor(String authorName){
-		String queryString = """
-				SELECT b FROM Book b 
-				INNER JOIN FETCH b.author a
-				WHERE a.fullName = :authorName""";
-		TypedQuery<Book> typedQuery = this.entityManager.createQuery(queryString,Book.class);
-		typedQuery.setParameter("authorName", authorName);
-		List<Book> books = typedQuery.getResultList();
-		return books;
+	public long getCountData() {
+		String queryString = "SELECT COUNT(b) FROM Book b";
+		Query query = this.entityManager.createQuery(queryString);
+		long numberOfEntries = (long) query.getSingleResult();
+		return numberOfEntries;
 	}
+	
+//	@Transactional
+//	public List<Book> getBooksByAuthor(String authorName){
+//		String queryString = """
+//				SELECT b FROM Book b 
+//				INNER JOIN FETCH b.author a
+//				WHERE a.fullName = :authorName""";
+//		TypedQuery<Book> typedQuery = this.entityManager.createQuery(queryString,Book.class);
+//		typedQuery.setParameter("authorName", authorName);
+//		List<Book> books = typedQuery.getResultList();
+//		return books;
+//	}
 	
 	@Transactional
 	public List<Book> getAll() {
@@ -111,51 +121,6 @@ public class BookRepository implements IBookRepository{
 		List<Book> books = this.entityManager.createQuery(queryString,Book.class).getResultList();
 		return books;
 	}
-	
-	@Transactional
-	public List<Book> getBookListPagination(String authorName, String illustratorName, String editorName, String collectionName){
-		String queryString = "FROM Book b WHERE 1=1";
-		Map<String, String> queryKeysValues = new HashMap<>();
-		if(authorName != null) {
-			queryString = queryString + " AND b.author.fullName = :authorName";
-			queryKeysValues.put("authorName", authorName);
-		}
-		
-		if(illustratorName != null) {
-			queryString = queryString + " AND b.illustrator.fullName = :illustratorName";
-			queryKeysValues.put("illustratorName", illustratorName);
-		}
-		
-		if(editorName != null) {
-			queryString = queryString + " AND b.editor.name = :editorName";
-			queryKeysValues.put("editorName", editorName);
-		}
-		
-		if(collectionName != null) {
-			queryString = queryString + " AND b.collection.name = :collectionName";	
-			queryKeysValues.put("collectionName", collectionName);
-		}
-		
-		TypedQuery<Book> typedQuery = this.entityManager.createQuery(queryString,Book.class);
-		for(Map.Entry<String, String> setKeyValue: queryKeysValues.entrySet()) {
-			typedQuery.setParameter(setKeyValue.getKey(), setKeyValue.getValue());
-		}
-//		int pageNumber = 1;
-//		int pageSize = 10;
-//		query.setFirstResult((pageNumber-1) * pageSize); 
-//		query.setMaxResults(pageSize);
-		int pageNumber = 0;
-		int pageSize = 12;
-		typedQuery.setFirstResult(pageNumber * pageSize + 1);
-		typedQuery.setMaxResults(pageSize);
-//		typedQuery.setParameter("authorName", authorName);
-//		typedQuery.setParameter("illustratorName", illustratorName);
-//		typedQuery.setParameter("editorName", editorName);
-//		typedQuery.setParameter("collectionName", collectionName);
-		List<Book> books = typedQuery.getResultList();
-		return books;
-	}
-
 	
 	@Transactional
 	public void updateBook(Book book) {
