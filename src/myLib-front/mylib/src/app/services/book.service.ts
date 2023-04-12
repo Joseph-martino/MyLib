@@ -28,7 +28,7 @@ export class BookService {
         return this.http.get<Book>(`${this.url}/mylib/books/${id}`);
     }
 
-    getBooksList(authorName: string, illustratorName: string, editorName: string, collectionName: string): Observable<Book[]>{
+    getBooksList(authorName: string, illustratorName: string, editorName: string, collectionName: string, pageNumber: number, pageSize: number): Observable<Book[]>{
 
     // https://stackoverflow.com/questions/45470575/angular-4-httpclient-query-parameters
     // On initialise l'objet params
@@ -50,6 +50,9 @@ export class BookService {
     if (collectionName) {
         params = params.append('collectionName', collectionName);
     }
+
+    params = params.append('pageNumber', pageNumber);
+    params = params.append('pageSize', pageSize);
     //On ajoute l'objet params à la requêtes http get
     return this.http.get<Book[]>(`${this.url}/mylib/books/authorBookList`, { params: params });
     }

@@ -37,3 +37,17 @@
     <mat-spinner></mat-spinner>
 </div>
 
+<!-- <div>
+    <pagination-controls
+      previousLabel="Précédent"
+      nextLabel="Suivant"
+      [responsive]="true"
+      (pageChange)="getPageChange($event)"
+    ></pagination-controls>
+</div> -->
+
+<div>
+    <button (click)="onPrevious()">Précédent</button>
+    <button (click)="onNext()">Suivant</button>
+</div>
+

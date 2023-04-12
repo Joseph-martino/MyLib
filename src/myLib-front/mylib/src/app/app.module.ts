@@ -13,7 +13,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NewBookComponent } from './new-book/new-book.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { SingleSearchBarComponent } from './single-search-bar/single-search-bar.component'
+import { SingleSearchBarComponent } from './single-search-bar/single-search-bar.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { SingleSearchBarComponent } from './single-search-bar/single-search-bar.
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
+    NgxPaginationModule
   ],
   exports: [
     MatProgressSpinnerModule

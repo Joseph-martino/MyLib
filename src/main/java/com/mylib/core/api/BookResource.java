@@ -30,6 +30,16 @@ public class BookResource {
 		return this.bookService.getBooksList();
 	}
 	
+	@GetMapping("/test")
+	public ResponseEntity<List<BookDto>> getAllBooks(
+			@RequestParam(defaultValue = "0") Integer pageNumber,
+			@RequestParam(defaultValue = "9") Integer pageSize,
+			@RequestParam(defaultValue = "id") String sortBy){
+		List<BookDto> booksDto = this.bookService.getBooksList();
+		return ResponseEntity.status(HttpStatus.OK).body(booksDto);
+		
+	}
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<BookDto> getById(@PathVariable("id") long id) {
 		BookDto bookDto = this.bookService.getById(id);
@@ -40,8 +50,11 @@ public class BookResource {
 	public List<BookDto> getBookListTest(@RequestParam(name="authorName", required = false) String authorName,
 										@RequestParam(name="illustratorName", required = false) String illustratorName,
 										@RequestParam( name="editorName", required = false) String editorName,
-										@RequestParam( name="collectionName", required = false) String collectionName){
-		return this.bookService.getBooksListTest(authorName, illustratorName, editorName, collectionName);
+										@RequestParam( name="collectionName", required = false) String collectionName,
+										@RequestParam( name="pageNumber") int pageNumber,
+										@RequestParam( name="pageSize") int pageSize
+										){
+		return this.bookService.getBooksListTest(authorName, illustratorName, editorName, collectionName, pageNumber, pageSize);
 	}
 	
 	@PostMapping("/create")
@@ -59,6 +72,4 @@ public class BookResource {
 	public void deleteBook(@PathVariable("id") long id) {
 		this.bookService.deleteBook(id);
 	}
-	
-
 }

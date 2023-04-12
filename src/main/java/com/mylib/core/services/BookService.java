@@ -58,8 +58,8 @@ public class BookService {
 		return booksDto;
 	}
 	
-	public List<BookDto> getBooksListTest(String authorName, String illustratorName, String editorName, String collectionName){
-		List<Book> books = this.bookRepository.getBooksListFromView(authorName, illustratorName, editorName, collectionName);
+	public List<BookDto> getBooksListTest(String authorName, String illustratorName, String editorName, String collectionName, int pageNumber, int pageSize){
+		List<Book> books = this.bookRepository.getBooksListFromView(authorName, illustratorName, editorName, collectionName, pageNumber, pageSize);
 		List<BookDto> booksDto = new ArrayList<>();
 		for(Book book: books) {
 			BookDto bookDto = createBookDto(book);
