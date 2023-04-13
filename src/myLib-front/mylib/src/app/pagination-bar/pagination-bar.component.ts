@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-pagination-bar',
@@ -6,21 +6,25 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./pagination-bar.component.scss']
 })
 export class PaginationBarComponent {
+  @Input() totalNumberPage!: number | null;
+  @Input() currentPageNumber!: number | null;
+  @Output() onSelectedPage = new EventEmitter<number>();
+  
+  goToPage(pageNumber: number){
+    this.onSelectedPage.emit(pageNumber - 1);
+  }
 
-  @Input() currentPage = 1;
-  @Input() totalPages = 1;
-  @Input() size = 9;
-  @Input() windowSize = 2;
-  @Input() showFirstLastButton = true;
-  @Input() routerLinkBase: string[] = [];
-
-  getNavigablePages(): number[] {
-    const pages = [];
-    const left = Math.max(1, this.currentPage - this.windowSize);
-    const right = Math.min(this.totalPages, this.currentPage + this.windowSize);
-    for (let i = left; i <= right; i++) {
-        pages.push(i);
+  createIntermediatePageNumbers(){
+    const windowSize: number = 2;
+    const numbers: number[] = [];
+    if(this.currentPageNumber !== null && this.totalNumberPage !== null){
+      const leftNumbers = Math.max(1, this.currentPageNumber - windowSize);
+      const rightNumbers = Math.min(this.totalNumberPage, this.currentPageNumber + windowSize);
+      
+      for(let i = leftNumbers; i <= rightNumbers; i++){
+          numbers.push(i);
+      }
     }
-    return pages;
+    return numbers;
   }
 }

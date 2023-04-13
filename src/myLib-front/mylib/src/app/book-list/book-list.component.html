@@ -33,31 +33,14 @@
     [book]="bookElement"></app-book>
 </div>
 
+<!--Ajouter un ngIf pour désactiver le loader quand les données sont affichées-->
 <div class="loader-container">
     <mat-spinner></mat-spinner>
 </div>
 
-<!-- <div>
-    <pagination-controls
-      previousLabel="Précédent"
-      nextLabel="Suivant"
-      [responsive]="true"
-      (pageChange)="getPageChange($event)"
-    ></pagination-controls>
-</div> -->
+<app-pagination-bar 
+    [totalNumberPage]="totalPagesNumber$ | async"
+    [currentPageNumber]="currentPageNumber"
+    (onSelectedPage)="getCurrentPage($event)"
+></app-pagination-bar>
 
-<div class="button-wrapper">
-    <div class="button-container">
-        <button (click)="onPrevious()">Précédent</button>
-        <p>{{totalNumberOfData | async }}</p>
-        <p>{{totalPages$ | async | number: '1.0-0' }}</p>
-        <button (click)="onNext()">Suivant</button>
-    </div>
-</div>
-
-<app-pagination-bar>
-    [currentPage]="page$ | async"
-    [totalPages]="totalPages$ | async"
-    [size]="size$ | async"
-    [routerLinkBase]="['/books']"
-</app-pagination-bar>
