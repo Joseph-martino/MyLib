@@ -15,6 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SingleSearchBarComponent } from './single-search-bar/single-search-bar.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { PaginationBarComponent } from './pagination-bar/pagination-bar.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     HeaderComponent,
     LandingPageComponent,
     NewBookComponent,
-    SingleSearchBarComponent
+    SingleSearchBarComponent,
+    PaginationBarComponent
   ],
   imports: [
     BrowserModule,

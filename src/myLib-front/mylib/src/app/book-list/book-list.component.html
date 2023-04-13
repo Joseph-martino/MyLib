@@ -50,8 +50,14 @@
     <div class="button-container">
         <button (click)="onPrevious()">Précédent</button>
         <p>{{totalNumberOfData | async }}</p>
-        <p>{{totalPage | async | number: '1.0-0' }}</p>
+        <p>{{totalPages$ | async | number: '1.0-0' }}</p>
         <button (click)="onNext()">Suivant</button>
     </div>
 </div>
 
+<app-pagination-bar>
+    [currentPage]="page$ | async"
+    [totalPages]="totalPages$ | async"
+    [size]="size$ | async"
+    [routerLinkBase]="['/books']"
+</app-pagination-bar>

@@ -1,0 +1,53 @@
+<ul class="navlinks">
+    <li *ngIf="showFirstLastButton">
+        <a
+            class="navlink"
+            [queryParams]="{ size: size, page: 1 }"
+            [routerLink]="routerLinkBase"
+            queryParamsHandling="merge"
+        >
+            Début
+        </a>
+    </li>
+    <li>
+        <a
+            class="navlink"
+            [queryParams]="{ size: size, page: currentPage - 1 }"
+            [routerLink]="routerLinkBase"
+            queryParamsHandling="merge"
+        >
+            < Précédent
+        </a>
+    </li>
+    <li *ngFor="let page of getNavigablePages()">
+        <a
+            class="navlink"
+            [queryParams]="{ size: size, page: page }"
+            [routerLink]="routerLinkBase"
+            queryParamsHandling="merge"
+            [class.active]="page === currentPage"
+        >
+            {{ page }}
+        </a>
+    </li>
+    <li>
+        <a
+            class="navlink"
+            [queryParams]="{ size: size, page: currentPage + 1 }"
+            [routerLink]="routerLinkBase"
+            queryParamsHandling="merge"
+        >
+            Suivant >
+        </a>
+    </li>
+    <li *ngIf="showFirstLastButton">
+        <a
+            class="navlink"
+            [queryParams]="{ size: size, page: totalPages }"
+            [routerLink]="routerLinkBase"
+            queryParamsHandling="merge"
+        >
+            Fin
+        </a>
+    </li>
+</ul>
