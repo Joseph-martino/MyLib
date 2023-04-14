@@ -18,7 +18,7 @@ export class BookListComponent implements OnInit {
   editorName!: string;
   collectionName!: string;
   pageNumber: number = 1;
-  pageSize: number = 9;
+  pageSize: number = 12;
   totalPagesNumber$!: Observable<number>;
   currentPageNumber: number;
 
@@ -37,7 +37,7 @@ export class BookListComponent implements OnInit {
     this.books$ = this.bookService.getBooksList(this.authorName, this.illustratorName, this.editorName, this.collectionName, this.pageNumber, this.pageSize);
     // dans une promise then=> boolean a false et on n'affiche plus le gif de chargement, avec les observables utiliser un pipe ????
   }
-  
+  //subject: créer un subject chacun pour authorName, Illustratorname... et les passer dans le combineLatest, et appeler la méthode de service à la fin de combineLastest
 
   //pagination bar angular
 //https://javascript.plainenglish.io/create-a-simple-pagination-component-in-angular-17b909ea03e1

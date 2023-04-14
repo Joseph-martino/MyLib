@@ -23,4 +23,14 @@
     button {
       display: block;
       margin: 20px auto;
+      background-color: #46B7B2;
+      padding: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      &:hover {
+          background: darken(#46B7B2, 10%)
     }
+  }

@@ -1,42 +1,41 @@
-:host {
-    display: block;
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50px;
 }
 
-.navlinks {
-    display: inline-flex;
+ul {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    width: 25%;
+    height: 30px;
 }
 
-.navlinks li {
-    margin-right: 0;
-    margin-left: -1px;
-
-    &:first-child .navlink {
-        border-top-left-radius: 0.5rem;
-        border-bottom-left-radius: 0.5rem;
-    }
-
-    &:last-child .navlink {
-        border-top-right-radius: 0.5rem;
-        border-bottom-right-radius: 0.5rem;
-    }
-}
-
-.navlink {
-    margin-left: 0;
-    border-width: 1px;
-    border-color: rgb(209 213 219);
-    background-color: white;
-    padding: 0.5rem 0.75rem;
-    line-height: 1.25;
-    color: rgb(107 114 128);
-
+button {
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #EEEEEE;
+    color: black;
+    border: 0.5 solid;
+    border: 1px solid #E9E9E9;
+    height: 40px;
+    width: 40px;
+    font-size: 16px;
+    cursor: pointer;
     &:hover {
-        background-color: rgb(243 244 246);
-        color: rgb(55 65 81);
-    }
-
-    &.active {
-        background-color: rgb(220, 222, 226);
-        color: rgb(55 65 81);
-    }
+        background: darken(#EEEEEE, 10%)
+      }
 }
+
+button:focus {
+    background-color: #46B7B2;
+    color: white;
+  }

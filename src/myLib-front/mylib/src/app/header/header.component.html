@@ -1,8 +1,10 @@
 <header>
-    <h1>MyLib</h1>
+    <a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <img src="assets/logos/mylib-header-logo.png" alt="application-logo">
+    </a>
     <nav>
         <a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Accueil</a>
         <a routerLink="books" routerLinkActive="active">Liste de livres</a>
+        <button (click)="onAddNewBook()"><span>Ajouter un livre</span></button>
     </nav>
-    <button (click)="onAddNewBook()">+</button>
 </header>

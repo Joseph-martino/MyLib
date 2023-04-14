@@ -1,14 +1,21 @@
 <nav>
     <ul>
-        <li><button (click)="goToPage(1)">Début</button>
+        <li><button (click)="goToPage(1)">&#10218;</button>
+        </li>
+
+        <li><button (click)="goToPreviousPage()">&#10216;</button>
         </li>
     
 
         <li *ngFor="let number of createIntermediatePageNumbers()">
             <button (click)="goToPage(number)">{{ number }}</button>
         </li>
+
+        <li><button (click)="goToNextPage()">&#10217;</button>
+        </li>
+        
         <li>
-            <button (click)="goToPage(totalNumberPage ?? 0)">Fin</button>
+            <button (click)="goToPage(totalNumberPage ?? 0)">&#10219;</button>
         </li>
     </ul>
 </nav>

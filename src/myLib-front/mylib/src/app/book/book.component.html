@@ -1,8 +1,21 @@
 <div class="card">
-    <h2 class="book-title">{{ book.title | uppercase }}</h2>
-    <h3>{{ book.author.fullName }}</h3>
-    <h3>{{ book.illustrator.fullName }}</h3>
-    <h3>{{ book.editor.name }}</h3>
-    <h3>{{ book.collection.name }}</h3>
-    <button class="more-info-button" (click)="onViewBook()">En savoir plus</button>
+    <div class="informations-container">
+        <h2 class="book-title" >{{ book.title | uppercase }}</h2>
+        <h3 [ngClass]="{grey: book.author.fullName === 'Nom inconnu'}">
+            Auteur: {{ book.author.fullName }}
+        </h3>
+        <h3 [ngClass]="{grey: book.illustrator.fullName === 'Nom inconnu'}">
+            Illustrateur: {{ book.illustrator.fullName }}
+        </h3>
+        <h3 [ngClass]="{grey: book.editor.name === 'Nom inconnu'}">
+            Editeur: {{ book.editor.name }}
+        </h3>
+        <h3 [ngClass]="{grey: book.collection.name === 'Nom inconnu'}">
+            Collection: {{ book.collection.name }}
+        </h3>
+    </div>
+
+    <div class="button-container">
+        <button class="more-info-button" (click)="onViewBook()">En savoir plus</button>
+    </div>
 </div>

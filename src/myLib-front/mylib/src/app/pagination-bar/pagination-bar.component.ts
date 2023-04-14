@@ -14,6 +14,20 @@ export class PaginationBarComponent {
     this.onSelectedPage.emit(pageNumber - 1);
   }
 
+  goToPreviousPage(){
+    this.currentPageNumber ? this.currentPageNumber-- : 1;
+    if(this.currentPageNumber !== null){
+      this.onSelectedPage.emit(this.currentPageNumber);
+    }
+  }
+
+  goToNextPage(){
+    this.currentPageNumber ? this.currentPageNumber++ : 1;
+    if(this.currentPageNumber !== null){
+      this.onSelectedPage.emit(this.currentPageNumber);
+    }
+  }
+
   createIntermediatePageNumbers(){
     const windowSize: number = 2;
     const numbers: number[] = [];

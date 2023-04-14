@@ -5,7 +5,9 @@
     padding: 10px 30px;
     box-shadow: lightgray 4px 4px 20px;
     h2 {
-      margin-bottom: 0;
+      margin-bottom: 20px;
+      text-align: center;
+      margin-top: 20px;
     }
 }
 
@@ -17,12 +19,41 @@
   justify-content: space-between;
 }
 
+.information-container {
+  margin: 10px 0;
+}
 .action-buttons {
   width: 100%;
+}
+
+.bold {
+  font-weight: 600;
 }
 
 button {
   display: block;
   margin: 20px auto;
+    display: block;
+    margin: 20px auto;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    color: white;
+    border: none;
+    border-radius: 8px;
+}
+
+.update-button {
+  background-color: #46B7B2;
+  &:hover {
+    background: darken(#46B7B2, 10%)
+  }
+}
+
+.delete-button {
+  background-color: #DF676D;
+  &:hover {
+    background: darken(#DF676D, 10%)
+  }
 }
 
