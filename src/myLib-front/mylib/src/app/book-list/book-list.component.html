@@ -34,7 +34,7 @@
 </div>
 
 <!--Ajouter un ngIf pour désactiver le loader quand les données sont affichées-->
-<div class="loader-container">
+<div class="loader-container" *ngIf="!books$">
     <mat-spinner></mat-spinner>
 </div>
 

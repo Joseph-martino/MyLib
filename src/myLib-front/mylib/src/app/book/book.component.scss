@@ -5,13 +5,20 @@ h3 {
 .card {
     box-sizing: border-box;
     width: 100%;
-    padding: 20px 30px;
     box-shadow: lightgray 4px 4px 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     margin: 0;
-    height: 345px;
+    height: 320px;
+}
+
+.title-container {
+    background: linear-gradient(90deg, rgba(70,183,178,1) 21%, rgba(31,121,177,1) 100%);
+}
+
+.book-title {
+    color: white;
 }
 
 .bold {
@@ -22,8 +29,26 @@ h3 {
     text-align: center;
 }
 
+.informations-container {
+    padding: 0 30px 20px 30px;
+}
+
+.information-row {
+    display: flex;
+    width: 75%;
+    justify-content: flex-start;
+}
+
+.information-field {
+    margin-right: 10px;
+}
+
 .grey {
     color: #C6C6C6;
+}
+
+.darkGrey {
+    color: #4E4D4D;
 }
 
 .button-container {

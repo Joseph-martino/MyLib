@@ -32,10 +32,10 @@ export class SingleBookComponent implements OnInit{
     this.book$ = this.bookService.getBookById(this.snapId);
     this.updateForm = this.formBuilder.group({
       title: [null],
-        authorName: [null],
-        illustratorName: [null],
-        editorName: [null],
-        collectionName: [null],
+      authorName: [null],
+      illustratorName: [null],
+      editorName: [null],
+      collectionName: [null],
     });
   }
 
@@ -47,6 +47,10 @@ export class SingleBookComponent implements OnInit{
 
   onUpdateBook():void {
     this.isModified = true;
+  }
+
+  onHide(){
+    this.isModified = false;
   }
 
   onSubmitForm():void {
