@@ -16,6 +16,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SingleSearchBarComponent } from './single-search-bar/single-search-bar.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PaginationBarComponent } from './pagination-bar/pagination-bar.component';
+import { LoaderComponent } from './loader/loader.component';
+import { ToastComponent } from './toast/toast.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { PaginationBarComponent } from './pagination-bar/pagination-bar.componen
     LandingPageComponent,
     NewBookComponent,
     SingleSearchBarComponent,
-    PaginationBarComponent
+    PaginationBarComponent,
+    LoaderComponent,
+    ToastComponent
   ],
   imports: [
     BrowserModule,

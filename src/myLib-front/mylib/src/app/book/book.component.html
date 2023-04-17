@@ -1,35 +1,43 @@
 <div class="card">
     <div class="title-container">
-        <h2 class="book-title" >{{ book.title | uppercase }}</h2>
+        <h2 [ngClass]="{changeFontSizeTo18Px: book.title.length > 24}" 
+            [ngClass]="{changeFontSizeTo13Px: book.title.length > 28}"
+            [ngClass]="{changeFontSizeTo11Px: book.title.length > 30}"
+            class="book-title" >{{ book.title | uppercase }}</h2>
     </div>
     <div class="informations-container">
-        <div class="information-row">
+        <div class="label-container">
             <h3 class="information-field bold darkGrey">Auteur: </h3>
-            <h3 [ngClass]="{grey: book.author.fullName === 'Nom inconnu'}">
-                {{ book.author.fullName }}
-            </h3>
-        </div>
-        <div class="information-row">
             <h3 class="information-field bold darkGrey">Illustrateur: </h3>
-            <h3 [ngClass]="{grey: book.illustrator.fullName === 'Nom inconnu'}">
-                {{ book.illustrator.fullName }}
-            </h3>
-        </div>
-        <div class="information-row">
             <h3 class="information-field bold darkGrey">Editeur: </h3>
-            <h3 [ngClass]="{grey: book.editor.name === 'Nom inconnu'}">
-                {{ book.editor.name }}
-            </h3>
+            <h3 class="information-field bold darkGrey">Collection:</h3>
         </div>
-        <div class="information-row">
-            <h3 class="information-field bold darkGrey">Collection</h3>
-            <h3 [ngClass]="{grey: book.collection.name === 'Nom inconnu'}">
-                {{ book.collection.name }}
-            </h3>
+
+        <div class="informations-wrapper">
+            <div class="information-row">
+                <h3 [ngClass]="{grey: book.author.fullName === 'Nom inconnu'}">
+                    {{ book.author.fullName }}
+                </h3>
+            </div>
+            <div class="information-row">
+                <h3 [ngClass]="{grey: book.illustrator.fullName === 'Nom inconnu'}">
+                    {{ book.illustrator.fullName }}
+                </h3>
+            </div>
+            <div class="information-row">
+                <h3 [ngClass]="{grey: book.editor.name === 'Nom inconnu'}">
+                    {{ book.editor.name }}
+                </h3>
+            </div>
+            <div class="information-row">
+                <h3 [ngClass]="{grey: book.collection.name === 'Nom inconnu'}">
+                    {{ book.collection.name }}
+                </h3>
+            </div>
         </div>
-        <div class="button-container">
-            <button class="more-info-button" (click)="onViewBook()">En savoir plus</button>
-        </div>
+    </div>
+    <div class="button-container">
+        <button class="more-info-button" (click)="onViewBook()">En savoir plus</button>
     </div>
 
    

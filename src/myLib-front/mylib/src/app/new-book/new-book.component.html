@@ -2,28 +2,30 @@
     <h2>NOUVEAU LIVRE</h2>
     <form class="form" [formGroup]="bookForm" (ngSubmit)="onSubmitForm()">
         <div class="form-group">
-            <label class="bold" for="title">Titre</label>
+            <label class="bold" for="title">Titre*</label>
             <input class= "form-input" id="title" type="text" formControlName="title"/>
         </div>
         <div class="form-group">
-            <label class="bold" for="author-name">Autheur</label>
+            <label class="bold" for="author-name">Auteur*</label>
             <input class= "form-input" id="author-name" type="text" formControlName="authorName"/>
         </div>
         <div class="form-group">
-            <label class="bold" for="illustrator-name">Illustrateur</label>
+            <label class="bold" for="illustrator-name">Illustrateur*</label>
             <input class= "form-input" id="illustrator-name" type="text" formControlName="illustratorName"/>
         </div>
         <div class="form-group">
-            <label class="bold" for="editor-name">Editeur</label>
+            <label class="bold" for="editor-name">Editeur*</label>
             <input class= "form-input" id="editor-name" type="text" formControlName="editorName"/>
         </div>
 
         <div class="form-group">
-            <label class="bold" for="collection-name">Collection</label>
+            <label class="bold" for="collection-name">Collection*</label>
             <input class= "form-input" id="collection-name" type="text" formControlName="collectionName"/>
         </div>
         <div class="action-buttons">
-            <button type="submit">Enregistrer</button>
+            <button type="submit" [disabled]="bookForm.invalid">Enregistrer</button>
         </div>
     </form>
 </div>
+
+<app-toast [message]="message" *ngIf="success"></app-toast>

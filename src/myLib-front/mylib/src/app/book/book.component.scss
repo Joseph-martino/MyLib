@@ -27,15 +27,23 @@ h3 {
 
 .book-title {
     text-align: center;
+    padding: 15px;
 }
 
 .informations-container {
-    padding: 0 30px 20px 30px;
+    padding: 0 15px 0 15px;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.informations-wrapper {
+    width: 55%;
 }
 
 .information-row {
     display: flex;
-    width: 75%;
+    width: 100%;
     justify-content: flex-start;
 }
 
@@ -51,9 +59,22 @@ h3 {
     color: #4E4D4D;
 }
 
+.changeFontSizeTo18Px {
+    font-size: 18px;
+}
+
+.changeFontSizeTo13Px {
+    font-size: 13px;
+}
+
+.changeFontSizeTo11Px {
+    font-size: 11px;
+}
+
 .button-container {
     display: flex;
     justify-content: center;
+    margin-bottom: 15px;
 }
 
 .more-info-button {

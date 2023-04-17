@@ -5,28 +5,23 @@
         </div>
         <div class="card-content">
             <div class="informations-wrapper">
-                <div class="information-container">
+                <div class="informations-container">
                     <span class="bold">Auteur: </span>
-                    <span>{{ book.author.fullName }}</span>
-                </div>
-        
-                <div class="information-container">
                     <span class="bold">Illustrateur: </span>
-                    <span>{{ book.illustrator.fullName }}</span>
-                </div>
-        
-                <div class="information-container">
                     <span class="bold">Editeur: </span>
-                    <span>{{ book.editor.name }}</span>
-                </div>
-        
-                <div class="information-container">
                     <span class="bold">Collection: </span>
+                </div>
+
+
+                <div class="informations-container">
+                    <span>{{ book.author.fullName }}</span>
+                    <span>{{ book.illustrator.fullName }}</span>
+                    <span>{{ book.editor.name }}</span>
                     <span>{{ book.collection.name }}</span>
                 </div>
             </div>  
             <div class="buttons-container">
-                <button class=" base-button update-button"(click)="onUpdateBook()">Modifier</button>
+                <button class=" validation-button update-button"(click)="onUpdateBook()">Modifier</button>
                 <button class="base-button delete-button" (click)="onDeleteBook()">Supprimer</button>
             </div>
         </div>
@@ -43,29 +38,31 @@
         <h3 class="update-form-header">MODIFIER LE LIVRE</h3>
         <form class="form" [formGroup]="updateForm" (ngSubmit)="onSubmitForm()">
             <div class="form-group">
-                <label class="bold" for="title">Titre:</label>
+                <label class="bold" for="title">Titre*:</label>
                 <input class="update-form-input" id="title" type="text" formControlName="title"/>
             </div>
             <div class="form-group">
-                <label class="bold" for="author-name">Auteur:</label>
+                <label class="bold" for="author-name">Auteur*:</label>
                 <input class="update-form-input" id="author-name" type="text" formControlName="authorName"/>
             </div>
             <div class="form-group">
-                <label class="bold" for="illustrator-name">Illustrateur:</label>
+                <label class="bold" for="illustrator-name">Illustrateur*:</label>
                 <input class="update-form-input" id="illustrator-name" type="text" formControlName="illustratorName"/>
             </div>
             <div class="form-group">
-                <label class="bold" for="editor-name">Editeur:</label>
+                <label class="bold" for="editor-name">Editeur*:</label>
                 <input class="update-form-input" id="editor-name" type="text" formControlName="editorName"/>
             </div>
     
             <div class="form-group">
-                <label class="bold" for="collection-name">Collection:</label>
+                <label class="bold" for="collection-name">Collection*:</label>
                 <input class="update-form-input" id="collection-name" type="text" formControlName="collectionName"/>
             </div>
             <div class="action-buttons">
-                <button class="base-button" type="submit">Valider</button>
+                <button class="validation-button" type="submit" [disabled]="updateForm.invalid">Valider</button>
             </div>
         </form>      
     </div>
 </div>
+
+<app-toast [message]="message" *ngIf="success"></app-toast>

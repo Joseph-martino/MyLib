@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { OnInit } from '@angular/core';
 import { BookService } from '../services/book.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-single-book',
@@ -18,6 +18,8 @@ export class SingleBookComponent implements OnInit{
   isModified!: boolean;
   updateForm!: FormGroup;
   bookPreview$!: Observable<Book>;
+  success!: boolean;
+  message!: string;
 
 
   constructor(private bookService: BookService,
@@ -28,14 +30,16 @@ export class SingleBookComponent implements OnInit{
 
   ngOnInit(): void {
     this.isModified = false;
+    this.success =false;
+    this.message = "Le livre a été modifié avec succès";
     this.snapId = +this.route.snapshot.params['id'];
     this.book$ = this.bookService.getBookById(this.snapId);
     this.updateForm = this.formBuilder.group({
-      title: [null],
-      authorName: [null],
-      illustratorName: [null],
-      editorName: [null],
-      collectionName: [null],
+      title: [null, Validators.required],
+      authorName: [null, Validators.required],
+      illustratorName: [null, Validators.required],
+      editorName: [null, Validators.required],
+      collectionName: [null, Validators.required],
     });
   }
 
@@ -54,10 +58,10 @@ export class SingleBookComponent implements OnInit{
   }
 
   onSubmitForm():void {
-    console.log(this.updateForm.value);
     this.bookService.updateBook(this.snapId, this.updateForm.value).pipe(
-      tap(()=> this.router.navigateByUrl(`/books/${this.snapId}`))
+      tap(() => this.router.navigateByUrl(`/books/${this.snapId}`))
     ).subscribe();
-    
+    this.success = true;
+    setTimeout(() => this.success = false, 3000);
   }
 }

@@ -25,6 +25,7 @@
   .card-content {
     display: flex;
     justify-content: space-around;
+    padding: 20px;
   }
 
   .form-group {
@@ -37,13 +38,15 @@
 
   .informations-wrapper{
     padding: 10px 10px;
-    width: 190px;
+    display: flex;
+    width: 45%;
+    justify-content: space-around;
   }
 
-  .information-container {
-    margin: 10px 0;
+  .informations-container {
     display: flex;
-      justify-content: space-between;
+    flex-direction: column;
+    justify-content: space-around;
   }
 
   .button-container {
@@ -61,7 +64,7 @@
     font-weight: 600;
   }
 
-  .base-button {
+  %base-button {
     display: block;
     margin: 20px auto;
     display: block;
@@ -74,7 +77,8 @@
     border-radius: 8px;
   }
 
-  .update-button {
+  .validation-button {
+    @extend %base-button;
     background-color: #46B7B2;
     &:hover {
       background: darken(#46B7B2, 10%)
@@ -82,6 +86,7 @@
   }
 
   .delete-button {
+    @extend %base-button;
     background-color: #DF676D;
     &:hover {
       background: darken(#DF676D, 10%)
@@ -94,7 +99,7 @@
   background-color: transparent;
   margin: 10px;
   span {
-    color: black;
+    color: #666;
     font-size: 35px;
   }
 }
@@ -116,6 +121,13 @@ form {
   border-radius: 5px;
   border-width: 0.7px;
   border-color: #D1D1D1;
+}
+
+.input-red-border {
+  height: 25px;
+  border-radius: 5px;
+  border-width: 0.7px;
+  border-color: #FF5757;
 }
 
 .update-form-input:focus {

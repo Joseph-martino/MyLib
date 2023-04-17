@@ -13,6 +13,7 @@ import { Book } from '../models/book.model';
 export class BookListComponent implements OnInit {
 
   books$!: Observable<Book[]>;
+  isLoading$!: Observable<boolean>;
   authorName!: string;
   illustratorName!: string;
   editorName!: string;
@@ -36,11 +37,16 @@ export class BookListComponent implements OnInit {
     //boolean =true et afficher le gif (on peut utiliser Angular material ???)
     this.books$ = this.bookService.getBooksList(this.authorName, this.illustratorName, this.editorName, this.collectionName, this.pageNumber, this.pageSize);
     // dans une promise then=> boolean a false et on n'affiche plus le gif de chargement, avec les observables utiliser un pipe ????
+    this.isLoading$ = this.books$.pipe(
+      map(numberOdBooks => numberOdBooks.length <= 0),
+    );
   }
   //subject: créer un subject chacun pour authorName, Illustratorname... et les passer dans le combineLatest, et appeler la méthode de service à la fin de combineLastest
 
   //pagination bar angular
 //https://javascript.plainenglish.io/create-a-simple-pagination-component-in-angular-17b909ea03e1
+
+  
 
   getCurrentPage(pageNumber: number){
     this.currentPageNumber = pageNumber;

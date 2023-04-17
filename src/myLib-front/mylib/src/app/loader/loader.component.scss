@@ -1,0 +1,50 @@
+.loader {
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+}
+
+.loader-circles {
+    border-radius: 50px;
+    border: 3px solid transparent;
+    border-top-color: black;
+    -webkit-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite;
+}
+
+.loader-circles:after{
+    content:'';
+    position: absolute;
+    top:5px;
+    left:5px;
+    bottom:5px;
+    right:5px;
+    border-radius: 50px;
+    border: 3px solid transparent;
+    border-top-color: black;
+    opacity: 0.8;
+    -webkit-animation: spin 5s linear infinite;
+     animation: spin 5s linear infinite;
+}
+
+.loader-circles:before{
+    content:'';
+    position: absolute; 
+    top:12px;
+    left:12px;
+    bottom:12px;
+    right:12px;
+    border-radius: 50px;
+    border: 3px solid transparent;
+    border-top-color: black;
+    opacity: 0.5;
+    -webkit-animation: spin 10s linear infinite;
+    animation: spin 10s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg);}
+    100%{ transform: rotate(360deg);}
+}
