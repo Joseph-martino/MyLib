@@ -33,7 +33,7 @@
     [book]="bookElement"></app-book>
 </div>
 
-<app-loader class="loader-container" *ngIf="isLoading$ | async"></app-loader>
+<app-loader class="loader-container" *ngIf="isLoading"></app-loader>
 
 <app-pagination-bar 
     [totalNumberPage]="totalPagesNumber$ | async"

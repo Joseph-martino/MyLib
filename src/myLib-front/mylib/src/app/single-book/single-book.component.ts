@@ -68,6 +68,8 @@ export class SingleBookComponent implements OnInit{
     });
   }
 
+  //https://angular.io/guide/form-validation
+
   onDeleteBook():void{
     this.bookService.deleteBook(this.snapId).pipe(
       tap(()=> this.router.navigateByUrl('/books'))

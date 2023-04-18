@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { BookService } from '../services/book.service';
 import { OnInit } from '@angular/core';
-import { Observable, map, tap } from 'rxjs';
+import { Observable, map, tap, delay } from 'rxjs';
 import { Book } from '../models/book.model';
 
 
@@ -13,7 +13,7 @@ import { Book } from '../models/book.model';
 export class BookListComponent implements OnInit {
 
   books$!: Observable<Book[]>;
-  isLoading$!: Observable<boolean>;
+  isLoading: boolean;
   authorName!: string;
   illustratorName!: string;
   editorName!: string;
@@ -25,9 +25,11 @@ export class BookListComponent implements OnInit {
 
   constructor(private bookService: BookService){
     this.currentPageNumber = 1;
+    this.isLoading = false;
   }
 
   ngOnInit(): void {
+    this.isLoading = true;
     const totalNumberOfData = this.bookService.getCountData();
     
     this.totalPagesNumber$ = totalNumberOfData.pipe(
@@ -35,11 +37,13 @@ export class BookListComponent implements OnInit {
     );
 
     //boolean =true et afficher le gif (on peut utiliser Angular material ???)
-    this.books$ = this.bookService.getBooksList(this.authorName, this.illustratorName, this.editorName, this.collectionName, this.pageNumber, this.pageSize);
+    this.books$ = this.bookService
+      .getBooksList(this.authorName, this.illustratorName, this.editorName, this.collectionName, this.pageNumber, this.pageSize)
+      /*.pipe(delay((5000)))*/
+      .pipe(tap(() => {
+        this.isLoading = false;
+      }));
     // dans une promise then=> boolean a false et on n'affiche plus le gif de chargement, avec les observables utiliser un pipe ????
-    this.isLoading$ = this.books$.pipe(
-      map(numberOdBooks => numberOdBooks.length <= 0),
-    );
   }
   //subject: créer un subject chacun pour authorName, Illustratorname... et les passer dans le combineLatest, et appeler la méthode de service à la fin de combineLastest
 
