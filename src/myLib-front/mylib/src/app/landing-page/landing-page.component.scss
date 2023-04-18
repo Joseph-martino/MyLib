@@ -1,3 +1,6 @@
+@import 'colors';
+@import 'mixins';
+
 .landing-block {
   display: flex;
   flex-direction: column;
@@ -13,18 +16,13 @@
   }
 
   button {
-    background-color: transparent;
+    @include styleButton($lightWhite);
+    color: $black;
     padding: 5px 10px;
-    border: none;
-    box-shadow: lightgray 3px 3px 7px;
-    font-size: 20px;
-    font-weight: 500;
-    cursor: pointer;
+    box-shadow: $lightGrey 3px 3px 7px;
+    font-size: 18px;
     &:active {
       transform: translate(1px, 1px);
-      box-shadow: lightgray 0 0 5px;
-    }
-    &:hover {
-      background-color: #EEE;
+      box-shadow: $lightGrey 0 0 5px;
     }
   }

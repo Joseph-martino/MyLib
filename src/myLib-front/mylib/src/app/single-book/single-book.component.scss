@@ -1,8 +1,11 @@
+  @import 'colors';
+  @import 'mixins';
+  
   .book-card, .update-book-form {
       box-sizing: border-box;
       width: 50%;
       margin: 20px auto;
-      box-shadow: lightgray 4px 4px 20px;
+      box-shadow: $lightGrey 4px 4px 20px;
       h2 {
         margin-bottom: 20px;
         text-align: center;
@@ -15,10 +18,10 @@
   }
 
   .title-wrapper {
-    background: linear-gradient(90deg, rgba(70,183,178,1) 21%, rgba(31,121,177,1) 100%);
+    background: $gradientBlue;
     padding: 10px 30px;
     h2 {
-      color: white;
+      color: $white;
     }
   }
 
@@ -58,6 +61,7 @@
 
   .action-buttons {
     width: 100%;
+    margin-top: 30px;
   }
 
   .bold {
@@ -67,44 +71,41 @@
   %base-button {
     display: block;
     margin: 20px auto;
-    display: block;
-    margin: 20px auto;
     padding: 10px;
-    cursor: pointer;
-    font-weight: 600;
-    color: white;
-    border: none;
-    border-radius: 8px;
+    width: 90px;
   }
 
   .validation-button {
+    @include styleButton($fontainBlue);
     @extend %base-button;
-    background-color: #46B7B2;
-    &:hover {
-      background: darken(#46B7B2, 10%)
-    }
   }
 
   .delete-button {
+    @include styleButton($redStone);
     @extend %base-button;
-    background-color: #DF676D;
-    &:hover {
-      background: darken(#DF676D, 10%)
-    }
-}
+  }
+
+  .invalidButton {
+    background-color: red;
+  }
+
+  .submit-button {
+    width: 82%;
+  }
 
 .previous-button {
   cursor: pointer;
   border: none;
-  background-color: transparent;
+  background-color: $transparent;
   margin: 10px;
   span {
-    color: #666;
+    color: $headerLinkGrey;
     font-size: 35px;
   }
 }
 
 .update-form-header {
+  color: $fontainBlue;
   text-align: center;
   font-size: 20px;
   font-weight: 500;
@@ -120,19 +121,25 @@ form {
   height: 25px;
   border-radius: 5px;
   border-width: 0.7px;
-  border-color: #D1D1D1;
+  border-color: $lightGrey;
+  color: $spanishGrey;
+}
+
+input::placeholder {
+  opacity: 0.8;
+  color: $phillipineSilver;
 }
 
 .input-red-border {
   height: 25px;
   border-radius: 5px;
   border-width: 0.7px;
-  border-color: #FF5757;
+  border-color: $persimmon;
 }
 
 .update-form-input:focus {
   outline: none;
-  border: 2px solid #46B7B2;
+  border: 2px solid $fontainBlue;
 }
 
 .bold {

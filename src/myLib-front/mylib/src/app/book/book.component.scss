@@ -1,3 +1,6 @@
+@import 'colors';
+@import 'mixins';
+
 h3 {
     font-size: 0.9rem;
 }
@@ -5,7 +8,7 @@ h3 {
 .card {
     box-sizing: border-box;
     width: 100%;
-    box-shadow: lightgray 4px 4px 20px;
+    box-shadow: $lightGrey 4px 4px 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -14,11 +17,11 @@ h3 {
 }
 
 .title-container {
-    background: linear-gradient(90deg, rgba(70,183,178,1) 21%, rgba(31,121,177,1) 100%);
+    background: $gradientBlue;
 }
 
 .book-title {
-    color: white;
+    color: $white;
 }
 
 .bold {
@@ -38,7 +41,7 @@ h3 {
 }
 
 .informations-wrapper {
-    width: 55%;
+    width: 60%;
 }
 
 .information-row {
@@ -52,11 +55,11 @@ h3 {
 }
 
 .grey {
-    color: #C6C6C6;
+    color: $silver;
 }
 
 .darkGrey {
-    color: #4E4D4D;
+    color: $darkLiver;
 }
 
 .changeFontSizeTo18Px {
@@ -78,14 +81,6 @@ h3 {
 }
 
 .more-info-button {
-    background-color: #46B7B2;
+    @include styleButton($fontainBlue);
     padding: 10px;
-    cursor: pointer;
-    font-weight: 600;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    &:hover {
-        background: darken(#46B7B2, 10%)
-      }
 }

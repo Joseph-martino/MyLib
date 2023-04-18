@@ -1,0 +1,11 @@
+@import 'colors';
+@import 'buttons';
+
+@mixin styleButton($color){
+    @extend %button;
+    background-color: $color;
+    color: $white;
+    &:hover {
+        background: darken($color, 10%)
+      }  
+}

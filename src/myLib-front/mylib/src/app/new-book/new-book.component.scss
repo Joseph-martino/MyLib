@@ -1,15 +1,19 @@
+@import 'colors';
+@import 'mixins';
+
 .form-card {
     box-sizing: border-box;
     width: 50%;
     margin: 20px auto;
     padding: 10px 30px;
-    box-shadow: lightgray 4px 4px 20px;
+    box-shadow: $lightGrey 4px 4px 20px;
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
     h2 {
       text-align: center;
+      color: $fontainBlue;
     }
   }
 
@@ -29,12 +33,12 @@
       height: 25px;
       border-radius: 5px;
       border-width: 0.7px;
-      border-color: #D1D1D1;
+      border-color: $lightSilver;
     }
     
     .form-input:focus {
       outline: none;
-      border: 2px solid #46B7B2;
+      border: 2px solid $fontainBlue;
     }
 
     .bold {
@@ -46,16 +50,8 @@
     }
     
     button {
+      @include styleButton($fontainBlue);
       display: block;
       margin: 20px auto;
-      background-color: #46B7B2;
       padding: 10px;
-      cursor: pointer;
-      font-weight: 600;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      &:hover {
-          background: darken(#46B7B2, 10%)
-    }
   }

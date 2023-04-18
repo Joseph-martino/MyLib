@@ -1,3 +1,4 @@
+@import 'colors';
 nav {
     display: flex;
     justify-content: center;
@@ -22,20 +23,20 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #EEEEEE;
-    color: black;
+    background-color: $lightWhite;
+    color: $black;
     border: 0.5 solid;
-    border: 1px solid #E9E9E9;
+    border: 1px solid $snowBank;
     height: 40px;
     width: 40px;
     font-size: 16px;
     cursor: pointer;
     &:hover {
-        background: darken(#EEEEEE, 10%)
+        background: darken($lightWhite, 10%)
       }
 }
 
 button:focus {
-    background-color: #46B7B2;
-    color: white;
+    background-color: $fontainBlue;
+    color: $white;
   }

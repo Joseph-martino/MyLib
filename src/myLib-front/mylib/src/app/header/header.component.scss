@@ -1,7 +1,10 @@
+@import 'colors';
+@import 'buttons';
+@import 'mixins';
 header {
     display: flex;
     justify-content: space-between;
-    background-color: #EEE;
+    background-color: $lightWhite;
     margin-bottom: 20px;
     padding: 10px;
     img {
@@ -14,30 +17,23 @@ header {
     justify-content: space-around;
     align-items: center;
     width: 40%;
+  }
 
-    button {
-      border: none;
-      background-color: #46B7B2;
+  .add-button {
+    @include styleButton($fontainBlue);
+      border: none;//
       padding: 15px;
       width: 15px;
       height: 15px;
-      border-radius: 10px;
-      color: white;
-      font-weight: 700;
       display: flex;
       justify-content: center;
       align-items: center;
       width: 145px;
-      cursor: pointer;
-      &:hover {
-        background: darken(#46B7B2, 10%)
-      }
-    }
   }
 
   a {
     margin: 0 10px;
-    color: #333;
+    color: $headerLinkActiveGrey;
     text-decoration: none;
     text-underline-offset: 5px;
     &:hover {
@@ -45,6 +41,6 @@ header {
     }
   } 
   .active {
-    color: #666;
+    color: $headerLinkGrey;
     text-decoration: underline;
   }
