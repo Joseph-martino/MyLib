@@ -6,10 +6,10 @@
         <div class="card-content">
             <div class="informations-wrapper">
                 <div class="informations-container">
-                    <span class="bold">Auteur: </span>
-                    <span class="bold">Illustrateur: </span>
-                    <span class="bold">Editeur: </span>
-                    <span class="bold">Collection: </span>
+                    <span class="bold label-color">Auteur: </span>
+                    <span class="bold label-color">Illustrateur: </span>
+                    <span class="bold label-color">Editeur: </span>
+                    <span class="bold label-color">Collection: </span>
                 </div>
 
 
@@ -38,25 +38,25 @@
         <h3 class="update-form-header">MODIFIER LE LIVRE</h3>
         <form class="form" [formGroup]="updateForm" (ngSubmit)="onSubmitForm()">
             <div class="form-group">
-                <label class="bold" for="title">Titre*:</label>
+                <label class="bold label-color" for="title">Titre*:</label>
                 <input class="update-form-input" id="title" type="text" placeholder="Ex: Les 3 mousquetaires" formControlName="title" [value]="title$ | async"/>
                 <span *ngIf="(title$ | async) == ''">Le titre est requis</span>
             </div>
             <div class="form-group">
-                <label class="bold" for="author-name">Auteur*:</label>
+                <label class="bold label-color" for="author-name">Auteur*:</label>
                 <input class="update-form-input" id="author-name" type="text" placeholder="Ex: Nadine Biloivanenko" formControlName="authorName" [value]="authorName$ | async"/>
             </div>
             <div class="form-group">
-                <label class="bold" for="illustrator-name">Illustrateur*:</label>
+                <label class="bold label-color" for="illustrator-name">Illustrateur*:</label>
                 <input class="update-form-input" id="illustrator-name" type="text" placeholder="Ex: Quentin Blake" formControlName="illustratorName" [value]="illustratorName$ | async"/>
             </div>
             <div class="form-group">
-                <label class="bold" for="editor-name">Editeur*:</label>
+                <label class="bold label-color" for="editor-name">Editeur*:</label>
                 <input class="update-form-input" id="editor-name" type="text" placeholder="Ex: Gallimard" formControlName="editorName" [value]="editorName$ | async"/>
             </div>
     
             <div class="form-group">
-                <label class="bold" for="collection-name">Collection*:</label>
+                <label class="bold label-color" for="collection-name">Collection*:</label>
                 <input class="update-form-input" id="collection-name" type="text" placeholder="Ex: Hachette" formControlName="collectionName" [value]="collectionName$ | async"/>
             </div>
             <div class="action-buttons">
@@ -66,4 +66,6 @@
     </div>
 </div>
 
-<app-toast [message]="message" *ngIf="success"></app-toast>
+<app-toast *ngIf="success" [message]="message"></app-toast>
+<app-modal *ngIf="isDeleted" (onDeleted)="onCloseModal($event)"></app-modal>
+

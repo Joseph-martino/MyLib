@@ -1,0 +1,57 @@
+@import 'colors';
+@import 'mixins';
+
+.main-container {
+    width: 500px;
+    background-color: $white;
+    padding: 26px;
+    border-radius: 8px;
+    position: absolute;
+    top: 27%;
+    left: 32%;
+    box-sizing: border-box;
+    width: 35%;
+    box-shadow: $lightGrey 4px 4px 20px;
+}
+
+.close-button-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.close-modal-button {
+    border: none;
+    background-color: transparent;
+    font-size: 20px;
+    color: $spanishGrey;
+    cursor: pointer;
+}
+
+.content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.buttons-container {
+    width: 50%;
+    display: flex;
+    justify-content: space-around;
+}
+
+%base-button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px;
+    width: 90px;
+  }
+
+  .validation-button {
+    @include styleButton($fontainBlue);
+    @extend %base-button;
+  }
+
+  .cancel-button {
+    @include styleButton($redStone);
+    @extend %base-button;
+  }

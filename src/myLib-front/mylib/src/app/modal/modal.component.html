@@ -1,0 +1,14 @@
+<div class="main-container">
+    <div class="close-button-container">
+        <button (click)="closeModal()" class="close-modal-button">&#10006;</button>
+    </div>
+    <div class="content-container">
+        <h2>Etes-vous sur de vouloir supprimer le livre ?</h2>
+        <div class="buttons-container">
+            <button (click)="onDeleteBook()" class="validation-button">Supprimer</button>
+            <button (click)="closeModal()" class="cancel-button">Annuler</button>
+        </div>
+    </div>
+</div>
+
+<app-toast [message]="message" *ngIf="success"></app-toast>

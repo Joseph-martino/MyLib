@@ -68,6 +68,10 @@
     font-weight: 600;
   }
 
+  .label-color {
+    color: $headerLinkGrey;
+  }
+
   %base-button {
     display: block;
     margin: 20px auto;

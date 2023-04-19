@@ -44,6 +44,10 @@
     .bold {
       font-weight: 600;
     }
+
+    .label-color {
+      color: $headerLinkGrey;
+    }
     
     .action-buttons {
       width: 100%;
@@ -54,4 +58,5 @@
       display: block;
       margin: 20px auto;
       padding: 10px;
+      width: 82%;
   }

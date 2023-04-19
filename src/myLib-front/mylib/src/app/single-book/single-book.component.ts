@@ -16,8 +16,8 @@ export class SingleBookComponent implements OnInit{
   book$!: Observable<Book>;
   snapId!: number;
   isModified!: boolean;
+  isDeleted!: boolean;
   updateForm!: FormGroup;
-  bookPreview$!: Observable<Book>;
   success!: boolean;
   message!: string;
   title$!: Observable<string>;
@@ -35,6 +35,7 @@ export class SingleBookComponent implements OnInit{
 
   ngOnInit(): void {
     this.isModified = false;
+    this.isDeleted = false;
     this.success =false;
     this.message = "Le livre a été modifié avec succès";
 
@@ -71,12 +72,7 @@ export class SingleBookComponent implements OnInit{
   //https://angular.io/guide/form-validation
 
   onDeleteBook():void{
-    this.bookService.deleteBook(this.snapId).pipe(
-      tap(()=> this.router.navigateByUrl('/books'))
-    ).subscribe();
-    this.message = "Le livre a été supprimé";
-    this.success = true;
-    setTimeout(() => this.success = false, 3000);
+    this.isDeleted = true;
   }
 
   onUpdateBook():void {
@@ -89,9 +85,14 @@ export class SingleBookComponent implements OnInit{
 
   onSubmitForm():void {
     this.success = true;
-    setTimeout(() => this.success = false, 2000);
     this.bookService.updateBook(this.snapId, this.updateForm.value).pipe(
       tap(() => this.router.navigateByUrl(`/books/${this.snapId}`))
     ).subscribe();
+    setTimeout(() => this.success = false, 3000);
+    console.log(this.success);
+  }
+
+  onCloseModal(value: boolean){
+    this.isDeleted = value;
   }
 }

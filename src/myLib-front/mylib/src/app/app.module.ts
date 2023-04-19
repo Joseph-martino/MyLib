@@ -18,6 +18,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { PaginationBarComponent } from './pagination-bar/pagination-bar.component';
 import { LoaderComponent } from './loader/loader.component';
 import { ToastComponent } from './toast/toast.component';
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ToastComponent } from './toast/toast.component';
     SingleSearchBarComponent,
     PaginationBarComponent,
     LoaderComponent,
-    ToastComponent
+    ToastComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
