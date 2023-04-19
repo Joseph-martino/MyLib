@@ -1,5 +1,8 @@
 <div class="form-card">
     <h2>NOUVEAU LIVRE</h2>
+    <div class="previous-button-container">
+        <a routerLink="/books" routerLinkActive="active"><span>&#11013;</span></a> 
+    </div>
     <form class="form" [formGroup]="bookForm" (ngSubmit)="onSubmitForm()">
         <div class="form-group">
             <label class="bold label-color" for="title">Titre*</label>

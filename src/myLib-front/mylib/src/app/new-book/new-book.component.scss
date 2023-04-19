@@ -17,6 +17,20 @@
     }
   }
 
+  .previous-button-container {
+    width: 100%;
+    
+    a {
+      text-decoration: none;
+    }
+
+    span {
+      cursor: pointer;
+      color: $headerLinkGrey;
+      font-size: 35px;
+    }
+  }
+
   .form {
     width: 60%;
   }
