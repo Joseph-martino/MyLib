@@ -3,7 +3,7 @@
   
   .book-card, .update-book-form {
       box-sizing: border-box;
-      width: 50%;
+      width: 35%;
       margin: 20px auto;
       box-shadow: $lightGrey 4px 4px 20px;
       h2 {
@@ -28,7 +28,6 @@
   .card-content {
     display: flex;
     justify-content: space-around;
-    padding: 20px;
   }
 
   .form-group {
@@ -37,6 +36,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+
+  .input-container {
+    display: flex;
+    flex-direction: column;
   }
 
   .informations-wrapper{
@@ -89,8 +93,10 @@
     @extend %base-button;
   }
 
-  .invalidButton {
-    background-color: red;
+  .error-message {
+    color: $persimmon;
+    font-size: 10px;
+    font-style: italic;
   }
 
   .submit-button {
@@ -150,3 +156,10 @@ input::placeholder {
   font-weight: 600;
 }
 
+.ng-valid[required], .ng-valid.required  {
+  border-left: 5px solid #42A948; /* green */
+}
+
+.ng-invalid:not(form)  {
+  border: 2px solid $persimmon;
+}

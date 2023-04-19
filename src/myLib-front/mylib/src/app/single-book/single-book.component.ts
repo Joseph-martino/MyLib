@@ -60,6 +60,7 @@ export class SingleBookComponent implements OnInit{
     this.collectionName$ = this.book$.pipe(
       map(book => book.collection.name),
     );
+    
     this.updateForm = this.formBuilder.group({
       title: [null, Validators.required],
       authorName: [null, Validators.required],
@@ -67,6 +68,26 @@ export class SingleBookComponent implements OnInit{
       editorName: [null, Validators.required],
       collectionName: [null, Validators.required],
     });
+  }
+
+  get title() { 
+    return this.updateForm.get('title'); 
+  }
+
+  get authorName() { 
+    return this.updateForm.get('authorName'); 
+  }
+
+  get illustratorName() { 
+    return this.updateForm.get('illustratorName'); 
+  }
+
+  get editorName() { 
+    return this.updateForm.get('editorName'); 
+  }
+
+  get collectionName() { 
+    return this.updateForm.get('collectionName'); 
   }
 
   //https://angular.io/guide/form-validation
@@ -89,10 +110,13 @@ export class SingleBookComponent implements OnInit{
       tap(() => this.router.navigateByUrl(`/books/${this.snapId}`))
     ).subscribe();
     setTimeout(() => this.success = false, 3000);
-    console.log(this.success);
   }
 
   onCloseModal(value: boolean){
     this.isDeleted = value;
+  }
+
+  onPreviousPage() {
+    this.router.navigateByUrl('/books');
   }
 }
