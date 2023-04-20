@@ -28,6 +28,7 @@
   .card-content {
     display: flex;
     justify-content: space-around;
+    padding-bottom: 15px;
   }
 
   .form-group {
@@ -162,4 +163,55 @@ input::placeholder {
 
 .ng-invalid:not(form)  {
   border: 2px solid $persimmon;
+}
+
+.form-control.ng-untouched,
+.form-control.ng-valid {
+    border-color: red !important;
+}
+
+@media only screen and (max-width: 600px) {
+
+  .book-card {
+    width: 90%;
+  }
+
+  .card-content {
+    flex-direction: column;
+  }
+
+  .informations-wrapper {
+    width: 85%;
+  }
+
+  .informations-container {
+    span {
+      margin: 10px;
+    }
+  }
+
+  %base-button {
+
+    width: 90%;
+  }
+
+  .update-book-form {
+    width: 90%;
+  }
+
+  .update-form-inputs-container {
+    form {
+      width: 100%;
+    }
+  }
+
+  .form-group {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .input-container {
+    width: 100%;
+  }
+
 }

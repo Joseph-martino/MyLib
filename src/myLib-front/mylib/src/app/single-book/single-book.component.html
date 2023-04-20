@@ -1,86 +1,191 @@
-<ng-container *ngIf="isModified == false">
-    <div class="book-card" *ngIf="book$ | async as book">
-        <div class="title-wrapper">
-            <h2>{{ book.title | uppercase}}</h2>
-        </div>
-        <div class="card-body">
-            <div class="previous-arrow-container">
-                <button class="previous-button" (click)="onPreviousPage()">
-                    <span>&#11013;</span>
-                </button>
-            </div>
-            <div class="card-content">
-                <div class="informations-wrapper">
-                    <div class="informations-container">
-                        <span class="bold label-color">Auteur: </span>
-                        <span class="bold label-color">Illustrateur: </span>
-                        <span class="bold label-color">Editeur: </span>
-                        <span class="bold label-color">Collection: </span>
-                    </div>
-    
-    
-                    <div class="informations-container">
-                        <span>{{ book.author.fullName }}</span>
-                        <span>{{ book.illustrator.fullName }}</span>
-                        <span>{{ book.editor.name }}</span>
-                        <span>{{ book.collection.name }}</span>
-                    </div>
-                </div>  
-                <div class="buttons-container">
-                    <button class=" validation-button"(click)="onUpdateBook()">Modifier</button>
-                    <button class="base-button delete-button" (click)="onDeleteBook()">Supprimer</button>
-                </div>
-            </div>
-        </div>
+<ng-container *ngIf="!isModified; else elseBlock">
+  <div class="book-card" *ngIf="book as book">
+    <div class="title-wrapper">
+      <h2>{{ book.title | uppercase }}</h2>
     </div>
+    <div class="card-body">
+      <div class="previous-arrow-container">
+        <button class="previous-button" (click)="onPreviousPage()">
+          <span>&#11013;</span>
+        </button>
+      </div>
+      <div class="card-content">
+        <div class="informations-wrapper">
+          <div class="informations-container">
+            <span class="bold label-color">Auteur: </span>
+            <span class="bold label-color">Illustrateur: </span>
+            <span class="bold label-color">Editeur: </span>
+            <span class="bold label-color">Collection: </span>
+          </div>
+
+          <div class="informations-container">
+            <span>{{ book.author.fullName }}</span>
+            <span>{{ book.illustrator.fullName }}</span>
+            <span>{{ book.editor.name }}</span>
+            <span>{{ book.collection.name }}</span>
+          </div>
+        </div>
+        <div class="buttons-container">
+          <button class="validation-button" (click)="onUpdateBook()">
+            Modifier
+          </button>
+          <button class="base-button delete-button" (click)="onDeleteBook()">
+            Supprimer
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </ng-container>
 
-<div class="update-book-form" *ngIf="isModified">
+<ng-template #elseBlock>
+  <div class="update-book-form">
     <div class="previous-arrow-container">
-        <button class="previous-button" (click)="onHide()">
-            <span>&#11013;</span>
-        </button>
+      <button (click)="onHide()" class="previous-button">
+        <span>&#11013;</span>
+      </button>
     </div>
     <div class="update-form-inputs-container">
-        <h3 class="update-form-header">MODIFIER LE LIVRE</h3>
-        <form class="form" [formGroup]="updateForm" (ngSubmit)="onSubmitForm()">
-            <div class="form-group">
-                <label class="bold label-color" for="title">Titre*:</label>
-                <div  class="input-container">
-                    <span *ngIf="title?.errors?.['required']" class="error-message">Le titre est requis</span>
-                    <input class="update-form-input" id="title" type="text" placeholder="Ex: Les 3 mousquetaires" formControlName="title" [value]="title$ | async"/>
-                </div>  
+      <h3 class="update-form-header">MODIFIER LE LIVRE</h3>
+      <form class="form" [formGroup]="updateForm" (ngSubmit)="onSubmitForm()">
+        <div class="form-group">
+          <label class="bold label-color" for="title">Titre*:</label>
+          <div class="input-container">
+            <div
+              *ngIf="title?.invalid && (title?.dirty || title?.touched)"
+              class="alert alert-danger"
+            >
+              <span *ngIf="title?.errors?.['required']" class="error-message"
+                >Le titre est requis</span
+              >
             </div>
-            <div class="form-group">
-                <label class="bold label-color" for="author-name">Auteur*:</label>
-                <div  class="input-container">
-                    <span *ngIf="authorName?.errors?.['required']" class="error-message">Le nom de l'auteur est requis</span>
-                    <input class="update-form-input" id="author-name" type="text" placeholder="Ex: Nadine Biloivanenko" formControlName="authorName" [value]="authorName$ | async"/>
-                </div>
+            <input
+              class="update-form-input"
+              id="title"
+              type="text"
+              placeholder="Ex: Les 3 mousquetaires"
+              formControlName="title"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="bold label-color" for="author-name">Auteur*:</label>
+          <div class="input-container">
+            <div
+              *ngIf="
+                authorName?.invalid &&
+                (authorName?.dirty || authorName?.touched)
+              "
+              class="alert alert-danger"
+            >
+              <span
+                *ngIf="authorName?.errors?.['required']"
+                class="error-message"
+                >Le nom de l'auteur est requis</span
+              >
             </div>
-            <div class="form-group">
-                <label class="bold label-color" for="illustrator-name">Illustrateur*:</label>
-                <div  class="input-container">
-                    <span *ngIf="illustratorName?.errors?.['required']" class="error-message">Le nom de l'illustrateur est requis</span>
-                    <input class="update-form-input" id="illustrator-name" type="text" placeholder="Ex: Quentin Blake" formControlName="illustratorName" [value]="illustratorName$ | async"/>
-                </div>
+            <input
+              class="update-form-input"
+              id="author-name"
+              type="text"
+              placeholder="Ex: Nadine Biloivanenko"
+              formControlName="authorName"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="bold label-color" for="illustrator-name"
+            >Illustrateur*:</label
+          >
+          <div class="input-container">
+            <div
+              *ngIf="
+                illustratorName?.invalid &&
+                (illustratorName?.dirty || illustratorName?.touched)
+              "
+              class="alert alert-danger"
+            >
+              <span
+                *ngIf="illustratorName?.errors?.['required']"
+                class="error-message"
+                >Le nom de l'illustrateur est requis</span
+              >
             </div>
-            <div class="form-group">
-                <label class="bold label-color" for="editor-name">Editeur*:</label>
-                <input class="update-form-input" id="editor-name" type="text" placeholder="Ex: Gallimard" formControlName="editorName" [value]="editorName$ | async"/>
+            <input
+              class="update-form-input"
+              id="illustrator-name"
+              type="text"
+              placeholder="Ex: Quentin Blake"
+              formControlName="illustratorName"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="bold label-color" for="editor-name">Editeur*:</label>
+          <div class="input-container">
+            <div
+              *ngIf="
+                editorName?.invalid &&
+                (editorName?.dirty || editorName?.touched)
+              "
+              class="alert alert-danger"
+            >
+              <span
+                *ngIf="editorName?.errors?.['required']"
+                class="error-message"
+                >Le nom de l'éditeur est requis</span
+              >
             </div>
-    
-            <div class="form-group">
-                <label class="bold label-color" for="collection-name">Collection*:</label>
-                <input class="update-form-input" id="collection-name" type="text" placeholder="Ex: Hachette" formControlName="collectionName" [value]="collectionName$ | async"/>
+            <input
+              class="update-form-input"
+              id="editor-name"
+              type="text"
+              placeholder="Ex: Gallimard"
+              formControlName="editorName"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="bold label-color" for="collection-name"
+            >Collection*:</label
+          >
+          <div class="input-container">
+            <div
+              *ngIf="
+                collectionName?.invalid &&
+                (collectionName?.dirty || collectionName?.touched)
+              "
+              class="alert alert-danger"
+            >
+              <span
+                *ngIf="collectionName?.errors?.['required']"
+                class="error-message"
+                >Le nom de la collection est requis</span
+              >
             </div>
-            <div class="action-buttons">
-                <button class="validation-button submit-button" type="submit" [disabled]="updateForm.invalid">Valider</button>
-            </div>
-        </form>      
+            <input
+              class="update-form-input"
+              id="collection-name"
+              type="text"
+              placeholder="Ex: Hachette"
+              formControlName="collectionName"
+            />
+          </div>
+        </div>
+        <div class="action-buttons">
+          <button
+            class="validation-button submit-button"
+            type="submit"
+            [disabled]="updateForm.invalid"
+          >
+            Valider
+          </button>
+        </div>
+      </form>
     </div>
-</div>
+  </div>
+</ng-template>
 
-<app-toast *ngIf="success" [message]="message"></app-toast>
-<app-modal *ngIf="isDeleted" (onDeleted)="onCloseModal($event)"></app-modal>
-
+<!-- <app-toast *ngIf="success" [message]="message"></app-toast>
+<app-modal *ngIf="isDeleted" (onDeleted)="onCloseModal($event)"></app-modal> -->

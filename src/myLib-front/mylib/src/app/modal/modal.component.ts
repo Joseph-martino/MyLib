@@ -16,6 +16,8 @@ export class ModalComponent implements OnInit{
   snapId!: number;
   success!: boolean;
 
+  //https://jasonwatmore.com/post/2020/09/24/angular-10-custom-modal-window-dialog-box
+
   constructor(private bookService: BookService,
     private route: ActivatedRoute,
     private router: Router,){
@@ -35,12 +37,12 @@ export class ModalComponent implements OnInit{
 
   onDeleteBook():void{
     this.isDeleted = true;
-    this.bookService.deleteBook(this.snapId).pipe(
-      tap(()=> this.router.navigateByUrl('/books'))
-    ).subscribe();
     this.message = "Le livre a été supprimé avec succès";
     this.success = true;
     setTimeout(() => this.success = false, 3000);
+    this.bookService.deleteBook(this.snapId).pipe(
+      tap(()=> this.router.navigateByUrl('/books'))
+    ).subscribe();
   }
 
 }

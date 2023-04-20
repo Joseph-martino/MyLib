@@ -8,3 +8,11 @@
         <button class="add-button" (click)="onAddNewBook()"><span>Ajouter un livre</span></button>
     </nav>
 </header>
+
+<header class="mobile-header">
+    <a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <img src="assets/logos/mylib-header-logo.png" alt="application-logo">
+    </a>
+</header>
+
+<button (click)="onAddNewBook()">+</button>

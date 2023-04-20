@@ -14,3 +14,14 @@
     box-shadow: $lightGrey 4px 4px 20px;
     color: $lightGreen;
 }
+
+
+@media only screen and (max-width: 600px) {
+
+    .message-container {
+        width: 80%;
+        top:22%;
+        left:10%; 
+    }
+  }
+

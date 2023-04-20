@@ -55,3 +55,25 @@
     @include styleButton($redStone);
     @extend %base-button;
   }
+
+
+
+  @media only screen and (max-width: 600px) {
+      
+    .main-container {
+        padding: 10px;
+        width: 70%;
+        top: 40%;
+        left: 15%;
+    }
+
+    .content-container {
+    font-size: 15px;
+    text-align: center;
+    }
+
+    .buttons-container {
+    width: 100%;
+    }
+  }
+

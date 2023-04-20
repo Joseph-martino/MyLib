@@ -19,6 +19,7 @@ import { PaginationBarComponent } from './pagination-bar/pagination-bar.componen
 import { LoaderComponent } from './loader/loader.component';
 import { ToastComponent } from './toast/toast.component';
 import { ModalComponent } from './modal/modal.component';
+import { MobileNavigationComponent } from './mobile-navigation/mobile-navigation.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { ModalComponent } from './modal/modal.component';
     PaginationBarComponent,
     LoaderComponent,
     ToastComponent,
-    ModalComponent
+    ModalComponent,
+    MobileNavigationComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +44,7 @@ import { ModalComponent } from './modal/modal.component';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
-    NgxPaginationModule
+    NgxPaginationModule,
   ],
   exports: [
     MatProgressSpinnerModule

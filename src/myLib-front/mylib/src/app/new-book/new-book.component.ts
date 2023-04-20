@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Book } from '../models/book.model';
 import { BookService } from '../services/book.service';
@@ -14,23 +14,58 @@ export class NewBookComponent implements OnInit{
   bookForm!: FormGroup;
   message!: string;
   success!: boolean;
+  book: Book;
 
-  constructor(private bookService: BookService,
-    private formBuilder: FormBuilder){
+  constructor(private bookService: BookService){
+      this.book = {
+        id: -1,
+        title: '',
+        author: {
+          fullName: ''
+        },
+        illustrator: {
+          fullName:''
+        },
+        editor: {
+          name:''
+        },
+        collection: {
+          name:''
+        }
+      }
   }
 
   ngOnInit(): void {
     this.message = "Le livre a été crée avec succès";
     this.success = false;
-    this.bookForm = this.formBuilder.group(
-      {
-        title: [null, Validators.required],
-        authorName: [null, Validators.required],
-        illustratorName: [null, Validators.required],
-        editorName: [null, Validators.required],
-        collectionName: [null, Validators.required],
-      }
-    );
+
+    this.bookForm = new FormGroup({
+      title: new FormControl(this.book.title, [Validators.required]),
+      authorName: new FormControl(this.book.author.fullName, [Validators.required]),
+      illustratorName: new FormControl(this.book.illustrator.fullName, [Validators.required]),
+      editorName: new FormControl(this.book.editor.name, [Validators.required]),
+      collectionName: new FormControl(this.book.collection.name, [Validators.required])
+    });
+  }
+
+  get title() {
+    return this.bookForm.get('title');
+  }
+
+  get authorName() {
+    return this.bookForm.get('authorName');
+  }
+
+  get illustratorName() {
+    return this.bookForm.get('illustratorName');
+  }
+
+  get editorName() {
+    return this.bookForm.get('editorName');
+  }
+
+  get collectionName() {
+    return this.bookForm.get('collectionName');
   }
 
   onSubmitForm():void{
