@@ -82,12 +82,11 @@ export class SingleBookComponent implements OnInit {
   }
 
   onSubmitForm(): void {
-    this.success = false;
     this.bookService
       .updateBook(this.snapId, this.updateForm.value)
-      .pipe(tap(() => this.router.navigateByUrl(`/books/${this.snapId}`)))
+      .pipe(tap(() => this.router.navigateByUrl(`/books`)))
       .subscribe();
-    //setTimeout(() => (this.success = false), 3000);
+
   }
 
   onCloseModal(value: boolean) {

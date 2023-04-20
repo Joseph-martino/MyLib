@@ -1,5 +1,19 @@
   @import 'colors';
   @import 'mixins';
+
+  .main-container {
+    display: block;
+  }
+
+  .book-card {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  .title-wrapper {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
   
   .book-card, .update-book-form {
       box-sizing: border-box;
@@ -15,6 +29,7 @@
 
   .update-book-form {
     padding: 5px;
+    border-radius: 10px;
   }
 
   .title-wrapper {
@@ -171,6 +186,14 @@ input::placeholder {
 }
 
 @media only screen and (max-width: 600px) {
+
+  .main-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   .book-card {
     width: 90%;

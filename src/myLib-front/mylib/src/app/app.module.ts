@@ -44,7 +44,7 @@ import { MobileNavigationComponent } from './mobile-navigation/mobile-navigation
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
-    NgxPaginationModule,
+    NgxPaginationModule
   ],
   exports: [
     MatProgressSpinnerModule
