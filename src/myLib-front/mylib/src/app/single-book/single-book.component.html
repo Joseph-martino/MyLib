@@ -191,3 +191,11 @@
   <!-- <app-toast *ngIf="success" [message]="message"></app-toast>
             <app-modal *ngIf="isDeleted" (onDeleted)="onCloseModal($event)"></app-modal> -->
 </div>
+
+<app-delete-modal id="test">
+  <h1>A tall modal popup</h1>
+  <p style="padding-bottom: 1500px">
+    Close with the button below or by clicking the background.
+  </p>
+  <button (click)="modalService.close()">Close</button>
+</app-delete-modal>

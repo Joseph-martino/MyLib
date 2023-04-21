@@ -21,6 +21,7 @@ import { ToastComponent } from './toast/toast.component';
 import { ModalComponent } from './modal/modal.component';
 import { MobileNavigationComponent } from './mobile-navigation/mobile-navigation.component';
 import { TabletNavigationComponent } from './tablet-navigation/tablet-navigation.component';
+import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { TabletNavigationComponent } from './tablet-navigation/tablet-navigation
     ToastComponent,
     ModalComponent,
     MobileNavigationComponent,
-    TabletNavigationComponent
+    TabletNavigationComponent,
+    DeleteModalComponent
   ],
   imports: [
     BrowserModule,

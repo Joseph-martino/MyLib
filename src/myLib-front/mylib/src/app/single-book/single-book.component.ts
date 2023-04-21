@@ -10,6 +10,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { ModalService } from '../services/modal.service';
 
 @Component({
   selector: 'app-single-book',
@@ -23,12 +24,14 @@ export class SingleBookComponent implements OnInit {
   success!: boolean;
   isModified!: boolean;
   isDeleted!: boolean;
+  bodyText = 'This text can be updated in modal 1';
 
   constructor(
     private bookService: BookService,
     private route: ActivatedRoute,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    protected modalService: ModalService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -39,10 +42,16 @@ export class SingleBookComponent implements OnInit {
     this.book = await lastValueFrom(this.bookService.getBookById(this.snapId));
     this.updateForm = new FormGroup({
       title: new FormControl(this.book.title, [Validators.required]),
-      authorName: new FormControl(this.book.author.fullName, [Validators.required]),
-      illustratorName: new FormControl(this.book.illustrator.fullName, [Validators.required]),
+      authorName: new FormControl(this.book.author.fullName, [
+        Validators.required,
+      ]),
+      illustratorName: new FormControl(this.book.illustrator.fullName, [
+        Validators.required,
+      ]),
       editorName: new FormControl(this.book.editor.name, [Validators.required]),
-      collectionName: new FormControl(this.book.collection.name, [Validators.required])
+      collectionName: new FormControl(this.book.collection.name, [
+        Validators.required,
+      ]),
     });
   }
 
@@ -70,6 +79,7 @@ export class SingleBookComponent implements OnInit {
 
   onDeleteBook(): void {
     this.isDeleted = true;
+    this.modalService.open('test');
   }
 
   onUpdateBook(): void {
@@ -86,7 +96,6 @@ export class SingleBookComponent implements OnInit {
       .updateBook(this.snapId, this.updateForm.value)
       .pipe(tap(() => this.router.navigateByUrl(`/books`)))
       .subscribe();
-
   }
 
   onCloseModal(value: boolean) {
