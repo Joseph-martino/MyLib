@@ -65,7 +65,8 @@
   display: none;
 }
 
-@media only screen and (max-width: 600px) {
+//Phone
+@media only screen and (min-width: 320px) and (max-width: 480px) {
 
   .search-bars-container {
     display: none;
@@ -74,4 +75,18 @@
   .grid {
     grid-template-columns: repeat(1, 1fr);
   }
+}
+
+//tablet
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+
+  .search-bars-container {
+    display: none;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+
 }

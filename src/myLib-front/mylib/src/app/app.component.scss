@@ -7,11 +7,41 @@ app-mobile-navigation {
     display: none;
 }
 
-@media only screen and (max-width: 600px) {
+app-tablet-navigation {
+    display: none;
+}
+
+//Phone
+@media only screen and (min-width: 320px) and (max-width: 480px) {
 
     app-mobile-navigation {
         display: block;
     }
-  
+
+  }
+
+  //Tablet
+  @media only screen and (min-width: 481px) and (max-width: 768px)  {
+
+    app-header {
+        display: none;
+    }
+
+    .component-wrapper {
+        display: flex;
+        height: 100%;
+    }
+
+    .content-container {
+        width: 70%;
+    }
+
+    app-mobile-navigation {
+        display: none;
+    }
+    app-tablet-navigation {
+        display: block;
+        width: 30%;
+    }
 
   }

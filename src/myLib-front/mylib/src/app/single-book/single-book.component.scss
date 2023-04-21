@@ -238,3 +238,26 @@ input::placeholder {
   }
 
 }
+
+  //Tablet
+  @media only screen and (min-width: 481px) and (max-width: 768px)  {
+
+    .main-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+
+
+    .book-card, .update-book-form {
+      width: 90%;
+    }
+
+    .form {
+      width: 100%;
+    }
+
+  }
+
+

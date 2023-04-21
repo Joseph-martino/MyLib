@@ -92,3 +92,23 @@ h3 {
     @include styleButton($fontainBlue);
     padding: 10px;
 }
+
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+
+    .book-title {
+        font-size: 16px;
+    }
+
+    .information-field {
+        font-size: 12px;
+    }
+
+    .information-row {
+        h3 {
+            font-size: 11px;
+        }
+    }
+
+
+
+}

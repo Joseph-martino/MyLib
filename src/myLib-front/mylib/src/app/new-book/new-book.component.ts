@@ -69,9 +69,16 @@ export class NewBookComponent implements OnInit{
   }
 
   onSubmitForm():void{
-    this.bookService.addBook(this.bookForm.value).subscribe();
     this.success = true;
     setTimeout(() => this.success = false, 3000);
+    this.book.title =  this.title?.value;
+    this.book.author.fullName =  this.authorName?.value;
+    this.book.illustrator.fullName =  this.illustratorName?.value;
+    this.book.editor.name =  this.editorName?.value;
+    this.book.collection.name =  this.collectionName?.value;
+    
+    console.log(this.bookForm.value);
+    this.bookService.addBook(this.bookForm.value).subscribe();
   }
 
 }

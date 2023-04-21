@@ -35,6 +35,13 @@
       height: 100%;
       background-color: #90FFEB;
     }
-  
-
   }
+
+   //Tablet
+   @media only screen and (min-width: 481px) and (max-width: 768px)  {
+
+    .landing-block {
+      height: 100%;
+      justify-content: center;
+    }
+   }

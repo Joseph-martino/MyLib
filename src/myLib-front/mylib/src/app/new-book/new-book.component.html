@@ -1,133 +1,141 @@
-<div class="form-card">
-  <div class="header-previous-button-container">
-    <a routerLink="/books" routerLinkActive="active"><span>&#11013;</span></a>
-  </div>
-  <h2>NOUVEAU LIVRE</h2>
-  <div class="previous-button-container">
-    <a routerLink="/books" routerLinkActive="active"><span>&#11013;</span></a>
-  </div>
-  <form class="form" [formGroup]="bookForm" (ngSubmit)="onSubmitForm()">
-    <div class="form-group">
-      <label class="bold label-color" for="title">Titre*</label>
-      <div class="input-container">
-        <div
-          *ngIf="title?.invalid && (title?.dirty || title?.touched)"
-          class="alert alert-danger"
-        >
-          <span *ngIf="title?.errors?.['required']" class="error-message"
-            >Le titre est requis</span
-          >
-        </div>
-        <input
-          class="form-input"
-          id="title"
-          type="text"
-          placeholder="Ex: Les 3 mousquetaires"
-          formControlName="title"
-        />
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="bold label-color" for="author-name">Auteur*</label>
-      <div class="input-container">
-        <div
-          *ngIf="
-            authorName?.invalid && (authorName?.dirty || authorName?.touched)
-          "
-          class="alert alert-danger"
-        >
-          <span *ngIf="authorName?.errors?.['required']" class="error-message"
-            >Le nom de l'auteur est requis</span
-          >
-        </div>
-        <input
-          class="form-input"
-          id="author-name"
-          type="text"
-          placeholder="Ex: Nadine Biloivanenko"
-          formControlName="authorName"
-        />
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="bold label-color" for="illustrator-name"
-        >Illustrateur*</label
-      >
-      <div class="input-container">
-        <div
-          *ngIf="
-            illustratorName?.invalid &&
-            (illustratorName?.dirty || illustratorName?.touched)
-          "
-          class="alert alert-danger"
-        >
-          <span
-            *ngIf="illustratorName?.errors?.['required']"
-            class="error-message"
-            >Le nom de l'illustrateur est requis</span
-          >
-        </div>
-        <input
-          class="form-input"
-          id="illustrator-name"
-          type="text"
-          placeholder="Ex: Anthony Lerouge"
-          formControlName="illustratorName"
-        />
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="bold label-color" for="editor-name">Editeur*</label>
-      <div class="input-container">
-        <div
-          *ngIf="
-            editorName?.invalid && (editorName?.dirty || editorName?.touched)
-          "
-          class="alert alert-danger"
-        >
-          <span *ngIf="editorName?.errors?.['required']" class="error-message"
-            >Le nom de l'éditeur est requis</span
-          >
-        </div>
-        <input
-          class="form-input"
-          id="editor-name"
-          type="text"
-          placeholder="Ex: Hanuman"
-          formControlName="editorName"
-        />
-      </div>
-    </div>
+<div class="new-book-main-container">
 
-    <div class="form-group">
-      <label class="bold label-color" for="collection-name">Collection*</label>
-      <div class="input-container">
-        <div
-          *ngIf="
-            collectionName?.invalid &&
-            (collectionName?.dirty || collectionName?.touched)
-          "
-          class="alert alert-danger"
-        >
-          <span
-            *ngIf="collectionName?.errors?.['required']"
-            class="error-message"
-            >Le nom de la collection est requis</span
+  <div class="form-card">
+    <div class="header-previous-button-container">
+      <a routerLink="/books" routerLinkActive="active"><span>&#11013;</span></a>
+    </div>
+    <h2>NOUVEAU LIVRE</h2>
+    <div class="previous-button-container">
+      <a routerLink="/books" routerLinkActive="active"><span>&#11013;</span></a>
+    </div>
+    <form class="form" [formGroup]="bookForm" (ngSubmit)="onSubmitForm()">
+      <div class="form-group">
+        <label class="bold label-color" for="title">Titre*</label>
+        <div class="input-container">
+          <div
+            *ngIf="title?.invalid && (title?.dirty || title?.touched)"
+            class="alert alert-danger"
           >
+            <span *ngIf="title?.errors?.['required']" class="error-message"
+              >Le titre est requis</span
+            >
+          </div>
+          <input
+            class="form-input"
+            id="title"
+            type="text"
+            placeholder="Ex: Les 3 mousquetaires"
+            formControlName="title"
+          />
         </div>
-        <input
-          class="form-input"
-          id="collection-name"
-          type="text"
-          placeholder="Ex: Hachette"
-          formControlName="collectionName"
-        />
       </div>
-    </div>
-    <div class="action-buttons">
-      <button type="submit" [disabled]="bookForm.invalid">Enregistrer</button>
-    </div>
-  </form>
+      <div class="form-group">
+        <label class="bold label-color" for="author-name">Auteur*</label>
+        <div class="input-container">
+          <div
+            *ngIf="
+              authorName?.invalid && (authorName?.dirty || authorName?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <span *ngIf="authorName?.errors?.['required']" class="error-message"
+              >Le nom de l'auteur est requis</span
+            >
+          </div>
+          <input
+            class="form-input"
+            id="author-name"
+            type="text"
+            placeholder="Ex: Nadine Biloivanenko"
+            formControlName="authorName"
+          />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="bold label-color" for="illustrator-name"
+          >Illustrateur*</label
+        >
+        <div class="input-container">
+          <div
+            *ngIf="
+              illustratorName?.invalid &&
+              (illustratorName?.dirty || illustratorName?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <span
+              *ngIf="illustratorName?.errors?.['required']"
+              class="error-message"
+              >Le nom de l'illustrateur est requis</span
+            >
+          </div>
+          <input
+            class="form-input"
+            id="illustrator-name"
+            type="text"
+            placeholder="Ex: Anthony Lerouge"
+            formControlName="illustratorName"
+          />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="bold label-color" for="editor-name">Editeur*</label>
+        <div class="input-container">
+          <div
+            *ngIf="
+              editorName?.invalid && (editorName?.dirty || editorName?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <span *ngIf="editorName?.errors?.['required']" class="error-message"
+              >Le nom de l'éditeur est requis</span
+            >
+          </div>
+          <input
+            class="form-input"
+            id="editor-name"
+            type="text"
+            placeholder="Ex: Hanuman"
+            formControlName="editorName"
+          />
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label class="bold label-color" for="collection-name">Collection*</label>
+        <div class="input-container">
+          <div
+            *ngIf="
+              collectionName?.invalid &&
+              (collectionName?.dirty || collectionName?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <span
+              *ngIf="collectionName?.errors?.['required']"
+              class="error-message"
+              >Le nom de la collection est requis</span
+            >
+          </div>
+          <input
+            class="form-input"
+            id="collection-name"
+            type="text"
+            placeholder="Ex: Hachette"
+            formControlName="collectionName"
+          />
+        </div>
+      </div>
+      <div class="action-buttons">
+        <button type="submit" [disabled]="bookForm.invalid">Enregistrer</button>
+      </div>
+    </form>
+  </div>
+  
+  <app-toast [message]="message" *ngIf="success"></app-toast>
+
 </div>
 
-<app-toast [message]="message" *ngIf="success"></app-toast>
+
+
+

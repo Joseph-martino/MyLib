@@ -20,6 +20,7 @@ import { LoaderComponent } from './loader/loader.component';
 import { ToastComponent } from './toast/toast.component';
 import { ModalComponent } from './modal/modal.component';
 import { MobileNavigationComponent } from './mobile-navigation/mobile-navigation.component';
+import { TabletNavigationComponent } from './tablet-navigation/tablet-navigation.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { MobileNavigationComponent } from './mobile-navigation/mobile-navigation
     LoaderComponent,
     ToastComponent,
     ModalComponent,
-    MobileNavigationComponent
+    MobileNavigationComponent,
+    TabletNavigationComponent
   ],
   imports: [
     BrowserModule,
