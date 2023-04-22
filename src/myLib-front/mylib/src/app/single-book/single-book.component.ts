@@ -79,7 +79,7 @@ export class SingleBookComponent implements OnInit {
 
   onDeleteBook(): void {
     this.isDeleted = true;
-    this.modalService.open('test');
+    this.modalService.open('delete-modal');
   }
 
   onUpdateBook(): void {

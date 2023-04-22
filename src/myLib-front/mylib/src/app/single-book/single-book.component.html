@@ -192,10 +192,19 @@
             <app-modal *ngIf="isDeleted" (onDeleted)="onCloseModal($event)"></app-modal> -->
 </div>
 
-<app-delete-modal id="test">
-  <h1>A tall modal popup</h1>
-  <p style="padding-bottom: 1500px">
-    Close with the button below or by clicking the background.
-  </p>
-  <button (click)="modalService.close()">Close</button>
+<app-delete-modal id="delete-modal">
+  <div class="main-container">
+    <div class="close-button-container">
+        <button (click)="modalService.close()" class="close-modal-button">&#10006;</button>
+    </div>
+    <div class="content-container">
+        <h2>Etes-vous sur de vouloir supprimer le livre ?</h2>
+        <div class="modal-buttons-container">
+            <button (click)="onDeleteBook()" class="validation-button">Supprimer</button>
+            <button (click)="modalService.close()" class="delete-button">Annuler</button>
+        </div>
+    </div>
+</div>
+
+<!--app-toast [message]="message" *ngIf="success"></app-toast-->
 </app-delete-modal>

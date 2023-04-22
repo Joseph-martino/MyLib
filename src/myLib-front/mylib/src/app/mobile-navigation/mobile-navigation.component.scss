@@ -1,0 +1,32 @@
+@import 'colors';
+@import 'fonts';
+
+.mobile-navigation {
+    display: flex;
+    justify-content: center;
+    background: $gradientBlue;
+    color: $white;
+    padding: 20px;
+}
+
+.links-wrapper {
+    display: flex;
+    width: 70%;
+    justify-content: space-around;
+}
+
+.link-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    a {
+        text-decoration: none;
+        color: white;
+    }
+}
+
+.icon-home, .icon-books, .icon-plus {
+    font-size: 25px;
+}

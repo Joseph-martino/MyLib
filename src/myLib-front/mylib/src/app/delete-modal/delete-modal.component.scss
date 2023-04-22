@@ -18,11 +18,17 @@ app-delete-modal {
 
         /* enables scrolling for tall modals */
         overflow: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .d-modal-body {
         padding: 20px;
         background: #fff;
+        width: 40%;
+        height: 25%;
+        border-radius: 20px;
     }
 }
 

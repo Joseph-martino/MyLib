@@ -185,6 +185,35 @@ input::placeholder {
     border-color: red !important;
 }
 
+.close-button-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.close-modal-button {
+  border: none;
+  background-color: $transparent;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    h2 {
+      color: $darkLiver;
+    }
+}
+
+.modal-buttons-container {
+  display: flex;
+  justify-content: space-around;
+  width: 70%;
+}
+
 @media only screen and (max-width: 600px) {
 
   .main-container {
@@ -243,10 +272,27 @@ input::placeholder {
   @media only screen and (min-width: 481px) and (max-width: 768px)  {
 
     .main-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      width: 100%;
+      display: block;
       height: 100%;
+    }
+
+    .close-button-container {
+      display: flex;
+      width: 100%;
+    }
+
+    .content-container {
+      justify-content: space-around;
+
+      h2 {
+        font-size: 15px;
+      text-align: center;
+      }
+    }
+
+    .modal-buttons-container {
+      width: 100%;
     }
 
 
