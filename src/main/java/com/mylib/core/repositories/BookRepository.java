@@ -70,7 +70,7 @@ public class BookRepository implements IBookRepository{
 			queryKeysValues.put("collectionName", collectionName);
 		}
 		
-		queryString = queryString + "ORDER BY b.id ASC";
+		queryString = queryString + " ORDER BY b.id ASC";
 		
 		TypedQuery<Book> typedQuery = this.entityManager.createQuery(queryString,Book.class);
 		for(Map.Entry<String, String> setKeyValue: queryKeysValues.entrySet()) {
