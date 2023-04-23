@@ -1,8 +1,31 @@
 <div class="search-bars-container">
-    <app-single-search-bar (authorSearched)="getBooksByAuthorName($event)"></app-single-search-bar>
-    <app-single-search-bar (authorSearched)="getBooksByAuthorName($event)"></app-single-search-bar>
-    <app-single-search-bar (authorSearched)="getBooksByAuthorName($event)"></app-single-search-bar>
-    <app-single-search-bar (authorSearched)="getBooksByAuthorName($event)"></app-single-search-bar>
+    <div class="input-container">
+        <app-single-search-bar (infoSearched)="getAuthorName($event)"></app-single-search-bar>
+        <label class="label" for="fname" id="label-fname">
+            <div class="text">Auteur</div>
+        </label>
+    </div>
+
+    <div class="input-container">
+        <app-single-search-bar (infoSearched)="getIllustratorName($event)"></app-single-search-bar>
+        <label class="label" for="fname" id="label-fname">
+            <div class="text">Illustrateur</div>
+        </label>
+    </div>
+
+    <div class="input-container">
+        <app-single-search-bar (infoSearched)="getEditorName($event)"></app-single-search-bar>
+        <label class="label" for="fname" id="label-fname">
+            <div class="text">Editeur</div>
+        </label>
+    </div>
+
+    <div class="input-container">
+        <app-single-search-bar (infoSearched)="getCollectionName($event)"></app-single-search-bar>
+        <label class="label" for="fname" id="label-fname">
+            <div class="text">Collection</div>
+        </label>
+    </div>
 </div>
 
 <div class="grid">
@@ -10,7 +33,14 @@
     [book]="bookElement"></app-book>
 </div>
 
+<!--Ajouter un ngIf pour désactiver le loader quand les données sont affichées-->
 <div class="loader-container">
     <mat-spinner></mat-spinner>
 </div>
+
+<app-pagination-bar 
+    [totalNumberPage]="totalPagesNumber$ | async"
+    [currentPageNumber]="currentPageNumber"
+    (onSelectedPage)="getCurrentPage($event)"
+></app-pagination-bar>
 

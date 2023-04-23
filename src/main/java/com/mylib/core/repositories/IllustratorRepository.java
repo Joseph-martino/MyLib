@@ -12,7 +12,7 @@ import com.mylib.core.entities.Illustrator;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
-public interface IllustratorRepository extends CrudRepository<Illustrator, Long>{
+public interface IllustratorRepository extends CrudRepository<Illustrator, Long>, CustomizedIllustratorRepository{
 	
 	Illustrator getByFullName(String name);
 }

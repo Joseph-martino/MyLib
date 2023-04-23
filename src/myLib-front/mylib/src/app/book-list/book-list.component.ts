@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { BookService } from '../services/book.service';
 import { OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 import { Book } from '../models/book.model';
 
 
@@ -14,18 +14,56 @@ export class BookListComponent implements OnInit {
 
   books$!: Observable<Book[]>;
   authorName!: string;
-  constructor(private bookService: BookService){
+  illustratorName!: string;
+  editorName!: string;
+  collectionName!: string;
+  pageNumber: number = 1;
+  pageSize: number = 9;
+  totalPagesNumber$!: Observable<number>;
+  currentPageNumber: number;
 
+  constructor(private bookService: BookService){
+    this.currentPageNumber = 1;
   }
 
   ngOnInit(): void {
+    const totalNumberOfData = this.bookService.getCountData();
+    
+    this.totalPagesNumber$ = totalNumberOfData.pipe(
+      map(numberOfPage => Math.ceil(numberOfPage /this.pageSize)),
+    );
+
     //boolean =true et afficher le gif (on peut utiliser Angular material ???)
-    this.books$ = this.bookService.getAllBooks();
+    this.books$ = this.bookService.getBooksList(this.authorName, this.illustratorName, this.editorName, this.collectionName, this.pageNumber, this.pageSize);
     // dans une promise then=> boolean a false et on n'affiche plus le gif de chargement, avec les observables utiliser un pipe ????
   }
+  
 
-  getBooksByAuthorName(authorName: string){
-    this.books$ = this.bookService.getBookByAuthorName(authorName);
+  //pagination bar angular
+//https://javascript.plainenglish.io/create-a-simple-pagination-component-in-angular-17b909ea03e1
+
+  getCurrentPage(pageNumber: number){
+    this.currentPageNumber = pageNumber;
+    this.books$ = this.bookService.getBooksList(this.authorName, this.illustratorName, this.editorName, this.collectionName, this.currentPageNumber, this.pageSize);
   }
 
+  getAuthorName(authorName: string){
+    this.authorName = authorName;
+    this.books$ = this.bookService.getBooksList(this.authorName, this.illustratorName, this.editorName, this.collectionName, this.pageNumber, this.pageSize);
+  }
+
+  getIllustratorName(illustratorName: string){
+    this.illustratorName = illustratorName;
+    this.books$ = this.bookService.getBooksList(this.authorName, this.illustratorName, this.editorName, this.collectionName, this.pageNumber, this.pageSize);
+  }
+
+  getEditorName(editorName: string){
+    this.editorName = editorName;
+    this.books$ = this.bookService.getBooksList(this.authorName, this.illustratorName, this.editorName, this.collectionName, this.pageNumber, this.pageSize);
+  }
+
+  getCollectionName(collectionName: string){
+    this.collectionName = collectionName;
+    this.books$ = this.bookService.getBooksList(this.authorName, this.illustratorName, this.editorName, this.collectionName, this.pageNumber, this.pageSize);
+  }
 }

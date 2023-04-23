@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { Author } from "../models/author.model";
@@ -28,8 +28,37 @@ export class BookService {
         return this.http.get<Book>(`${this.url}/mylib/books/${id}`);
     }
 
-    getBookByAuthorName(authorName: string): Observable<Book[]>{
-        return this.http.get<Book[]>(`${this.url}/mylib/books/authorBookList/${authorName}`);
+    getBooksList(authorName: string, illustratorName: string, editorName: string, collectionName: string, pageNumber: number, pageSize: number): Observable<Book[]>{
+
+    // https://stackoverflow.com/questions/45470575/angular-4-httpclient-query-parameters
+    // On initialise l'objet params
+    let params = new HttpParams();
+
+    // On assigne les paramètres si ceux-ci existent
+    if (authorName) {
+        params = params.append('authorName', authorName);
+    }
+
+    if (illustratorName) {
+        params = params.append('illustratorName', illustratorName);
+    }
+
+    if (editorName) {
+        params = params.append('editorName', editorName);
+    }
+
+    if (collectionName) {
+        params = params.append('collectionName', collectionName);
+    }
+
+    params = params.append('pageNumber', pageNumber);
+    params = params.append('pageSize', pageSize);
+    //On ajoute l'objet params à la requêtes http get
+    return this.http.get<Book[]>(`${this.url}/mylib/books/authorBookList`, { params: params });
+    }
+
+    getCountData(): Observable<number> {
+        return this.http.get<number>(`${this.url}/mylib/books/total`);
     }
 
     getAllBooks(): Observable<Book[]>{

@@ -1,0 +1,14 @@
+<nav>
+    <ul>
+        <li><button (click)="goToPage(1)">Début</button>
+        </li>
+    
+
+        <li *ngFor="let number of createIntermediatePageNumbers()">
+            <button (click)="goToPage(number)">{{ number }}</button>
+        </li>
+        <li>
+            <button (click)="goToPage(totalNumberPage ?? 0)">Fin</button>
+        </li>
+    </ul>
+</nav>

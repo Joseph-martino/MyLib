@@ -13,6 +13,15 @@ public interface IBookRepository {
 	void updateBook(Book book);
 	void deleteAllFromDatabase();
 	List<Book> getAll();
-	List<Book> getBooksByAuthor(String authorName);
+	//List<Book> getBooksByAuthor(String authorName);
+	List<Book> getBooksListFromView(String authorName, String illustratorName, String editorNamer, String collectionName, int pageNumber, int pageSize);
+	void changeBookStatusToOk();
+	void changeBookStatusToToDelete();
+	void deleteBookWithStatusToDelete();
+	void deleteBookWithStatusInProgress();
+	void changeBookWithStatusToDeleteToOk();
+	void deleteBookWithStatusOk();
+	long getCountData();
+
 
 }
