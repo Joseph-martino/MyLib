@@ -25,6 +25,7 @@ import com.mylib.core.repositories.CollectionRepository;
 import com.mylib.core.repositories.EditorRepository;
 import com.mylib.core.repositories.IBookRepository;
 import com.mylib.core.repositories.IllustratorRepository;
+import com.mylib.core.enums.Status;
 
 @Service
 public class BookService {
@@ -58,8 +59,8 @@ public class BookService {
 		return booksDto;
 	}
 	
-	public List<BookDto> getBooksListTest(String authorName, String illustratorName, String editorName, String collectionName, int pageNumber, int pageSize){
-		List<Book> books = this.bookRepository.getBooksListFromView(authorName, illustratorName, editorName, collectionName, pageNumber, pageSize);
+	public List<BookDto> getAllBooksList(String authorName, String illustratorName, String editorName, String collectionName, int pageNumber, int pageSize){
+		List<Book> books = this.bookRepository.getAllBooksList(authorName, illustratorName, editorName, collectionName, pageNumber, pageSize);
 		List<BookDto> booksDto = new ArrayList<>();
 		for(Book book: books) {
 			BookDto bookDto = createBookDto(book);
@@ -103,6 +104,7 @@ public class BookService {
 		book.setIllustrator(illustrator);
 		book.setEditor(editor);
 		book.setCollection(collection);
+		book.setStatus(Status.OK.toString());
 		
 		this.bookRepository.createBook(book);
 		return bookDto;
@@ -113,6 +115,7 @@ public class BookService {
 	}
 	
 	public BookDto updateBook(BookDto bookDto) {
+		// récupérer l'id du livre existant 
 		Author author = new Author();
 		author.setFullName(bookDto.getAuthor().getFullName());
 		

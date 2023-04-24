@@ -18,7 +18,7 @@ export class ModalService {
 
   remove(modal: DeleteModalComponent) {
     // remove modal from array of active modals
-    this.modals = this.modals.filter((x) => x === modal);
+    this.modals = this.modals.filter((x) => x !== modal);
   }
 
   open(id: string) {

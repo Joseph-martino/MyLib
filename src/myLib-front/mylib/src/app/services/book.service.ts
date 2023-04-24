@@ -54,7 +54,7 @@ export class BookService {
     params = params.append('pageNumber', pageNumber);
     params = params.append('pageSize', pageSize);
     //On ajoute l'objet params à la requêtes http get
-    return this.http.get<Book[]>(`${this.url}/mylib/books/authorBookList`, { params: params });
+    return this.http.get<Book[]>(`${this.url}/mylib/books`, { params: params });
     }
 
     getCountData(): Observable<number> {

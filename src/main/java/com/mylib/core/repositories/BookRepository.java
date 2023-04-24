@@ -46,7 +46,7 @@ public class BookRepository implements IBookRepository{
 	}
 	
 	@Transactional
-	public List<Book> getBooksListFromView(String authorName, String illustratorName, String editorName, 
+	public List<Book> getAllBooksList(String authorName, String illustratorName, String editorName, 
 											String collectionName, int pageNumber, int pageSize) {
 		String queryString = "FROM Book b WHERE 1=1";
 		Map<String, String> queryKeysValues = new HashMap<>();
@@ -70,7 +70,7 @@ public class BookRepository implements IBookRepository{
 			queryKeysValues.put("collectionName", collectionName);
 		}
 		
-		queryString = queryString + "ORDER BY b.id ASC";
+		queryString = queryString + " ORDER BY b.id ASC";
 		
 		TypedQuery<Book> typedQuery = this.entityManager.createQuery(queryString,Book.class);
 		for(Map.Entry<String, String> setKeyValue: queryKeysValues.entrySet()) {

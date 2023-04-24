@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Book } from '../models/book.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, tap, map, lastValueFrom } from 'rxjs';
@@ -78,8 +78,15 @@ export class SingleBookComponent implements OnInit {
   // //https://angular.io/guide/form-validation
 
   onDeleteBook(): void {
-    this.isDeleted = true;
+    //this.isDeleted = true;
     this.modalService.open('delete-modal');
+  }
+
+  onConfirmDelete() {
+    this.bookService
+      .deleteBook(this.snapId)
+      .pipe(tap(() => this.router.navigateByUrl('/books')))
+      .subscribe();
   }
 
   onUpdateBook(): void {

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class CsvParser {
@@ -24,15 +25,15 @@ public class CsvParser {
 	private File folder;
 	
 	@Autowired
-	BookService bookService;
+	private BookService bookService;
 	@Autowired
-	AuthorService authorService;
+	private AuthorService authorService;
 	@Autowired
-	IllustratorService illustratorService;
+	private IllustratorService illustratorService;
 	@Autowired
-	EditorService editorService;
+	private EditorService editorService;
 	@Autowired
-	CollectionService collectionService;
+	private CollectionService collectionService;
 	
 	public File getFileFromFolder(File folder) {
 		File file = null;
@@ -115,6 +116,7 @@ public class CsvParser {
 		return fileNameWithoutExtension;
 	}
 	
+	@Transactional
 	public void changeDataStatusToToDelete() {
 		this.authorService.changeAuthorStatusToToDelete();
     	this.illustratorService.changeIllustratorStatusToToDelete();
@@ -123,6 +125,7 @@ public class CsvParser {
     	this.bookService.changeBookStatusToToDelete();
 	}
 	
+	@Transactional
 	public void changeDataStatusToOk() {
 		this.bookService.changeBookStatutToOk();
         this.authorService.changeAuthorStatutToOk();
@@ -131,6 +134,7 @@ public class CsvParser {
         this.collectionService.changeCollectionStatutToOk();
 	}
 	
+	@Transactional
 	public void deleteDataWithStatusToDelete() {
 		this.bookService.deleteBookWithStatusToDelete();
         this.authorService.deleteAuthorWithStatusToDelete();
@@ -139,6 +143,7 @@ public class CsvParser {
         this.collectionService.deleteCollectionWithStatusToDelete();
 	}
 	
+	@Transactional
 	public void deleteDataWithStatusInProgress() {
 		this.bookService.deleteBookWithStatusInProgress();
     	this.authorService.deleteAuthorWithStatusInProgress();
@@ -147,6 +152,7 @@ public class CsvParser {
     	this.collectionService.deleteCollectionWithStatusInProgress();
 	}
 	
+	@Transactional
 	public void deleteDataWithStatusOk() {
 		this.bookService.deleteBookWithStatusOk();
     	this.authorService.deleteAuthorWithStatusOk();
@@ -155,6 +161,7 @@ public class CsvParser {
     	this.collectionService.deleteCollectionWithStatusOk();
 	}
 	
+	@Transactional
 	public void changeDataStatusFromToDeleteToOk() {
 		this.bookService.changeBookWithStatusToDeleteToOk();
     	this.authorService.changeAuthorWithStatusToDeleteToOk();

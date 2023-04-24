@@ -24,10 +24,10 @@ public class BookResource {
 	@Autowired
 	private BookService bookService;
 	
-	@GetMapping
-	public List<BookDto> getBooksList(){
-		return this.bookService.getBooksList();
-	}
+//	@GetMapping
+//	public List<BookDto> getBooksList(){
+//		return this.bookService.getBooksList();
+//	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<BookDto> getById(@PathVariable("id") long id) {
@@ -35,7 +35,7 @@ public class BookResource {
 		return ResponseEntity.status(HttpStatus.OK).body(bookDto);//Pour changer le statut code de la requête, ici 200 pour la lecture
 	}
 	
-	@GetMapping("/authorBookList")
+	@GetMapping
 	public List<BookDto> getBookListTest(@RequestParam(name="authorName", required = false) String authorName,
 										@RequestParam(name="illustratorName", required = false) String illustratorName,
 										@RequestParam( name="editorName", required = false) String editorName,
@@ -43,7 +43,7 @@ public class BookResource {
 										@RequestParam( name="pageNumber") int pageNumber,
 										@RequestParam( name="pageSize") int pageSize
 										){
-		return this.bookService.getBooksListTest(authorName, illustratorName, editorName, collectionName, pageNumber, pageSize);
+		return this.bookService.getAllBooksList(authorName, illustratorName, editorName, collectionName, pageNumber, pageSize);
 	}
 	
 	@GetMapping("/total")

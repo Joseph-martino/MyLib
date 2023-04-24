@@ -14,7 +14,6 @@ public interface IBookRepository {
 	void deleteAllFromDatabase();
 	List<Book> getAll();
 	//List<Book> getBooksByAuthor(String authorName);
-	List<Book> getBooksListFromView(String authorName, String illustratorName, String editorNamer, String collectionName, int pageNumber, int pageSize);
 	void changeBookStatusToOk();
 	void changeBookStatusToToDelete();
 	void deleteBookWithStatusToDelete();
@@ -22,6 +21,7 @@ public interface IBookRepository {
 	void changeBookWithStatusToDeleteToOk();
 	void deleteBookWithStatusOk();
 	long getCountData();
+	public List<Book> getAllBooksList(String authorName, String illustratorName, String editorNamer, String collectionName, int pageNumber, int pageSize);
 
 
 }
