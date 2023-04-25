@@ -53,7 +53,7 @@ public class CsvParser {
 		return null;
 	}
 	
-	@Scheduled(cron = "0 * * * * *")
+	@Scheduled(fixedDelay = 1000000, initialDelay = 2000)
 	public void getBooksList() {
 		
 		File sourceFile = getFileFromFolder(folder);

@@ -241,7 +241,7 @@ public class BookService {
     	
     	String authorFullName = !"".equals(bookInformationsRow[1]) ? bookInformationsRow[1] : "Nom inconnu";
 
-		Author author = this.authorRepository.getByFullName(authorFullName); // demander de chercher l'auteur font le statut est in progress
+		Author author = this.authorRepository.getAuthorByNameAndStatus(authorFullName); // demander de chercher l'auteur font le statut est in progress
 		 if(author == null) {
 			author = new Author();
 			author.setFullName(authorFullName);
