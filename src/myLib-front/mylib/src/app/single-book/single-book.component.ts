@@ -101,7 +101,7 @@ export class SingleBookComponent implements OnInit {
   onSubmitForm(): void {
     this.bookService
       .updateBook(this.snapId, this.updateForm.value)
-      .pipe(tap(() => this.router.navigateByUrl(`/books`)))
+      .pipe(tap(() => this.router.navigateByUrl(`/books`))) //(d) => this.book = d)
       .subscribe();
   }
 

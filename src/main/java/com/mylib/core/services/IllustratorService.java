@@ -15,7 +15,7 @@ public class IllustratorService {
 	}
 	
 	public void changeIllustratorStatusToToDelete() {
-		this.illustratorRepository.changeIllustratorWithStatusToDeleteToOk();	
+		this.illustratorRepository.changeIllustratorStatusToToDelete();	
 	}
 	
 	public void deleteIllustratorWithStatusToDelete() {

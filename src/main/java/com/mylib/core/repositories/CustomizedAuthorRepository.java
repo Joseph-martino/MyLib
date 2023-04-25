@@ -1,5 +1,7 @@
 package com.mylib.core.repositories;
 
+import com.mylib.core.entities.Author;
+
 public interface CustomizedAuthorRepository {
 	
 	void changeAuthorStatusToOk();
@@ -8,5 +10,6 @@ public interface CustomizedAuthorRepository {
 	void deleteAuthorWithStatusToDelete();
 	void deleteAuthorWithStatusInProgress();
 	void deleteAuthorWithStatusOk();
+	void createAuthor(Author author);
 
 }

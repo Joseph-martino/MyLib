@@ -78,10 +78,6 @@ public class BookService {
 		return this.bookRepository.getCountData();
 	}
 	
-//	public List<Book> getBooksByAuthorName(String authorName){
-//		return this.bookRepository.getBooksByAuthor(authorName);
-//	}
-	
 	public BookDto createBook(BookDto bookDto) {
 		//Vérifier si l'auteur, l'illustrateur.... existent et si oui récupère l'id
 		//book.setAuthor (Author que j'ai récupéré depuis la base de données)
@@ -115,26 +111,54 @@ public class BookService {
 	}
 	
 	public BookDto updateBook(BookDto bookDto) {
-		// récupérer l'id du livre existant 
-		Author author = new Author();
-		author.setFullName(bookDto.getAuthor().getFullName());
-		
 		Illustrator illustrator = new Illustrator();
-		illustrator.setFullName(bookDto.getIllustrator().getFullName());
-		
 		Editor editor = new Editor();
-		editor.setName(bookDto.getEditor().getName());
-		
 		Collection collection = new Collection();
-		collection.setName(bookDto.getCollection().getName());
-		
 		Book book = new Book();
+		Author authorFromDatabase = this.authorRepository.getByFullName(bookDto.getAuthor().getFullName());
+		if(authorFromDatabase != null) {
+			book.setAuthor(authorFromDatabase);
+		} else {
+			Author author = new Author();
+			author.setFullName(bookDto.getAuthor().getFullName());
+			author.setStatus(Status.OK.toString());
+			this.authorRepository.createAuthor(author);
+			book.setAuthor(author);
+		}
+		
+		Illustrator illustratorFromDatabase = this.illustratorRepository.getByFullName(bookDto.getIllustrator().getFullName());
+		if(illustratorFromDatabase != null) {
+			book.setIllustrator(illustratorFromDatabase);
+		} else {
+			illustrator.setFullName(bookDto.getIllustrator().getFullName());
+			illustrator.setStatus(Status.OK.toString());
+			this.illustratorRepository.createIllustrator(illustrator);
+			book.setIllustrator(illustrator);
+		}
+		
+		Editor editorFromDatabase = this.editorRepository.getByName(bookDto.getEditor().getName());
+		if(editorFromDatabase != null) {
+			book.setEditor(editorFromDatabase);
+		} else {
+			editor.setName(bookDto.getEditor().getName());
+			editor.setStatus(Status.OK.toString());
+			this.editorRepository.createEditor(editor);
+			book.setEditor(editor);
+		}
+
+		Collection collectionFromDatabase = this.collectionRepository.getByName(bookDto.getCollection().getName());
+		if(collectionFromDatabase != null) {
+			book.setCollection(collectionFromDatabase);
+		} else {
+			collection.setName(bookDto.getCollection().getName());
+			collection.setStatus(Status.OK.toString());
+			this.collectionRepository.createCollection(collection);
+			book.setCollection(collection);
+		}
+		
 		book.setId(bookDto.getId());
 		book.setTitle(bookDto.getTitle());
-		book.setAuthor(author);
-		book.setIllustrator(illustrator);
-		book.setEditor(editor);
-		book.setCollection(collection);
+		book.setStatus(Status.OK.toString());
 		this.bookRepository.updateBook(book);
 		return bookDto;
 	}
@@ -217,7 +241,7 @@ public class BookService {
     	
     	String authorFullName = !"".equals(bookInformationsRow[1]) ? bookInformationsRow[1] : "Nom inconnu";
 
-		Author author = this.authorRepository.getByFullName(authorFullName);
+		Author author = this.authorRepository.getByFullName(authorFullName); // demander de chercher l'auteur font le statut est in progress
 		 if(author == null) {
 			author = new Author();
 			author.setFullName(authorFullName);

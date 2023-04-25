@@ -1,5 +1,7 @@
 package com.mylib.core.repositories;
 
+import com.mylib.core.entities.Illustrator;
+
 public interface CustomizedIllustratorRepository {
 	void changeIllustratorStatusToOk();
 	void changeIllustratorWithStatusToDeleteToOk();
@@ -7,5 +9,5 @@ public interface CustomizedIllustratorRepository {
 	void deleteIllustratorWithStatusToDelete();
 	void deleteIllustratorWithStatusInProgress();
 	void deleteIllustratorWithStatusOk();
-
+	void createIllustrator(Illustrator illustrator);
 }

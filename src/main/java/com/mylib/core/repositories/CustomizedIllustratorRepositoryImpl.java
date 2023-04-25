@@ -2,6 +2,7 @@ package com.mylib.core.repositories;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mylib.core.entities.Illustrator;
 import com.mylib.core.enums.Status;
 
 import jakarta.persistence.EntityManager;
@@ -12,6 +13,11 @@ public class CustomizedIllustratorRepositoryImpl implements CustomizedIllustrato
 	
 	@PersistenceContext
 	private EntityManager entityManager;
+	
+	@Transactional
+	public void createIllustrator(Illustrator illustrator) {
+		this.entityManager.persist(illustrator);
+	}
 	
 	/**
 	 * Met à jour le status IN_PROGRESS en OK

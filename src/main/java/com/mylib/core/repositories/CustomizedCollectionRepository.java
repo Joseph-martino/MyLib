@@ -1,5 +1,7 @@
 package com.mylib.core.repositories;
 
+import com.mylib.core.entities.Collection;
+
 public interface CustomizedCollectionRepository {
 	
 	void changeCollectionStatusToOk();
@@ -8,5 +10,5 @@ public interface CustomizedCollectionRepository {
 	void deleteCollectionWithStatusToDelete();
 	void deleteCollectionWithStatusInProgress();
 	void deleteCollectionWithStatusOk();
-
+	void createCollection(Collection collection);
 }

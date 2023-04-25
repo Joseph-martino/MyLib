@@ -15,7 +15,7 @@ public class EditorService {
 	}
 	
 	public void changeEditorStatusToToDelete() {
-		this.editorRepository.changeEditorWithStatusToDeleteToOk();	
+		this.editorRepository.changeEditorStatusToToDelete();	
 	}
 	
 	public void deleteEditorWithStatusToDelete() {

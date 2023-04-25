@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { Book } from '../models/book.model';
 import { BookService } from '../services/book.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-book',
@@ -16,7 +17,8 @@ export class NewBookComponent implements OnInit{
   success!: boolean;
   book: Book;
 
-  constructor(private bookService: BookService){
+  constructor(private bookService: BookService,
+              private router: Router){
       this.book = {
         id: -1,
         title: '',
@@ -76,9 +78,9 @@ export class NewBookComponent implements OnInit{
     this.book.illustrator.fullName =  this.illustratorName?.value;
     this.book.editor.name =  this.editorName?.value;
     this.book.collection.name =  this.collectionName?.value;
-    
-    console.log(this.bookForm.value);
-    this.bookService.addBook(this.bookForm.value).subscribe();
+    this.bookService.addBook(this.bookForm.value)
+    .pipe(tap(() => this.router.navigateByUrl(`/books`)))
+    .subscribe();
   }
 
 }

@@ -2,6 +2,7 @@ package com.mylib.core.repositories;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mylib.core.entities.Author;
 import com.mylib.core.enums.Status;
 
 import jakarta.persistence.EntityManager;
@@ -13,6 +14,11 @@ public class CustomizedAuthorRepositoryImpl implements CustomizedAuthorRepositor
 	
 	@PersistenceContext
 	private EntityManager entityManager;
+	
+	@Transactional
+	public void createAuthor(Author author) {
+		this.entityManager.persist(author);
+	}
 	
 	/**
 	 * Met à jour le status IN_PROGRESS en OK

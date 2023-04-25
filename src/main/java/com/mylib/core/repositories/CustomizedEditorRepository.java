@@ -1,5 +1,7 @@
 package com.mylib.core.repositories;
 
+import com.mylib.core.entities.Editor;
+
 public interface CustomizedEditorRepository {
 	
 	void changeEditorStatusToOk();
@@ -8,5 +10,5 @@ public interface CustomizedEditorRepository {
 	void deleteEditorWithStatusToDelete();
 	void deleteEditorWithStatusInProgress();
 	void deleteEditorWithStatusOk();
-
+	void createEditor(Editor editor);
 }

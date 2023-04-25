@@ -2,6 +2,7 @@ package com.mylib.core.repositories;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mylib.core.entities.Editor;
 import com.mylib.core.enums.Status;
 
 import jakarta.persistence.EntityManager;
@@ -13,6 +14,11 @@ public class CustomizedEditorRepositoryImpl implements CustomizedEditorRepositor
 	
 	@PersistenceContext
 	private EntityManager entityManager;
+	
+	@Transactional
+	public void createEditor(Editor editor) {
+		this.entityManager.persist(editor);
+	}
 	
 	/**
 	 * Met à jour le status IN_PROGRESS en OK

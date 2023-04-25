@@ -116,7 +116,7 @@ public class CsvParser {
 		return fileNameWithoutExtension;
 	}
 	
-	@Transactional
+	
 	public void changeDataStatusToToDelete() {
 		this.authorService.changeAuthorStatusToToDelete();
     	this.illustratorService.changeIllustratorStatusToToDelete();
@@ -125,7 +125,7 @@ public class CsvParser {
     	this.bookService.changeBookStatusToToDelete();
 	}
 	
-	@Transactional
+	
 	public void changeDataStatusToOk() {
 		this.bookService.changeBookStatutToOk();
         this.authorService.changeAuthorStatutToOk();
@@ -134,7 +134,6 @@ public class CsvParser {
         this.collectionService.changeCollectionStatutToOk();
 	}
 	
-	@Transactional
 	public void deleteDataWithStatusToDelete() {
 		this.bookService.deleteBookWithStatusToDelete();
         this.authorService.deleteAuthorWithStatusToDelete();
