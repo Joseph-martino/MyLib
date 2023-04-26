@@ -1,7 +1,14 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Book } from '../models/book.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, tap, map, lastValueFrom } from 'rxjs';
+import {
+  Observable,
+  tap,
+  map,
+  lastValueFrom,
+  delay,
+  firstValueFrom,
+} from 'rxjs';
 import { OnInit } from '@angular/core';
 import { BookService } from '../services/book.service';
 import {
@@ -99,15 +106,20 @@ export class SingleBookComponent implements OnInit {
     this.isModified = false;
   }
 
-  onSubmitForm(): void {
-    this.bookService
-      .updateBook(this.snapId, this.updateForm.value)
-      .pipe(
-        tap(() => this.router.navigateByUrl(`/books/${this.snapId}`))) //(d) => this.book = d)
-      .subscribe();
-      this.success = true;
-      this.message = "Le livre a été modifié"
-      setTimeout(() => this.success = false, 3000);
+  async onSubmitForm(): Promise<void> {
+    this.book = await firstValueFrom(
+      this.bookService.updateBook(this.snapId, this.updateForm.value).pipe(
+        tap(async () => {
+          this.message = 'Le livre a été modifié';
+          this.success = true;
+        }),
+        delay(3000),
+        tap(() => {
+          this.isModified = false;
+          this.success = false;
+        })
+      )
+    );
   }
 
   onPreviousPage() {
