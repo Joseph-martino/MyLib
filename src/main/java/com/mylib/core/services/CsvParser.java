@@ -127,13 +127,14 @@ public class CsvParser {
 	
 	
 	public void changeDataStatusToOk() {
-		this.bookService.changeBookStatutToOk();
         this.authorService.changeAuthorStatutToOk();
         this.illustratorService.changeIllustratorStatutToOk();
         this.editorService.changeEditorStatutToOk();
         this.collectionService.changeCollectionStatutToOk();
+        this.bookService.changeBookStatutToOk();
 	}
 	
+
 	public void deleteDataWithStatusToDelete() {
 		this.bookService.deleteBookWithStatusToDelete();
         this.authorService.deleteAuthorWithStatusToDelete();
@@ -142,7 +143,7 @@ public class CsvParser {
         this.collectionService.deleteCollectionWithStatusToDelete();
 	}
 	
-	@Transactional
+	
 	public void deleteDataWithStatusInProgress() {
 		this.bookService.deleteBookWithStatusInProgress();
     	this.authorService.deleteAuthorWithStatusInProgress();
@@ -151,7 +152,7 @@ public class CsvParser {
     	this.collectionService.deleteCollectionWithStatusInProgress();
 	}
 	
-	@Transactional
+	
 	public void deleteDataWithStatusOk() {
 		this.bookService.deleteBookWithStatusOk();
     	this.authorService.deleteAuthorWithStatusOk();
@@ -160,12 +161,12 @@ public class CsvParser {
     	this.collectionService.deleteCollectionWithStatusOk();
 	}
 	
-	@Transactional
+	
 	public void changeDataStatusFromToDeleteToOk() {
-		this.bookService.changeBookWithStatusToDeleteToOk();
     	this.authorService.changeAuthorWithStatusToDeleteToOk();
     	this.illustratorService.changeIllustratorWithStatusToDeleteToOk();
     	this.editorService.changeEditorWithStatusToDeleteToOk();
     	this.collectionService.changeCollectionWithStatusToDeleteToOk();
+    	this.bookService.changeBookWithStatusToDeleteToOk();
 	}
 }

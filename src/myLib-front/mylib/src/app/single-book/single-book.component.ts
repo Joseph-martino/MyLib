@@ -24,7 +24,8 @@ export class SingleBookComponent implements OnInit {
   success!: boolean;
   isModified!: boolean;
   isDeleted!: boolean;
-  bodyText = 'This text can be updated in modal 1';
+  message!: string;
+  //bodyText = 'This text can be updated in modal 1';
 
   constructor(
     private bookService: BookService,
@@ -35,7 +36,7 @@ export class SingleBookComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    this.success = true;
+    this.success = false;
     this.isDeleted = false;
     this.isModified = false;
     this.snapId = +this.route.snapshot.params['id'];
@@ -101,12 +102,12 @@ export class SingleBookComponent implements OnInit {
   onSubmitForm(): void {
     this.bookService
       .updateBook(this.snapId, this.updateForm.value)
-      .pipe(tap(() => this.router.navigateByUrl(`/books`))) //(d) => this.book = d)
+      .pipe(
+        tap(() => this.router.navigateByUrl(`/books/${this.snapId}`))) //(d) => this.book = d)
       .subscribe();
-  }
-
-  onCloseModal(value: boolean) {
-    //this.isDeleted = value;
+      this.success = true;
+      this.message = "Le livre a été modifié"
+      setTimeout(() => this.success = false, 3000);
   }
 
   onPreviousPage() {

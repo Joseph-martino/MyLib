@@ -82,38 +82,6 @@ public class BookService {
 		//Vérifier si l'auteur, l'illustrateur.... existent et si oui récupère l'id
 		//book.setAuthor (Author que j'ai récupéré depuis la base de données)
 		//S'il non alors nouvelle instance de author et persist(author)
-		Author author = new Author();
-		author.setFullName(bookDto.getAuthor().getFullName());
-		
-		Illustrator illustrator = new Illustrator();
-		illustrator.setFullName(bookDto.getIllustrator().getFullName());
-		
-		Editor editor = new Editor();
-		editor.setName(bookDto.getEditor().getName());
-		
-		Collection collection = new Collection();
-		collection.setName(bookDto.getCollection().getName());
-		
-		Book book = new Book();
-		book.setTitle(bookDto.getTitle());
-		book.setAuthor(author);
-		book.setIllustrator(illustrator);
-		book.setEditor(editor);
-		book.setCollection(collection);
-		book.setStatus(Status.OK.toString());
-		
-		this.bookRepository.createBook(book);
-		return bookDto;
-	}
-	
-	public void createBook(Book book) {
-		this.bookRepository.createBook(book);
-	}
-	
-	public BookDto updateBook(BookDto bookDto) {
-		Illustrator illustrator = new Illustrator();
-		Editor editor = new Editor();
-		Collection collection = new Collection();
 		Book book = new Book();
 		Author authorFromDatabase = this.authorRepository.getByFullName(bookDto.getAuthor().getFullName());
 		if(authorFromDatabase != null) {
@@ -130,6 +98,7 @@ public class BookService {
 		if(illustratorFromDatabase != null) {
 			book.setIllustrator(illustratorFromDatabase);
 		} else {
+			Illustrator illustrator = new Illustrator();
 			illustrator.setFullName(bookDto.getIllustrator().getFullName());
 			illustrator.setStatus(Status.OK.toString());
 			this.illustratorRepository.createIllustrator(illustrator);
@@ -140,6 +109,7 @@ public class BookService {
 		if(editorFromDatabase != null) {
 			book.setEditor(editorFromDatabase);
 		} else {
+			Editor editor = new Editor();
 			editor.setName(bookDto.getEditor().getName());
 			editor.setStatus(Status.OK.toString());
 			this.editorRepository.createEditor(editor);
@@ -150,6 +120,73 @@ public class BookService {
 		if(collectionFromDatabase != null) {
 			book.setCollection(collectionFromDatabase);
 		} else {
+			Collection collection = new Collection();
+			collection.setName(bookDto.getCollection().getName());
+			collection.setStatus(Status.OK.toString());
+			this.collectionRepository.createCollection(collection);
+			book.setCollection(collection);
+		}
+		
+//		Illustrator illustrator = new Illustrator();
+//		illustrator.setFullName(bookDto.getIllustrator().getFullName());
+//		
+//		Editor editor = new Editor();
+//		editor.setName(bookDto.getEditor().getName());
+//		
+//		Collection collection = new Collection();
+//		collection.setName(bookDto.getCollection().getName());
+		
+		book.setTitle(bookDto.getTitle());
+		book.setStatus(Status.OK.toString());
+		
+		this.bookRepository.createBook(book);
+		return bookDto;
+	}
+	
+	public void createBook(Book book) {
+		this.bookRepository.createBook(book);
+	}
+	
+	public BookDto updateBook(BookDto bookDto) {
+		Book book = new Book();
+		Author authorFromDatabase = this.authorRepository.getByFullName(bookDto.getAuthor().getFullName());
+		if(authorFromDatabase != null) {
+			book.setAuthor(authorFromDatabase);
+		} else {
+			Author author = new Author();
+			author.setFullName(bookDto.getAuthor().getFullName());
+			author.setStatus(Status.OK.toString());
+			this.authorRepository.createAuthor(author);
+			book.setAuthor(author);
+		}
+		
+		Illustrator illustratorFromDatabase = this.illustratorRepository.getByFullName(bookDto.getIllustrator().getFullName());
+		if(illustratorFromDatabase != null) {
+			book.setIllustrator(illustratorFromDatabase);
+		} else {
+			Illustrator illustrator = new Illustrator();
+			illustrator.setFullName(bookDto.getIllustrator().getFullName());
+			illustrator.setStatus(Status.OK.toString());
+			this.illustratorRepository.createIllustrator(illustrator);
+			book.setIllustrator(illustrator);
+		}
+		
+		Editor editorFromDatabase = this.editorRepository.getByName(bookDto.getEditor().getName());
+		if(editorFromDatabase != null) {
+			book.setEditor(editorFromDatabase);
+		} else {
+			Editor editor = new Editor();
+			editor.setName(bookDto.getEditor().getName());
+			editor.setStatus(Status.OK.toString());
+			this.editorRepository.createEditor(editor);
+			book.setEditor(editor);
+		}
+
+		Collection collectionFromDatabase = this.collectionRepository.getByName(bookDto.getCollection().getName());
+		if(collectionFromDatabase != null) {
+			book.setCollection(collectionFromDatabase);
+		} else {
+			Collection collection = new Collection();
 			collection.setName(bookDto.getCollection().getName());
 			collection.setStatus(Status.OK.toString());
 			this.collectionRepository.createCollection(collection);
@@ -252,7 +289,7 @@ public class BookService {
     		
     
 		String illustratorName = !"".equals(bookInformationsRow[2]) ? bookInformationsRow[2] : "Nom inconnu";
-		Illustrator illustrator = this.illustratorRepository.getByFullName(illustratorName);
+		Illustrator illustrator = this.illustratorRepository.getIllustratorByNameAndStatus(illustratorName);
 		
 		if(illustrator == null) {
 			illustrator = new Illustrator();
@@ -263,7 +300,7 @@ public class BookService {
 		book.setIllustrator(illustrator);	
 		
 		String editorName = !"".equals(bookInformationsRow[3]) ? bookInformationsRow[3] : "Nom inconnu";
-		Editor editor = this.editorRepository.getByName(editorName);
+		Editor editor = this.editorRepository.getEditorByNameAndStatus(editorName);
 		if(editor == null) {
 			editor = new Editor();
 			editor.setName(editorName);
@@ -273,7 +310,7 @@ public class BookService {
 		book.setEditor(editor);
 	
 		String collectionName = !"".equals(bookInformationsRow[4]) ? bookInformationsRow[4] : "Nom inconnu";
-		Collection collection = this.collectionRepository.getByName(collectionName);
+		Collection collection = this.collectionRepository.getCollectionByNameAndStatus(collectionName);
 		if(collection == null) {
 			collection = new Collection();
 			collection.setName(collectionName);

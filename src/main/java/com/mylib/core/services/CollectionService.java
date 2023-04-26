@@ -15,7 +15,7 @@ public class CollectionService {
 	}
 	
 	public void changeCollectionStatusToToDelete() {
-		this.collectionRepository.changeCollectionWithStatusToDeleteToOk();	
+		this.collectionRepository.changeCollectionStatusToToDelete();	
 	}
 	
 	public void deleteCollectionWithStatusToDelete() {

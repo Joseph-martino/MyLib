@@ -17,7 +17,7 @@ public class AuthorService {
 	}
 	
 	public void changeAuthorStatusToToDelete() {
-		this.authorRepository.changeAuthorWithStatusToDeleteToOk();	
+		this.authorRepository.changeAuthorStatusToToDelete();	
 	}
 	
 	public void deleteAuthorWithStatusToDelete() {

@@ -1,13 +1,13 @@
 package com.mylib.core.repositories;
 
+import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.mylib.core.entities.Editor;
 import com.mylib.core.enums.Status;
-
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 
 public class CustomizedEditorRepositoryImpl implements CustomizedEditorRepository {
 	
@@ -18,6 +18,23 @@ public class CustomizedEditorRepositoryImpl implements CustomizedEditorRepositor
 	@Transactional
 	public void createEditor(Editor editor) {
 		this.entityManager.persist(editor);
+	}
+	
+	@Transactional
+	public Editor getEditorByNameAndStatus(String name) {
+		String queryString  = "FROM Editor e WHERE name=:name AND status=:status";
+		TypedQuery<Editor> typedQuery = this.entityManager.createQuery(queryString, Editor.class);
+		typedQuery.setParameter("name", name);
+		typedQuery.setParameter("status", Status.IN_PROGRESS.toString());
+		List<Editor> editors = typedQuery.getResultList();
+		
+		if(editors.isEmpty()) {
+			return null;
+		} else {
+			return editors.get(0);
+		}
+		
+		//return typedQuery.getSingleResult(); //prendre la methode getResulltList et si la liste rettournée est vide on renvoie null sinon on renvoie le premier resultat de la liste
 	}
 	
 	/**

@@ -2,8 +2,8 @@
 
 .message-container {
     position: absolute;
-    top: 25%;
-    width: 18%;
+    top: 18%;
+    width: 20%;
     height: 10%;
     left: 41%;
     background-color: $white;
@@ -15,13 +15,24 @@
     color: $lightGreen;
 }
 
-
+//Phone
 @media only screen and (max-width: 600px) {
 
     .message-container {
         width: 80%;
-        top:22%;
+        top: 30%;
         left:10%; 
     }
   }
+
+    //Tablet
+@media only screen and (min-width: 481px) and (max-width: 768px)  {
+
+    .message-container {
+        width: 50%;
+        height: 5%;
+        top: 20%;
+
+    }
+}
 

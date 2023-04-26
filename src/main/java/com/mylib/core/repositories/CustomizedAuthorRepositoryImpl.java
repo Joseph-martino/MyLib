@@ -1,5 +1,7 @@
 package com.mylib.core.repositories;
 
+import java.util.List;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mylib.core.entities.Author;
@@ -28,7 +30,15 @@ public class CustomizedAuthorRepositoryImpl implements CustomizedAuthorRepositor
 		TypedQuery<Author> typedQuery = this.entityManager.createQuery(queryString, Author.class);
 		typedQuery.setParameter("name", name);
 		typedQuery.setParameter("status", Status.IN_PROGRESS.toString());
-		return typedQuery.getSingleResult(); //prendre la methode getResulltList et si la liste rettournée est vide on renvoie null sinon on renvoie le premier resultat de la liste
+		List<Author> authors = typedQuery.getResultList();
+		
+		if(authors.isEmpty()) {
+			return null;
+		} else {
+			return authors.get(0);
+		}
+		
+		//return typedQuery.getSingleResult(); //prendre la methode getResulltList et si la liste rettournée est vide on renvoie null sinon on renvoie le premier resultat de la liste
 	}
 	
 	/**

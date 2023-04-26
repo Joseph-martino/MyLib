@@ -1,13 +1,17 @@
 package com.mylib.core.repositories;
 
+import java.util.List;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mylib.core.entities.Collection;
+import com.mylib.core.entities.Editor;
 import com.mylib.core.enums.Status;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 
 public class CustomizedCollectionRepositoryImpl implements CustomizedCollectionRepository {
 	
@@ -18,6 +22,23 @@ public class CustomizedCollectionRepositoryImpl implements CustomizedCollectionR
 	@Transactional
 	public void createCollection(Collection collection) {
 		this.entityManager.persist(collection);
+	}
+	
+	@Transactional
+	public Collection getCollectionByNameAndStatus(String name) {
+		String queryString  = "FROM Collection c WHERE name=:name AND status=:status";
+		TypedQuery<Collection> typedQuery = this.entityManager.createQuery(queryString, Collection.class);
+		typedQuery.setParameter("name", name);
+		typedQuery.setParameter("status", Status.IN_PROGRESS.toString());
+		List<Collection> collections = typedQuery.getResultList();
+		
+		if(collections.isEmpty()) {
+			return null;
+		} else {
+			return collections.get(0);
+		}
+		
+		//return typedQuery.getSingleResult(); //prendre la methode getResulltList et si la liste rettournée est vide on renvoie null sinon on renvoie le premier resultat de la liste
 	}
 	
 	/**
@@ -78,7 +99,7 @@ public class CustomizedCollectionRepositoryImpl implements CustomizedCollectionR
 	 */
 	@Transactional
 	public void deleteCollectionWithStatusOk() {
-		Query query = this.entityManager.createQuery("DELETE FROM Collection c WHERE status =:status");
+		Query query = this.entityManager.createQuery("DELETE FROM Collection c WHERE status = :status");
 		query.setParameter("status", Status.OK.toString());
 		query.executeUpdate();	
 	}

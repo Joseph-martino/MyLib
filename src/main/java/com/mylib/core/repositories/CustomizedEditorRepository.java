@@ -4,6 +4,7 @@ import com.mylib.core.entities.Editor;
 
 public interface CustomizedEditorRepository {
 	
+	Editor getEditorByNameAndStatus(String name);
 	void changeEditorStatusToOk();
 	void changeEditorWithStatusToDeleteToOk();
 	void changeEditorStatusToToDelete();
