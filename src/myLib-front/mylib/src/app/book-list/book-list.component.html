@@ -37,7 +37,7 @@
 
 <app-pagination-bar 
     [totalNumberPage]="totalPagesNumber$ | async"
-    [currentPageNumber]="currentPageNumber"
+    [currentPageNumber]="currentPageNumber$ | async"
     (onSelectedPage)="getCurrentPage($event)"
 ></app-pagination-bar>
 

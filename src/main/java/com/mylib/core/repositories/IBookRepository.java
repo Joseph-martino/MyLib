@@ -13,7 +13,6 @@ public interface IBookRepository {
 	void updateBook(Book book);
 	void deleteAllFromDatabase();
 	List<Book> getAll();
-	//List<Book> getBooksByAuthor(String authorName);
 	void changeBookStatusToOk();
 	void changeBookStatusToToDelete();
 	void deleteBookWithStatusToDelete();

@@ -24,11 +24,6 @@ public class BookResource {
 	@Autowired
 	private BookService bookService;
 	
-//	@GetMapping
-//	public List<BookDto> getBooksList(){
-//		return this.bookService.getBooksList();
-//	}
-	
 	@GetMapping("/{id}")
 	public ResponseEntity<BookDto> getById(@PathVariable("id") long id) {
 		BookDto bookDto = this.bookService.getById(id);
@@ -36,7 +31,7 @@ public class BookResource {
 	}
 	
 	@GetMapping
-	public List<BookDto> getBookListTest(@RequestParam(name="authorName", required = false) String authorName,
+	public List<BookDto> getBookList(@RequestParam(name="authorName", required = false) String authorName,
 										@RequestParam(name="illustratorName", required = false) String illustratorName,
 										@RequestParam( name="editorName", required = false) String editorName,
 										@RequestParam( name="collectionName", required = false) String collectionName,
