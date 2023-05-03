@@ -64,7 +64,7 @@ export class BookListComponent implements OnInit {
           illustrator,
           editor,
           collection,
-          currentPage,
+          currentPage -1,
           this.pageSize
         );
       }),

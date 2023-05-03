@@ -80,7 +80,7 @@ public class BookRepository implements IBookRepository{
 //		int pageSize = 10;
 //		query.setFirstResult((pageNumber-1) * pageSize); 
 //		query.setMaxResults(pageSize);
-		typedQuery.setFirstResult(pageNumber * pageSize + 1);
+		typedQuery.setFirstResult(pageNumber * pageSize);
 		typedQuery.setMaxResults(pageSize);
 //		typedQuery.setParameter("authorName", authorName);
 //		typedQuery.setParameter("illustratorName", illustratorName);
@@ -97,18 +97,6 @@ public class BookRepository implements IBookRepository{
 		long numberOfEntries = (long) query.getSingleResult();
 		return numberOfEntries;
 	}
-	
-//	@Transactional
-//	public List<Book> getBooksByAuthor(String authorName){
-//		String queryString = """
-//				SELECT b FROM Book b 
-//				INNER JOIN FETCH b.author a
-//				WHERE a.fullName = :authorName""";
-//		TypedQuery<Book> typedQuery = this.entityManager.createQuery(queryString,Book.class);
-//		typedQuery.setParameter("authorName", authorName);
-//		List<Book> books = typedQuery.getResultList();
-//		return books;
-//	}
 	
 	@Transactional
 	public List<Book> getAll() {
